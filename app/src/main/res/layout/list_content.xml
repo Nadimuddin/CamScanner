@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="10dp">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:id="@+id/coverImage"
+            android:src="@drawable/camera"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:id="@+id/docName"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/coverImage"
+            android:layout_toEndOf="@+id/coverImage"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateTime"
+            android:textSize="15sp"
+            android:layout_below="@+id/docName"
+            android:layout_toRightOf="@+id/coverImage"
+            android:layout_toEndOf="@+id/coverImage"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageCount"
+            android:layout_below="@+id/docName"
+            android:layout_toRightOf="@+id/dateTime"
+            android:layout_toEndOf="@+id/dateTime"
+            android:layout_marginLeft="10dp"/>
+    </RelativeLayout>
+</LinearLayout>

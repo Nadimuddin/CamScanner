@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Import from Gallery"
+        android:id="@+id/import_from_gallery"/>
+
+    <!--<item android:id="@+id/pdfSetting"
+        android:title="PDF Settings"/>
+
+    <item android:id="@+id/invite"
+        android:title="Invite"/>
+
+    <item android:id="@+id/comment"
+        android:title="Comments"/>
+
+    <item android:id="@+id/emailTo"
+        android:title="Email to Myself"/>
+
+    <item android:id="@+id/setTag"
+        android:title="Set Tag"/>-->
+
+    <item android:title="Rename"
+        android:id="@+id/rename"/>
+
+    <!--<item android:id="@+id/manualSorting"
+        android:title="Manual Sorting"/>
+
+    <item android:id="@+id/viewBy"
+        android:title="View By"/>
+
+    <item android:id="@+id/collage"
+        android:title="Collage"/>
+
+    <item android:title="Select"
+        android:id="@+id/select"/>-->
+
+</menu>

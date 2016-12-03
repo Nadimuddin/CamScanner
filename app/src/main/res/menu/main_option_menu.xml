@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:id="@+id/createNewFolder"
+        android:title="Create new folder"/>-->
+
+    <item android:title="Import from Gallery"
+        android:id="@+id/import_from_gallery" />
+
+    <!--<item android:id="@+id/gridView"
+        android:title="Grid View"/>
+
+    <item android:id="@+id/sortBy"
+        android:title="Sort by"/>-->
+
+    <item android:id="@+id/select"
+        android:title="Select"/>
+
+</menu>

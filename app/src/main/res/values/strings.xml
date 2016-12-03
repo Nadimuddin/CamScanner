@@ -1,0 +1,1042 @@
+<resources>
+    <string name="app_name">Doc Scanner</string>
+    <string name="title_name">Doc Scanner</string>
+    <string name="document_name">Document Name</string>
+
+    <string name="my_xpresson">My XPressOn</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="DevelopmentMode">FALSE</string>
+
+    <!-- XON Main UI -->
+    <string name="Logo">Logo</string>
+    <string name="about">about</string>
+    <string name="start_here">Start here</string>
+    <string name="gallery">Choose a Photo</string>
+    <string name="gallery_tip">Select Image</string>
+    <string name="camera">Take a Photo</string>
+    <string name="camera_tip">Take Picture</string>
+    <string name="myXON">My Saved Photos</string>
+    <string name="myXON_tip">View XPressOn Gallery</string>
+    <string name="createXON">Create</string>
+    <string name="createXON_tip">Personalize on Design from Creative Artist. COMMING SOON....</string>
+    <string name="XONWidgetBackground">#FFFF66</string>
+    <string name="XONWidgetSelBackground">#CC66FF</string>
+    <string name="image_dialog">View Selected Image</string>
+    <string name="title_activity_xon__main__ui">XPressOn</string>
+    <string name="delete_image">Delete Image</string>
+    <string name="clear_cache_menu">Clear Caches</string>
+    <string name="clear_image_complete_toast">Image has been cleared</string>
+    <string name="clear_cache_complete_toast">Caches have been cleared</string>
+    <string name="imageview_description">Image Thumbnail</string>
+    <string name="no_network_connection_toast">No network connection found</string>
+    <string name="ImageSharedText">Create using XPressOn</string>
+    <string name="share_intent_text">Select appropriate App</string>
+
+    <!-- XON IM Top Panel -->
+    <string name="actions">Actions</string>
+    <string name="home">Home</string>
+    <string name="orig">Orig</string>
+    <string name="rotate">Rotate</string>
+    <string name="save_effects">Create</string>
+    <string name="crop">Crop</string>
+    <string name="save_effects_name">Name (upto 10 chars)</string>
+    <string name="num_effects_char">10</string>
+    <string name="save_effects_title">Create My Effects</string>
+    <string name="image_enhance">Enhance</string>
+    <string name="image_enhance_full">Enhance Image</string>
+    <string name="quick_effects">Quick Ez</string>
+    <string name="image_effects">Effects</string>
+    <string name="image_filters">Filters</string>
+    <string name="save_share">Save Share</string>
+    <string name="save_n_share">Save N Share</string>
+    <string name="share">Share XPressOn</string>
+    <string name="popular_effects">Filter</string>
+    <string name="frame_effects">Frames</string>
+    <string name="premium_effects">Premium</string>
+    <string name="adv_effects">Advance</string>
+    <string name="user_effects">My Effects</string>
+    <string name="multi_effects">Multi Effects</string>
+    <string name="fade_effects">Fade Effects</string>
+    <string name="color_effects">Color Effects</string>
+    <string name="funny_effects">Funny Effects</string>
+    <string name="light_effects">Light Effects</string>
+    <string name="border_filters">Border Filters</string>
+    <string name="color_filters">Color Filters</string>
+    <string name="distort_filters">Distort Filters</string>
+    <string name="blur_filters">Blur Filters</string>
+    <string name="title_activity_xon__im__ui">XON_IM_UI</string>
+    <string name="title_activity_xon_crop">XON_CROP_UI</string>
+    <string name="ok"> OK </string>
+    <string name="cancel"> Cancel </string>
+    <string name="reset"> Reset </string>
+
+    <!-- Image Action Popup Elements  -->
+    <string name="image_action_text">Choose Image Actions</string>
+    <string name="alert_dialog_ok">OK</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+    <string-array name="image_action_list">
+        <item>Rotate CW</item>
+        <item>Rotate CCW</item>
+        <item>Show Original</item>
+    </string-array>
+
+    <!-- Full View Image Action Popup Elements  -->
+    <string-array name="image_view_action_list">
+        <item>Delete Image</item>
+    </string-array>
+
+    <!-- Delete User Saved Effects -->
+    <string name="user_effects_actions">Actions for User Saved Effects</string>
+    <string-array name="user_effects_action_list">
+        <item>Delete Selected User Effect</item>
+    </string-array>
+
+    <!--  Messages Displayed by XPressOn -->
+    <string name="selected_txt">Select appropriate </string>
+    <string name="ImageFilterSelMesg">Image Filter Activated</string>
+    <string name="ImageFilterSlideMesg">Slide Finger or Tap on Screen to change the looks</string>
+    <string name="CircularFilterSlideMesg">Slide Finger on lower portion of the Screen to change the intensity. Also drag the square to position the Intensity</string>
+    <string name="ImageFilterDeSelMesg">Image Filter De-Activated</string>
+    <string name="NoImageFilterSel">No Image Filter is Selected</string>
+    <string name="NoImageFilterParam">Sliding Finger not needed. Change is applied.</string>
+    <string name="NoImageSel">Please select an Image to be saved.</string>
+    <string name="SmallImageSavedTitle">Memory Constraint</string>
+    <string name="SmallImageSaved">Due to Memory Constraint small Image size is Saved and will take little longer.</string>
+    <string name="NoSavedImage">All Images saved using this App can be viewed here. Since no Image is saved, hence this view is not shown.</string>
+    <string name="NoImageExists">Image not Found. This happened because image is manually deleted from Memory Card</string>
+    <string name="ShowOriginal">Showing the Original Image</string>
+    <string name="ShowTransformed">Showing the Transformed Image</string>
+    <string name="InfoTitle">Info Message</string>
+    <string name="ErrorTitle">Error Occurred</string>
+    <string name="PickAColor">Slide On Wheel and Click Center</string>
+    <string name="NoActionMesg">No Action Taken</string>
+    <string name="FilterNotApplied">This Filter Conflicts with Filter Used</string>
+    <string name="NoImageFound">Image Not Found. Redirecting to Main Page. Report Error to support@xpressonnet.com. Appreciate your support</string>
+    <string name="NoImageSaved">Unable to save Image. Redirecting to Main Page. Report Error to support@xpressonnet.com. Appreciate your support</string>
+    <string name="ImageEffectsNotSaved">Image Effects Not Saved</string>
+    <string name="ImageEffectsNotSavedMesg">Image Effects Name is used. Please give a new Name</string>
+    <string name="NoSavedEffectsTitle">No Saved Effects</string>
+    <string name="NoSavedEffectsMesg">Image Effects and Filters used in any combination can be saved. These effects saved by you will show in Personalized Effects for reuse.</string>
+    <string name="FeatureCommingTitle">Feature Coming Soon</string>
+    <string name="FeatureCommingMesg">Feature is coming soon.</string>
+    <string name="ShowCropMessage"> </string>
+    <string name="ViewImageTry">Unable to Show Image, Retrying</string>
+    <string name="NoImageShown">Unable to Show Image and Redirecting to Main Page</string>
+    <string name="NoMyXONImageShown">No Image Saved, Redirecting to Main Page</string>
+    <string name="NoImageSelTitle">No Image Selected</string>
+    <string name="NoImageSelMesg">Please Selected Image from the Gallery. Redirecting to Main Page</string>
+    <string name="CannotSaveEffects">Cannot Create My Effects as no Effects or Filters are selected.</string>
+    <string name="NoImagePathTitle">No Image Found</string>
+    <string name="NoImagePathMesg">Unable to retrieve the selected image from the Gallery. Redirecting to Main Page</string>
+    <string name="UnableToRate">Unable to connect to Google Play. Sorry for inconvinience.</string>
+    <string name="AboutXON">About XPressOn</string>
+    <string name="AboutXONMesg">XPressOn is an Image Editing App with 1000s of Image Effects and Filters. Its free with no ads.\n\nXPressOn vision is to do more with the pictures you have taken by auto-plugging your pictures into Designs created by Professional Designers.\n\nIt will be of immense help if you can review our app in Google Play, give us your feedback, like us on Facebook Page and refer your Friends. All this you can do from XPressOn App itself by clicking on the image that appear in the home page.\n\nThanks for your support.\nXPressOn Team</string>
+
+    <!-- Quick Fix Image Settings -->
+    <string-array name="quick_fix_image_settings">
+        <item>AvgPixel:=0::Brightness:=0.7::Contrast:=0.6::Bias:=0.8</item>
+        <item>AvgPixel:=32::Brightness:=0.6::Contrast:=0.6::Bias:=0.7</item>
+        <item>AvgPixel:=64::Brightness:=0.6::Contrast:=0.6::Bias:=0.7</item>
+        <item>AvgPixel:=128::Brightness:=0.6::Contrast:=0.6::Bias:=0.4</item>
+        <item>AvgPixel:=160::Brightness:=0.6::Contrast:=0.6::Bias:=0.4</item>
+        <item>AvgPixel:=192::Brightness:=0.6::Contrast:=0.6::Bias:=0.4</item>
+        <item>AvgPixel:=224::Brightness:=0.4::Contrast:=0.6::Bias:=0.3</item>
+        <item>AvgPixel:=255::Brightness:=0.4::Contrast:=0.6::Bias:=0.3</item>
+    </string-array>
+
+    <!-- Quick Fix Image Settings using Gain and Brightness -->
+    <string-array name="quick_fix_image_gain_settings">
+        <item>AvgPixel:=0::Gain:=0.4::Brightness:=1.3</item>
+        <item>AvgPixel:=32::Gain:=0.4::Brightness:=1.0</item>
+        <item>AvgPixel:=64::Gain:=0.4::Brightness:=0.7</item>
+        <item>AvgPixel:=128::Gain:=0.4::Brightness:=0.6</item>
+        <item>AvgPixel:=160::Gain:=0.4::Brightness:=0.6</item>
+        <item>AvgPixel:=192::Gain:=0.4::Brightness:=0.6</item>
+        <item>AvgPixel:=224::Gain:=0.4::Brightness:=0.4</item>
+        <item>AvgPixel:=255::Gain:=0.4::Brightness:=0.4</item>
+    </string-array>
+
+    <!-- Images and Text to be displayed in Main View -->
+    <!-- ImgRes - identifies the drawable resource,
+         TextRes  - specifies the optional text to be displayed with image
+         Action -  specifies if any action needs to be taken -->
+    <string-array name="MainViewData">
+        <item>ImgRes:=xon_main_page_logo::TextRes:=xon_main_page_logo_text::Action:=ShowAboutXON</item>
+        <item>ImgRes:=suggestion_box::TextRes:=suggestion_text::Action:=Feedback</item>
+        <item>ImgRes:=google_app_review::TextRes:=google_app_rev_txt::Action:=GoogleAppReview</item>
+        <item>ImgRes:=like_us::TextRes:=like_us_txt::Action:=FollowOnFB</item>
+        <item>ImgRes:=refer_friend::TextRes:=refer_friend_txt::Action:=ReferFriend</item>
+
+    </string-array>
+
+    <string name="xon_main_page_logo_text">Use XPressOn to bring life to ur photographs on ur Mobile</string>
+    <string name="suggestion_text">We would love to hear your suggestion. Thankyou for your feedback.</string>
+    <string name="google_app_rev_txt">Please review us in Google Play</string>
+    <string name="like_us_txt">Like us on Facebook</string>
+    <string name="refer_friend_txt">Refer your Friend to download XPressOn App</string>
+    <string name="refer_friend_mesg">Get XPressOn App for Android to quickly fix your picture, apply effects, filters, borders, etc to create stunning photo and share it on Facebook, Email, WhatsApp, etc.<p>Download for free https://play.google.com/store/apps/details?id=com.xpresson.android</p></string>
+
+    <!--  XON Web Pages -->
+    <string name="XONFBPage">http://www.facebook.com/xpressonapp</string>
+
+    <!-- Properties to allow Sharing  -->
+    <string-array name="XONShareProperties">
+        <item>Action:=Feedback::EMailTo:=narayan@xpressonnet.com::EmailSub:=XPressOn Feedback</item>
+
+    </string-array>
+
+    <!-- Popular Filter Positions -->
+    <string-array name="PopularFilterPositions">
+
+        <item>autofix1_filter_22::1</item>
+        <item>autofix2_filter_23::2</item>
+        <item>xon_sharp_filter_1::3</item>
+        <item>sunrise_filter_2::4</item>
+        <item>bluevalley_filter_3::5</item>
+        <item>miller_filter_4::6</item>
+        <item>kelvin_filter_5::7</item>
+        <item>sketch_filter_6::8</item>
+        <item>xon_cool_filter_7::9</item>
+        <item>sketched_filter_30::10</item>
+        <item>xon_pro_filter_9::11</item>
+        <item>color_skech_filter_31::12</item>
+        <item>xon_hifi_filter_8::13</item>
+        <item>a_1942_filter_10::14</item>
+        <item>xon_rusty_filter_11::15</item>
+        <item>mauvenpic_filter_12::16</item>
+        <item>childen_filter_13::17</item>
+        <item>foggy_filter_14::18</item>
+        <item>willy_filter_15::19</item>
+        <item>emboss_filter_16::20</item>
+        <item>emboss_sharp_filter_17::21</item>
+        <item>a_2002_filter_18::22</item>
+        <item>crank_filter_19::23</item>
+        <item>crimson_filter_20::24</item>
+        <item>fudge_filter_21::25</item>
+        <item>wine_filter_24::26</item>
+        <item>automn_filter_25::27</item>
+        <item>stanley_filter_26::28</item>
+        <item>smudge_filter_27::29</item>
+        <item>mint_filter_28::30</item>
+        <item>xtreme_filter_29::31</item>
+
+    </string-array>
+
+    <!-- Popular Filter Name Mappings -->
+    <string-array name="PopularFilterNameMappings">
+        <item>Automn::Autumn</item>
+        <item>Sketch::Cedar</item>
+        <item>EmbossNew::Emboss</item>
+        <item>EmbossBrgh::Embed</item>
+        <item>XONRustie::XONRusty</item>
+        <item>Childen::Childon</item>
+        <item>Wine::Winnie</item>
+
+    </string-array>
+
+    <string name="img_disp_gap">30</string>
+    <string name="intensity_adj_ht">75</string>
+    <string name="panel_scale">98</string>
+    <string name="image_start_pt">0</string>
+    <string name="icon_width">50</string>
+    <string name="icon_height">50</string>
+    <string name="thread_pool_size">10</string>
+    <string name="scroll_monitor_time">1000</string>
+    <string name="thread_sleep_time">500</string>
+
+    <!-- This parameters influence the Popup Time  -->
+    <string name="popup_scroll_dist">20</string>
+    <string name="popup_scroll_time">500</string>
+    <string name="main_view_display_multiple">20</string>
+
+    <!-- FADING PARAMETERS -->
+    <string name="NumOfFadeRegion">10</string>
+    <string name="MaxNumOfFadeRegion">20</string>
+    <string name="FadeRegionSize">10.0</string>
+    <string name="FadeBorderPercent">0.75</string>
+
+    <!-- COLOR PARAMETERS -->
+    <string name="border_colors">BLACK::BLUE::YELLOW::RED::GREEN::MAGENTA::DARKGRAY::GRAY::WHITE::#33B5E5::#AA66CC::#99CC00::#FFBB33::#FF4444::#0099CC::#9933CC::#669900::#FF8800::#CC0000::#daa520::#bc8f8f::#cd5c5c::#ff69b4::#ff1493::#db7093::#b03060::#9932cc::#9400d3::#8a2be2</string>
+    <string name="colors">BLACK::BLUE::YELLOW::RED::CYAN::GREEN::MAGENTA::DARKGRAY::GRAY::LIGHTGRAY::WHITE::#33B5E5::#AA66CC::#99CC00::#FFBB33::#FF4444::#0099CC::#9933CC::#669900::#FF8800::#CC0000::#000000::#2f4f4f::#696969::#708090::#778899::#bebebe::#d3d3d3::#191970::#000080::#6495ed::#483d8b::#6a5acd::#7b68ee::#8470ff::#0000cd::#4169e1::#0000ff::#1e90ff::#00bfff::#87ceeb::#87cefa::#4682b4::#b0c4de::#add8e6::#b0e0e6::#afeeee::#00ced1::#48d1cc::#40e0d0::#00ffff::#e0ffff::#5f9ea0::#66cdaa::#7fffd4::#006400::#556b2f::#8fbc8f::#2e8b57::#3cb371::#20b2aa::#98fb98::#00ff7f::#7cfc00::#7fff00::#00fa9a::#adff2f::#32cd32::#9acd32::#228b22::#6b8e23::#bdb76b::#f0e68c::#eee8aa::#fafad2::#ffffe0::#ffff00::#ffd700::#eedd82::#daa520::#b8860b::#bc8f8f::#cd5c5c::#8b4513::#a0522d::#cd853f::#deb887::#f5f5dc::#f5deb3::#f4a460::#d2b48c::#d2691e::#b22222::#a52a2a::#e9967a::#fa8072::#ffa07a::#ffa500::#ff8c00::#ff7f50::#f08080::#ff6347::#ff4500::#ff0000::#ff69b4::#ff1493::#ffc0cb::#ffb6c1::#db7093::#b03060::#c71585::#d02090::#ee82ee::#dda0dd::#da70d6::#ba55d3::#9932cc::#9400d3::#8a2be2::#a020f0::#9370db::#d8bfd8</string>
+
+
+    <color name="XONHomeButtonBG">#222222</color>
+    <color name="XONTitleBackground">#FFFF66</color>
+    <color name="XONSubTitleBackground">#99FF66</color>
+    <color name="XONTitleSelBackground">#FFFF66</color>
+    <color name="XONSelBackground">#FFFF66</color>
+    <color name="XONTextSelColor">#ffffff</color>
+
+
+    <string-array name="image_filter_groupings">
+        <item>Enhance</item>
+        <item>Fade Effect</item>
+        <item>Color Effect</item>
+        <item>Funny Effect</item>
+        <item>Light Effect</item>
+        <item>Border Fltrs</item>
+        <item>Color Filters</item>
+        <item>Distort Fltr</item>
+        <item>Blur Filters</item>
+    </string-array>
+
+    <string name="def_filter_vals">CenterX:=0.0::CenterY:=0.0::AmtX=0.0::RadX:=0.0::AmtY:=0.0::AngXY:=0.0</string>
+    <string name="CircularImpactSize">100</string>
+
+    <!-- Image Enhance Filters -->
+    <string-array name="ImageEnhanceDispName">
+        <item>AutoFix1</item>
+        <item>AutoFix2</item>
+        <!-- <item>FixMthd2</item> -->
+        <item>Brightness</item>
+        <item>Contrast</item>
+        <item>Bias</item>
+        <item>Exposure</item>
+        <item>Gain</item>
+        <!--  <item>Hue</item>
+          <item>Saturation</item>
+          <item>ColorBright</item>-->
+    </string-array>
+
+    <string-array name="ImageEnhance">
+        <item>AutoFix1</item>
+        <item>AutoFix2</item>
+        <!-- <item>FixMthd2</item> -->
+        <item>Brightness</item>
+        <item>Contrast</item>
+        <item>Bias</item>
+        <item>Exposure</item>
+        <item>Gain</item>
+        <!-- <item>Hue</item>
+         <item>Saturation</item>
+         <item>ColorBright</item>-->
+
+    </string-array>
+
+    <!--
+       Valid FieldTypes are
+       - Intensity (The Value of this field is Set using Sliding along the X Dirn)
+       - IntensityXY(The Value of the fields are set using Sliding along the X and Y Dirn)
+       - AngularIntensity(The Value of the fields are set using Sliding along the X and Y Dirn and the Angle)
+       - CircularImpact (This indicates the Circle where the Filter has to be applied)
+       - PresetValue (This indicates the Preset Value is set to the one indicated in the Amt)
+     -->
+    <string-array name="AutoFix1Enhance_Val">
+        <item>Name:=Bias::Type:=Intensity::AmtX:=-1.0::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+    </string-array>
+    <string-array name="AutoFix2Enhance_Val">
+        <item>Name:=Brightness::Type:=Intensity::AmtX:=-1.0::MinX:=0.0::MaxX:=3.0::FactorX:=3.0</item>
+    </string-array>
+    <string-array name="FixMthd2Enhance_Val">
+        <item>Name:=Brightness::Type:=Intensity::AmtX:=-1.0::MinX:=0.0::MaxX:=3.0::FactorX:=3.0</item>
+    </string-array>
+    <string-array name="BrightnessEnhance_Val">
+        <item>Name:=Brightness::Type:=Intensity::AmtX:=0.6::MinX:=0.0::MaxX:=2.0::FactorX:=2.0</item>
+    </string-array>
+    <string-array name="ContrastEnhance_Val">
+        <item>Name:=Contrast::Type:=Intensity::AmtX:=0.6::MinX:=0.0::MaxX:=2.0::FactorX:=2.0</item>
+    </string-array>
+    <string-array name="BiasEnhance_Val">
+        <item>Name:=Bias::Type:=Intensity::AmtX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+    </string-array>
+    <string-array name="ExposureEnhance_Val">
+        <item>Name:=Exposure::Type:=Intensity::AmtX:=0.2::MinX:=0.0::MaxX:=5.0::FactorX:=5.0</item>
+    </string-array>
+    <string-array name="GainEnhance_Val">
+        <item>Name:=Gain::Type:=Intensity::AmtX:=0.4::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+    </string-array>
+    <string-array name="HueEnhance_Val">
+        <item>Name:=Hue::Type:=Intensity::AmtX:=0.75::MinX:=-1.0::MaxX:=1.0::FactorX:=2.0</item>
+    </string-array>
+    <string-array name="SaturationEnhance_Val">
+        <item>Name:=Saturation::Type:=Intensity::AmtX:=0.75::MinX:=-1.0::MaxX:=1.0::FactorX:=2.0</item>
+    </string-array>
+    <string-array name="ColorBrightEnhance_Val">
+        <item>Name:=ColorBright::Type:=Intensity::AmtX:=0.75::MinX:=-1.0::MaxX:=1.0::FactorX:=2.0</item>
+    </string-array>
+
+    <!-- Border Image Filters -->
+    <string-array name="FramesDispName">
+        <item>ColorFade</item>
+        <item>Solid</item>
+        <item>Crystal</item>
+        <item>Multi</item>
+        <item>ColorDots</item>
+        <item>Noisy</item>
+        <item>Misty</item>
+        <item>Shield</item>
+        <item>Colorful</item>
+        <item>MixMatch</item>
+        <item>Inverse</item>
+    </string-array>
+
+    <string-array name="Frames">
+        <item>ColorFade</item>
+        <item>Solid</item>
+        <item>Crystal</item>
+        <item>Multi</item>
+        <item>ColorDots</item>
+        <item>Noisy</item>
+        <item>Misty</item>
+        <item>Shield</item>
+        <item>Colorful</item>
+        <item>MixMatch</item>
+        <item>Inverse</item>
+
+    </string-array>
+
+    <string name="ColorFade_Filters">UniformFadeEffects::ColorFadeBorderFilters</string>
+    <string-array name="ColorFadeFrames_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.15::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=FadePerc::Type:=PresetValue::Value:=0.10</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+    </string-array>
+
+    <string name="Solid_Filters">UniformFadeEffects::ColorFadeBorderFilters</string>
+    <string-array name="SolidFrames_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.15::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=FadePerc::Type:=PresetValue::Value:=0.5</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+    </string-array>
+
+    <string name="Misty_Filters">InvertFadeEffects::NoiseFadeEffects::UniformFadeEffects::ColorFadeBorderFilters</string>
+    <string-array name="MistyFrames_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.12::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+    </string-array>
+
+    <string name="Crystal_Filters">ColorFadeBorderFilters::CrystalBorderFilters</string>
+    <string-array name="CrystalFrames_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.10::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+        <item>Name:=UseInverseColor::Type:=PresetValue::Value:=FALSE</item>
+    </string-array>
+
+    <string name="Shield_Filters">InvertFadeEffects::UniformFadeEffects::ColorFadeBorderFilters</string>
+    <string-array name="ShieldFrames_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.10::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+    </string-array>
+
+    <string name="Colorful_Filters">ColorfulFadeEffects::UniformFadeEffects::ColorFadeBorderFilters</string>
+    <string-array name="ColorfulFrames_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.10::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+    </string-array>
+
+    <string name="ColorDots_Filters">NoiseFadeEffects::UniformFadeEffects::ColorFadeBorderFilters</string>
+    <string-array name="ColorDotsFrames_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.10::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+    </string-array>
+
+    <string name="MixMatch_Filters">PosterizeBorderFilters::UniformFadeEffects::ColorFadeBorderFilters</string>
+    <string-array name="MixMatchFrames_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.10::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+    </string-array>
+
+    <string name="Inverse_Filters">UniformFadeEffects::ColorFadeBorderFilters::InvertFadeEffects</string>
+    <string-array name="InverseFrames_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.12::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+    </string-array>
+
+    <string name="Noisy_Filters">UniformFadeEffects::ColorFadeBorderFilters::NoiseFadeEffects</string>
+    <string-array name="NoisyFrames_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.15::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+    </string-array>
+
+    <string name="Multi_Filters">ColorFadeBorderFilters::CrystalBorderFilters</string>
+    <string-array name="MultiFrames_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.12::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+        <item>Name:=UseInverseColor::Type:=PresetValue::Value:=TRUE</item>
+    </string-array>
+
+    <!-- Advanced Effects -->
+    <string-array name="AdvancedDispName">
+    </string-array>
+
+    <!-- Advanced -->
+    <string-array name="Advanced">
+    </string-array>
+
+    <!-- Fade Effects -->
+    <string-array name="FadeEffectsDispName">
+        <item>Uniform</item>
+        <item>Linear</item>
+        <item>ColorFade</item>
+        <item>Noise</item>
+        <item>Invert</item>
+        <item>Colorful</item>
+        <item>ColorDots</item>
+        <item>Crystal</item>
+        <item>Bar</item>
+        <item>ColorCrystal</item>
+    </string-array>
+
+    <string-array name="FadeEffects">
+        <item>Uniform</item>
+        <item>Linear</item>
+        <item>ColorFade</item>
+        <item>Noise</item>
+        <item>Invert</item>
+        <item>Colorful</item>
+        <item>ColorDots</item>
+        <item>Crystal</item>
+        <item>Bar</item>
+        <item>ColorCrystal</item>
+        <!--
+        <item>Posterize</item>
+        <item>Bursted</item>
+        <item>HexCrystal</item>
+        <item>OctaCrystal</item>
+        <item>ColorCrystal</item>
+        <item>HexColorCrystal</item>
+        <item>OctaColorCrystal</item>
+        -->
+        <!-- <item>Color</item>   -->
+    </string-array>
+
+    <string-array name="UniformFadeEffects_Val">
+        <item>Name:=Uniform::Type:=Intensity::AmtX:=0.2::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=MergeType::Type:=PresetValue::Value:=Fading</item>
+        <item>Name:=FadeType::Type:=PresetValue::Value:=Uniform</item>
+        <item>Name:=ShapeType::Type:=PresetValue::Value:=Rect</item>
+    </string-array>
+    <string-array name="LinearFadeEffects_Val">
+        <item>Name:=Linear::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=10.0</item>
+        <item>Name:=FadePerc::Type:=PresetValue::Value:=1.0</item>
+    </string-array>
+    <string-array name="InvertFadeEffects_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=BorderField::Type:=PresetValue::Value:=Invert</item>
+        <item>Name:=BorderFilter::Type:=PresetValue::Value:=InvertBorderFilters</item>
+    </string-array>
+    <string-array name="ColorFadeFadeEffects_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=BorderField::Type:=PresetValue::Value:=ColorFade</item>
+        <item>Name:=BorderFilter::Type:=PresetValue::Value:=ColorFadeBorderFilters</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+    </string-array>
+    <string-array name="ColorfulFadeEffects_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=BorderField::Type:=PresetValue::Value:=Colorful</item>
+        <item>Name:=BorderFilter::Type:=PresetValue::Value:=ColorfulBorderFilters</item>
+    </string-array>
+    <string-array name="ColorDotsFadeEffects_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=BorderField::Type:=PresetValue::Value:=ColorDots</item>
+        <item>Name:=BorderFilter::Type:=PresetValue::Value:=ColorDotsBorderFilters</item>
+    </string-array>
+    <string-array name="CrystalFadeEffects_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=BorderField::Type:=PresetValue::Value:=Crystal</item>
+        <item>Name:=BorderFilter::Type:=PresetValue::Value:=CrystalBorderFilters</item>
+    </string-array>
+    <string-array name="ColorCrystalFadeEffects_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=BorderField::Type:=PresetValue::Value:=ColorFade:N:Crystal</item>
+        <item>Name:=BorderFilter::Type:=PresetValue::Value:=ColorFadeBorderFilters:N:CrystalBorderFilters</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+    </string-array>
+    <string-array name="NoiseFadeEffects_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=BorderField::Type:=PresetValue::Value:=Noise</item>
+        <item>Name:=BorderFilter::Type:=PresetValue::Value:=NoiseBorderFilters</item>
+    </string-array>
+    <string-array name="BarFadeEffects_Val">
+        <item>Name:=BorderMargin::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Angle::Type:=PresetValue::Value:=0.0</item>
+        <item>Name:=FadeStart::Type:=PresetValue::Value:=0.0</item>
+        <item>Name:=FadeWidth::Type:=PresetValue::Value:=5.0</item>
+        <item>Name:=Sides::Type:=PresetValue::Value:=4</item>
+    </string-array>
+
+    <!-- Color Effects -->
+    <string-array name="ColorEffectsDispName">
+        <item>BW</item>
+        <item>Colorful</item>
+        <item>ColorDots</item>
+        <item>Posterize</item>
+        <item>Outline</item>
+        <item>Emboss</item>
+        <item>Sketch</item>
+        <item>Bursted</item>
+        <item>Negative</item>
+    </string-array>
+
+    <string-array name="ColorEffects">
+        <item>BW</item>
+        <item>Colorful</item>
+        <item>ColorDots</item>
+        <item>Posterize</item>
+        <item>Outline</item>
+        <item>Emboss</item>
+        <item>Sketch</item>
+        <!-- <item>ColorSketch</item> -->
+        <item>Bursted</item>
+        <item>Negative</item>
+
+    </string-array>
+
+    <string-array name="BWColorEffects_Val">
+        <item>Name:=BW::Type:=Intensity::AmtX:=0.2::MinX:=0.0::MaxX:=1.0::FactorX:=255.0</item>
+    </string-array>
+    <string-array name="ColorfulColorEffects_Val">
+        <item></item>
+    </string-array>
+    <string-array name="PosterizeColorEffects_Val">
+        <item>Name:=Posterize::Type:=Intensity::AmtX:=0.2::MinX:=0.0::MaxX:=1.0::FactorX:=10.0</item>
+    </string-array>
+    <string-array name="OutlineColorEffects_Val">
+        <item>Name:=Outline::Type:=Intensity::AmtX:=0.8::MinX:=0.0::MaxX:=1.0::FactorX:=10.0</item>
+        <item>Name:=Rad1::Type:=PresetValue::Value:=0.0</item>
+    </string-array>
+    <string-array name="EmbossColorEffects_Val">
+        <item>Name:=Emboss::Type:=Intensity::AmtX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=BumpHt::Type:=PresetValue::Value:=1.0</item>
+    </string-array>
+    <string-array name="SketchColorEffects_Val">
+        <item>Name:=BumpHt::Type:=PresetValue::Value:=20.0</item>
+        <item>Name:=BumpSoft::Type:=PresetValue::Value:=1.0</item>
+    </string-array>
+    <string-array name="ColorSketchColorEffects_Val">
+        <item>Name:=ColorSketch::Type:=Intensity::AmtX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=5.0</item>
+        <item>Name:=Elevation::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=BumpSoft::Type:=PresetValue::Value:=5.0</item>
+    </string-array>
+    <string-array name="BurstedColorEffects_Val">
+        <item>Name:=Bursted::Type:=Intensity::AmtX:=0.0::MinX:=0.0::MaxX:=1.0::FactorX:=3.0</item>
+    </string-array>
+    <string-array name="NegativeColorEffects_Val">
+        <item></item>
+    </string-array>
+    <string-array name="ColorDotsColorEffects_Val">
+        <item>Name:=ColorDots::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+        <item>Name:=EdgeThickness::Type:=PresetValue::Value:=0.5</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=3</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=5</item>
+    </string-array>
+
+    <!-- Funny Effects -->
+    <string-array name="FunnyEffectsDispName">
+        <item>Pinch</item>
+        <item>Bulge</item>
+        <item>Circle</item>
+        <item>Sphere</item>
+        <item>Twirl</item>
+    </string-array>
+
+    <string-array name="FunnyEffects">
+        <item>Pinch</item>
+        <item>Bulge</item>
+        <item>Circle</item>
+        <item>Sphere</item>
+        <item>Twirl</item>
+
+    </string-array>
+
+    <string-array name="PinchFunnyEffects_Val">
+        <item>Name:=Pinch::Type:=CircularImpact::CenterX:=0.5::CenterY:=0.5::RadX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=1.0::AmtY:=0.5::MinY:=0.0::MaxY:=1.0::FactorY:=1.0::AngXY:=0.0::MinXY:=0.0::MaxXY:=1.0::FactorXY:=0.0</item>
+    </string-array>
+
+    <string-array name="BulgeFunnyEffects_Val">
+        <item>Name:=Bulge::Type:=CircularImpact::CenterX:=0.5::CenterY:=0.5::RadX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=1.0::AmtY:=0.5::MinY:=0.0::MaxY:=1.0::FactorY:=1.0::AngXY:=0.0::MinXY:=0.0::MaxXY:=1.0::FactorXY:=0.0</item>
+    </string-array>
+
+    <!-- In CircleFunnyEffects Intensity in X Dirn is used to change the SpreadAngle from  0 to 360 Degrees and Y Dirn is used to set Angle -->
+    <string-array name="CircleFunnyEffects_Val">
+        <item>Name:=Circle::Type:=IntensityXY::AmtX:=1.0::MinX:=0.0::MaxX:=1.0::FactorX:=360.0::AmtY:=0.0::MinY:=0.0::MaxY:=1.0::FactorY:=10.0</item>
+    </string-array>
+
+    <string-array name="SphereFunnyEffects_Val">
+        <item>Name:=Sphere::Type:=CircularImpact::CenterX:=0.5::CenterY:=0.5::RadX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=1.0::AmtY:=0.5::MinY:=0.0::MaxY:=1.0::FactorY:=2.0::AngXY:=0.0::MinXY:=0.0::MaxXY:=1.0::FactorXY:=0.0</item>
+    </string-array>
+
+    <string-array name="TwirlFunnyEffects_Val">
+        <item>Name:=Twirl::Type:=CircularImpact::CenterX:=0.5::CenterY:=0.5::RadX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=1.0::AmtY:=0.0::MinY:=0.0::MaxY:=1.0::FactorY:=1.0::AngXY:=45.0::MinXY:=0.0::MaxXY:=1.0::FactorXY:=1.0</item>
+    </string-array>
+
+    <!--  Light Effects -->
+    <string-array name="LightEffectsDispName">
+        <item>Flare</item>
+        <item>Ring</item>
+        <item>Rays</item>
+        <item>Sparkle</item>
+        <item>Solarize</item>
+        <item>Glow</item>
+    </string-array>
+
+    <string-array name="LightEffects">
+        <!-- <item>Circle</item> -->
+        <item>Flare</item>
+        <item>Ring</item>
+        <item>Rays</item>
+        <item>Sparkle</item>
+        <item>Solarize</item>
+        <item>Glow</item>
+    </string-array>
+
+    <string-array name="CircleLightEffects_Val">
+        <item>Name:=Circle::Type:=CircularImpact::CenterX:=0.5::CenterY:=0.5::RadX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=1.0::AmtY:=0.0::MinY:=0.0::MaxY:=1.0::FactorY:=1.0::AngXY:=0.0::MinXY:=0.0::MaxXY:=1.0::FactorXY:=1.0</item>
+        <item>Name:=ConeAngle::Type:=PresetValue::Value:=0.5235988</item>
+        <item>Name:=FocusAmt::Type:=PresetValue::Value:=0.5</item>
+    </string-array>
+    <string-array name="FlareLightEffects_Val">
+        <item>Name:=Flare::Type:=CircularImpact::CenterX:=0.5::CenterY:=0.5::RadX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=1.0::AmtY:=0.0::MinY:=0.0::MaxY:=1.0::FactorY:=1.0::AngXY:=0.0::MinXY:=0.0::MaxXY:=1.0::FactorXY:=1.0</item>
+        <item>Name:=RingAmount::Type:=PresetValue::Value:=0.1</item>
+        <item>Name:=BaseAmount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=RingWidth::Type:=PresetValue::Value:=1.6</item>
+    </string-array>
+    <string-array name="RaysLightEffects_Val">
+        <item>Name:=Rays::Type:=CircularImpact::CenterX:=0.5::CenterY:=0.5::RadX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=1.0::AmtY:=0.0::MinY:=0.0::MaxY:=1.0::FactorY:=1.0::AngXY:=0.0::MinXY:=0.0::MaxXY:=1.0::FactorXY:=1.0</item>
+        <item>Name:=BaseAmount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=RingAmount::Type:=PresetValue::Value:=0.0</item>
+        <item>Name:=RingWidth::Type:=PresetValue::Value:=0.0</item>
+    </string-array>
+    <string-array name="RingLightEffects_Val">
+        <item>Name:=Ring::Type:=CircularImpact::CenterX:=0.5::CenterY:=0.5::RadX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=1.0::AmtY:=0.0::MinY:=0.0::MaxY:=1.0::FactorY:=1.0::AngXY:=0.0::MinXY:=0.0::MaxXY:=1.0::FactorXY:=1.0</item>
+        <item>Name:=RingAmount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=RayAmount::Type:=PresetValue::Value:=0.0</item>
+        <item>Name:=BaseAmount::Type:=PresetValue::Value:=0.0</item>
+        <item>Name:=RingWidth::Type:=PresetValue::Value:=10.0</item>
+    </string-array>
+    <string-array name="SparkleLightEffects_Val">
+        <item>Name:=Sparkle::Type:=CircularImpact::CenterX:=0.5::CenterY:=0.5::RadX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0::AmtY:=0.0::MinY:=0.0::MaxY:=1.0::FactorY:=1.0::AngXY:=0.0::MinXY:=0.0::MaxXY:=1.0::FactorXY:=1.0</item>
+        <item>Name:=Randomness::Type:=PresetValue::Value:=25.0</item>
+    </string-array>
+    <string-array name="SolarizeLightEffects_Val">
+        <item></item>
+    </string-array>
+    <string-array name="GlowLightEffects_Val">
+        <item>Name:=Glow::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=0.75</item>
+    </string-array>
+
+
+    <!-- Border Filters -->
+    <string-array name="BorderFiltersDispName">
+        <item>ColorFade</item>
+        <item>Invert</item>
+        <item>Colorful</item>
+        <item>Posterize</item>
+        <item>Bursted</item>
+        <item>ColorDots</item>
+        <item>Noise</item>
+        <item>Crystal</item>
+        <item>HexCrystal</item>
+        <item>OctaCrystal</item>
+    </string-array>
+
+    <string-array name="BorderFilters">
+        <!-- <item>Grey</item> -->
+        <item>ColorFade</item>
+        <item>Invert</item>
+        <item>Colorful</item>
+        <item>Posterize</item>
+        <item>Bursted</item>
+        <item>ColorDots</item>
+        <item>Noise</item>
+        <item>Crystal</item>
+        <item>HexCrystal</item>
+        <item>OctaCrystal</item>
+        <!--
+        <item>ColorCrystal</item>
+        <item>HexColorCrystal</item>
+        <item>OctaColorCrystal</item>
+         -->
+    </string-array>
+
+    <!-- Border Filters Values -->
+    <string-array name="ColorFadeBorderFilters_Val">
+        <item>Name:=ColorFade::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+        <item>Name:=MergeType::Type:=PresetValue::Value:=Color</item>
+        <item>Name:=FadeType::Type:=PresetValue::Value:=Uniform</item>
+        <item>Name:=ShapeType::Type:=PresetValue::Value:=Rect</item>
+    </string-array>
+    <string-array name="GreyBorderFilters_Val">
+        <item>Name:=Grey::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+    </string-array>
+    <string-array name="InvertBorderFilters_Val">
+        <item>Name:=Invert::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+    </string-array>
+    <string-array name="ColorfulBorderFilters_Val">
+        <item>Name:=Colorful::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+    </string-array>
+    <string-array name="NoiseBorderFilters_Val">
+        <item>Name:=Noise::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=100</item>
+    </string-array>
+    <string-array name="PosterizeBorderFilters_Val">
+        <item>Name:=Posterize::Type:=IntensityXY::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0::AmtY:=0.2::MinY:=0.0::MaxY:=1.0::FactorY:=10.0</item>
+    </string-array>
+    <string-array name="BurstedBorderFilters_Val">
+        <item>Name:=Bursted::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+    </string-array>
+    <string-array name="ColorDotsBorderFilters_Val">
+        <item>Name:=ColorDots::Type:=IntensityXY::AmtX:=0.1::MinX:=0.1::MaxX:=1.0::FactorX:=1.0::AmtY:=0.2::MinY:=0.1::MaxY:=1.0::FactorY:=30.0</item>
+    </string-array>
+    <string-array name="CrystalBorderFilters_Val">
+        <item>Name:=Crystal::Type:=IntensityXY::AmtX:=0.1::MinX:=0.1::MaxX:=1.0::FactorX:=1.0::AmtY:=0.4::MinY:=0.1::MaxY:=1.0::FactorY:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=0</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+    </string-array>
+    <string-array name="HexCrystalBorderFilters_Val">
+        <item>Name:=Crystal::Type:=IntensityXY::AmtX:=0.1::MinX:=0.1::MaxX:=1.0::FactorX:=1.0::AmtY:=0.4::MinY:=0.1::MaxY:=1.0::FactorY:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=2</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+    </string-array>
+    <string-array name="OctaCrystalBorderFilters_Val">
+        <item>Name:=Crystal::Type:=IntensityXY::AmtX:=0.1::MinX:=0.1::MaxX:=1.0::FactorX:=1.0::AmtY:=0.4::MinY:=0.1::MaxY:=1.0::FactorY:=1.0</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=3</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+    </string-array>
+    <string-array name="ColorCrystalBorderFilters_Val">
+        <item>Name:=Crystal::Type:=IntensityXY::AmtX:=0.1::MinX:=0.1::MaxX:=1.0::FactorX:=1.0::AmtY:=0.1::MinY:=0.0::MaxY:=1.0::FactorY:=1.0</item>
+        <item>Name:=EdgeThickness::Type:=PresetValue::Value:=0.6</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=0</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+    </string-array>
+    <string-array name="HexColorCrystalBorderFilters_Val">
+        <item>Name:=Crystal::Type:=IntensityXY::AmtX:=0.1::MinX:=0.1::MaxX:=1.0::FactorX:=1.0::AmtY:=0.1::MinY:=0.0::MaxY:=1.0::FactorY:=1.0</item>
+        <item>Name:=EdgeThickness::Type:=PresetValue::Value:=0.6</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=2</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+    </string-array>
+    <string-array name="OctaColorCrystalBorderFilters_Val">
+        <item>Name:=Crystal::Type:=IntensityXY::AmtX:=0.1::MinX:=0.1::MaxX:=1.0::FactorX:=1.0::AmtY:=0.1::MinY:=0.0::MaxY:=1.0::FactorY:=1.0</item>
+        <item>Name:=EdgeThickness::Type:=PresetValue::Value:=0.6</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=3</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+    </string-array>
+
+    <!--  Color Filters -->
+    <string-array name="ColorFiltersDispName">
+        <item>Grey</item>
+        <item>Invert</item>
+        <item>Temperature</item>
+        <item>Gamma</item>
+        <item>HSB</item>
+        <item>Swizzle</item>
+        <item>GreyOut</item>
+    </string-array>
+
+    <string-array name="ColorFilters">
+        <item>Grey</item>
+        <item>Invert</item>
+        <item>Temperature</item>
+        <item>Gamma</item>
+        <item>HSB</item>
+        <item>Swizzle</item>
+        <item>GreyOut</item>
+
+    </string-array>
+
+    <!-- Since No Setting is done an empty array is created -->
+    <string-array name="GreyColorFilters_Val">
+        <item></item>
+    </string-array>
+    <string-array name="GreyOutColorFilters_Val">
+        <item></item>
+    </string-array>
+    <string-array name="InvertColorFilters_Val">
+        <item></item>
+    </string-array>
+    <string-array name="TemperatureColorFilters_Val">
+        <item>Name:=Temperature::Type:=Intensity::AmtX:=0.65::MinX:=1000.0::MaxX:=10000.0::FactorX:=10000.0</item>
+    </string-array>
+    <string-array name="GammaColorFilters_Val">
+        <item>Name:=Gamma::Type:=AngularIntensity::AmtX:=1.0::MinX:=0.0::MaxX:=1.0::FactorX:=1.0::AmtY:=1.0::MinY:=0.0::MaxY:=1.0::FactorY:=1.0::AngXY:=1.0::MinXY:=0.0::MaxXY:=1.0::FactorXY:=1.0</item>
+    </string-array>
+    <string-array name="HSBColorFilters_Val">
+        <item>Name:=HSB::Type:=AngularIntensity::AmtX:=0.75::MinX:=-1.0::MaxX:=1.0::FactorX:=2.0::AmtY:=0.75::MinY:=-1.0::MaxY:=1.0::FactorY:=2.0::AngXY:=0.75::MinXY:=-1.0::MaxXY:=1.0::FactorXY:=2.0</item>
+    </string-array>
+    <string-array name="SwizzleColorFilters_Val">
+        <item>Name:=Swizzle::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=MatrixOptions::Type:=PresetValue::Value:=7#8#7,8#9#11#13#11,13#14#16#17#16,17#19#7,11#7,8,11#7,11,13#7,11,16#7,11,16,17#7,11,19#7,11,13,16#7,13,16#7,13,16,17#8,11#8,11,16#8,11,16,17#11,16#11,16,13#17,9#16,9#13,9#17,9#13#19</item>
+    </string-array>
+
+
+    <!-- Distort Filters -->
+    <string-array name="DistortFiltersDispName">
+        <item>ColorDots</item>
+        <item>Mosaic</item>
+        <item>RandomShape</item>
+        <item>HexShape</item>
+        <item>OctShape</item>
+    </string-array>
+
+    <string-array name="DistortFilters">
+        <item>ColorDots</item>
+        <item>Mosaic</item>
+        <!--  <item>Flip</item>  -->
+        <item>RandomShape</item>
+        <item>HexShape</item>
+        <item>OctShape</item>
+
+    </string-array>
+
+    <string-array name="ColorDotsDistortFilters_Val">
+        <item>Name:=ColorDots::Type:=Intensity::AmtX:=0.4::MinX:=0.1::MaxX:=1.0::FactorX:=5.0</item>
+    </string-array>
+    <string-array name="MosaicDistortFilters_Val">
+        <item>Name:=Mosaic::Type:=Intensity::AmtX:=0.3::MinX:=0.04::MaxX:=1.0::FactorX:=25.0</item>
+    </string-array>
+    <string-array name="FlipDistortFilters_Val">
+        <item>Name:=Flip::Type:=Intensity::AmtX:=0.5::MinX:=0.04::MaxX:=1.0::FactorX:=6.0</item>
+    </string-array>
+    <string-array name="RandomShapeDistortFilters_Val">
+        <item>Name:=Crystal::Type:=Intensity::AmtX:=0.4::MinX:=0.1::MaxX:=1.0::FactorX:=30</item>
+        <item>Name:=EdgeColor::Type:=PresetValue::Value:=#000000</item>
+        <item>Name:=FadeEdges::Type:=PresetValue::Value:=true</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=0</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+        <item>Name:=EdgeThickness::Type:=PresetValue::Value:=0.2</item>
+    </string-array>
+    <string-array name="HexShapeDistortFilters_Val">
+        <item>Name:=Crystal::Type:=Intensity::AmtX:=0.4::MinX:=0.1::MaxX:=1.0::FactorX:=30</item>
+        <item>Name:=EdgeColor::Type:=PresetValue::Value:=#000000</item>
+        <item>Name:=FadeEdges::Type:=PresetValue::Value:=true</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=2</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+        <item>Name:=EdgeThickness::Type:=PresetValue::Value:=0.2</item>
+    </string-array>
+    <string-array name="OctShapeDistortFilters_Val">
+        <item>Name:=Crystal::Type:=Intensity::AmtX:=0.4::MinX:=0.1::MaxX:=1.0::FactorX:=30</item>
+        <item>Name:=EdgeColor::Type:=PresetValue::Value:=#000000</item>
+        <item>Name:=FadeEdges::Type:=PresetValue::Value:=true</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=3</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+        <item>Name:=EdgeThickness::Type:=PresetValue::Value:=0.2</item>
+    </string-array>
+
+    <!-- Blur Filters -->
+    <string-array name="BlurFiltersDispName">
+        <item>Bump</item>
+        <item>Sharpen</item>
+        <item>MaxPixel</item>
+        <item>Noise</item>
+        <item>Oil</item>
+        <item>Crystal</item>
+        <item>HexCrystal</item>
+        <item>OctCrystal</item>
+    </string-array>
+
+    <string-array name="BlurFilters">
+        <!-- <item>Simple</item>  -->
+        <item>Bump</item>
+        <item>Sharpen</item>
+        <item>MaxPixel</item>
+        <item>Noise</item>
+        <!-- <item>Gauss</item>  -->
+        <item>Oil</item>
+        <item>Crystal</item>
+        <item>HexCrystal</item>
+        <item>OctCrystal</item>
+        <!--
+        <item>ColorCrystal</item>
+        <item>HexColorCrystal</item>
+        <item>OctColorCrystal</item>
+         -->
+    </string-array>
+
+    <string-array name="NoiseBlurFilters_Val">
+        <item>Name:=Noise::Type:=Intensity::AmtX:=0.2::MinX:=0.1::MaxX:=1.0::FactorX:=100.0</item>
+    </string-array>
+    <string-array name="GaussBlurFilters_Val">
+        <item>Name:=Gauss::Type:=Intensity::AmtX:=0.2::MinX:=0.1::MaxX:=1.0::FactorX:=50.0</item>
+    </string-array>
+    <string-array name="OilBlurFilters_Val">
+        <item>Name:=Oil::Type:=Intensity::AmtX:=0.5::MinX:=0.1::MaxX:=1.0::FactorX:=10.0</item>
+        <item>Name:=Level::Type:=PresetValue::Value:=10</item>
+    </string-array>
+    <string-array name="MaxPixelBlurFilters_Val">
+        <item>Name:=MaxPixel::Type:=PresetValue::Value:=1</item>
+    </string-array>
+    <string-array name="BumpBlurFilters_Val">
+        <item>Name:=Bump::Type:=PresetValue::Value:=1</item>
+    </string-array>
+    <string-array name="SharpenBlurFilters_Val">
+        <item>Name:=Sharpen::Type:=PresetValue::Value:=2</item>
+    </string-array>
+    <string-array name="SimpleBlurFilters_Val">
+        <item>Name:=Simple::Type:=PresetValue::Value:=10</item>
+    </string-array>
+    <string-array name="CrystalBlurFilters_Val">
+        <item>Name:=Crystal::Type:=Intensity::AmtX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=0.8</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+        <item>Name:=FadeEdges::Type:=PresetValue::Value:=false</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=0</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+    </string-array>
+    <string-array name="HexCrystalBlurFilters_Val">
+        <item>Name:=Crystal::Type:=Intensity::AmtX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=0.8</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+        <item>Name:=FadeEdges::Type:=PresetValue::Value:=false</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=2</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+    </string-array>
+    <string-array name="OctCrystalBlurFilters_Val">
+        <item>Name:=Crystal::Type:=Intensity::AmtX:=0.5::MinX:=0.0::MaxX:=1.0::FactorX:=0.8</item>
+        <item>Name:=Color::Type:=PresetValue::Value:=BLACK</item>
+        <item>Name:=FadeEdges::Type:=PresetValue::Value:=false</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=3</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+    </string-array>
+    <string-array name="ColorCrystalBlurFilters_Val">
+        <item>Name:=Crystal::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=EdgeThickness::Type:=PresetValue::Value:=0.4</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=0</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+    </string-array>
+    <string-array name="HexColorCrystalBlurFilters_Val">
+        <item>Name:=Crystal::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=EdgeThickness::Type:=PresetValue::Value:=0.5</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=2</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+    </string-array>
+    <string-array name="OctColorCrystalBlurFilters_Val">
+        <item>Name:=Crystal::Type:=Intensity::AmtX:=0.1::MinX:=0.0::MaxX:=1.0::FactorX:=1.0</item>
+        <item>Name:=EdgeThickness::Type:=PresetValue::Value:=0.5</item>
+        <item>Name:=GridType::Type:=PresetValue::Value:=3</item>
+        <item>Name:=Amount::Type:=PresetValue::Value:=1.0</item>
+        <item>Name:=Scale::Type:=PresetValue::Value:=10</item>
+    </string-array>
+
+    <!--
+    ImageFilterRules - Specifies if a Particular Filter is used (UsedFilter) then Negate the Filters
+    specified (NegateFilter). The NegateFilter are sperated by seperator :N:
+    -->
+    <string-array name="ImageFilterRules">
+        <item>UsedFilter:=OutlineColorEffects::NegateFilter:=BrightnessEnhance</item>
+        <item>UsedFilter:=HueEnhance::NegateFilter:=BrightnessEnhance:N:FixMthd2Enhance:N:AutoFix2Enhance:N:AutoFix1Enhance</item>
+        <item>UsedFilter:=SaturationEnhance::NegateFilter:=BrightnessEnhance:N:FixMthd2Enhance:N:AutoFix2Enhance:N:AutoFix1Enhance</item>
+        <item>UsedFilter:=AutoFix1Enhance::NegateFilter:=FixMthd2Enhance</item>
+        <item>UsedFilter:=FixMthd2Enhance::NegateFilter:=AutoFixEnhance</item>
+        <item>UsedFilter:=AutoFix1Enhance::NegateFilter:=AutoFix2Enhance</item>
+        <item>UsedFilter:=AutoFix2Enhance::NegateFilter:=AutoFix1Enhance</item>
+    </string-array>
+</resources>

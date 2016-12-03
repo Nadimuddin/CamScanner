@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/activity_xon__im__ui">
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/filterList"
+        style="@style/horizontal_style"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/image_view"
+        android:scaleType="fitXY"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="30dp"
+        android:paddingTop="20dp"
+        android:layout_below="@id/filterList"
+        android:layout_above="@+id/toolbar_bottom_i_e"
+        android:background="@android:color/background_dark"
+        android:visibility="visible"/>
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar_bottom_i_e"
+        android:background="@color/violet"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:layout_alignParentBottom="true">
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_horizontal"
+            android:horizontalSpacing="100dp">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_arrow_back_white_36dp"
+                android:background="@color/violet"
+                android:id="@+id/backButton"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_marginRight="30dp"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_rotate_left_white_36dp"
+                android:background="@color/violet"
+                android:id="@+id/rotate_left"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_marginRight="30dp"
+                android:visibility="invisible"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_rotate_right_white_36dp"
+                android:background="@color/violet"
+                android:id="@+id/rotate_right"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:layout_marginRight="30dp"
+                android:visibility="invisible"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_tune_white_36dp"
+                android:background="@color/violet"
+                android:id="@+id/modify"
+                android:layout_row="0"
+                android:layout_column="3"
+                android:layout_marginRight="30dp"
+                android:visibility="invisible"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_done_white_36dp"
+                android:background="@color/violet"
+                android:id="@+id/done"
+                android:layout_row="0"
+                android:layout_column="4"
+                android:elevation="0dp"
+                android:foregroundGravity="center" />
+
+        </GridLayout>
+    </android.support.v7.widget.Toolbar>
+</RelativeLayout>
