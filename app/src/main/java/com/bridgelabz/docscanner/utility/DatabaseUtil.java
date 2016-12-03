@@ -100,7 +100,6 @@ public class DatabaseUtil extends SQLiteOpenHelper
         values.put(COL3, col3Data);
         values.put(COL4, col4Data);
         values.put(COL5, col5Data);
-
         long result = sqLite.insert(tableName, null, values);
         return result;
     }
