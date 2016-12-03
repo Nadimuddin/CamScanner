@@ -7,9 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -269,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         /* get directory
          * i.e. /data/data/com.bridgelabz.camscannertrail/app_images */
-        String directory = storage.getMyDirectory();
+        String directory = storage.getDirectoryForOriginalImage();
 
         int imageId = imageUtil.nextImageID("Images");
 

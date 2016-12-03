@@ -53,7 +53,7 @@ public class XONImageCropActivity extends Activity
                 m_ImageUri = m_XONImage.m_Uri;
                 Log.i(TAG, "XON View Type: "+m_XONImage.m_ViewType);
             } else {
-                IntentUtil.processIntent(this, XON_Main_UI.class);
+                IntentUtil.processIntent(this, ImageCropping.class);
                 return;
             }
         } else {}

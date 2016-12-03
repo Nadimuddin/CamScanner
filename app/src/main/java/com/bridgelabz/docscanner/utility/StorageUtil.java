@@ -66,13 +66,14 @@ public class StorageUtil
     {
         File file = new File(directory);
 
-        if(file.exists()) {
+        if(file.exists())
+        {
             file.delete();
             Log.i(TAG, "deleteImage: "+directory+" file successfully deleted");
         }
     }
 
-    public String getMyDirectory()
+    public String getDirectoryForOriginalImage()
     {
         ContextWrapper wrapper = new ContextWrapper(mContext);
 
@@ -81,7 +82,7 @@ public class StorageUtil
         File directory = wrapper.getDir("images", ContextWrapper.MODE_PRIVATE);
 
         String myDirectory = directory.toString();
-        Log.i(TAG, "getMyDirectory: "+myDirectory);
+        Log.i(TAG, "getDirectoryForOriginalImage: "+myDirectory);
         return myDirectory;
     }
 
@@ -94,7 +95,7 @@ public class StorageUtil
         File directory = wrapper.getDir("cropped_images", ContextWrapper.MODE_PRIVATE);
 
         String myDirectory = directory.toString();
-        Log.i(TAG, "getMyDirectory: "+myDirectory);
+        Log.i(TAG, "getDirectoryForOriginalImage: "+myDirectory);
         return myDirectory;
     }
 
@@ -107,7 +108,7 @@ public class StorageUtil
         File directory = wrapper.getDir("filtered_images", ContextWrapper.MODE_PRIVATE);
 
         String myDirectory = directory.toString();
-        Log.i(TAG, "getMyDirectory: "+myDirectory);
+        Log.i(TAG, "getDirectoryForOriginalImage: "+myDirectory);
         return myDirectory;
     }
 

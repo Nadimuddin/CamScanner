@@ -1,12 +1,10 @@
 package com.bridgelabz.docscanner.activities;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,7 +19,6 @@ import android.widget.Toast;
 import com.bridgelabz.docscanner.BuildConfig;
 import com.bridgelabz.docscanner.R;
 import com.bridgelabz.docscanner.controller.XONImageHolder;
-import com.bridgelabz.docscanner.fragment.ImageFiltering;
 import com.bridgelabz.docscanner.utility.Dimension;
 import com.bridgelabz.docscanner.utility.ImageUtil;
 import com.bridgelabz.docscanner.utility.IntentUtil;
@@ -69,7 +66,7 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
                 mImageUri = mXONImage.m_Uri;
                 Log.i(TAG, "XON View Type: "+mXONImage.m_ViewType);
             } else {
-                IntentUtil.processIntent(this, XON_Main_UI.class);
+                IntentUtil.processIntent(this, ImageCropping.class);
                 return;
             }
         } else XONPropertyInfo.setSuperLongToastMessage(R.string.ShowCropMessage);
@@ -78,7 +75,6 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
 
         FrameLayout frameLayout = (FrameLayout) findViewById(R.id.xon_graphics_holder);
         mXONCropView = new XONCropView(this); frameLayout.addView(mXONCropView);
-
 
         // The view tree observer is used to get notifications when global events, like layout,
         // happens. Listener is attached to get the final width of the GridView and then calc the
@@ -189,7 +185,7 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
 
             StorageUtil storage= new StorageUtil(this);
 
-            String directory = storage.getMyDirectory();
+            String directory = storage.getDirectoryForOriginalImage();
             int imageId = imageUtil.nextImageID("Images");
 
             Uri imageUri = storage.storeImage(bitmap, directory, "CamScanner"+imageId+1);

@@ -9,9 +9,10 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bridgelabz.docscanner.activities.ImageCropping;
 import com.bridgelabz.docscanner.activities.XONCanvasView;
 import com.bridgelabz.docscanner.activities.XON_IM_UI;
-import com.bridgelabz.docscanner.activities.XON_Main_UI;
+//import com.bridgelabz.docscanner.activities.XON_Main_UI;
 import com.bridgelabz.docscanner.controller.TemplateFilterHolder;
 import com.bridgelabz.docscanner.controller.XONImageHolder;
 import com.bridgelabz.docscanner.controller.XONImageHolder.ImageType;
@@ -280,7 +281,7 @@ public class XONImageFilterView implements XONImageProcessor, ThreadInvokerMetho
             if (m_UserEffectsAction.equals(userEffectsActions[0])) deleteUserEffect();
             return;
         }
-        IntentUtil.processIntent(XONPropertyInfo.m_SubMainActivity, XON_Main_UI.class);
+        IntentUtil.processIntent(XONPropertyInfo.m_SubMainActivity, ImageCropping.class);
     }
 
     @Override

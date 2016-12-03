@@ -171,7 +171,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
             /* get directory
              * i.e. /data/data/com.bridgelabz.docscanner/images     */
-            String directory = storage.getMyDirectory();
+            String directory = storage.getDirectoryForOriginalImage();
 
 
             int imageId = imageUtil.nextImageID("Images");
@@ -259,7 +259,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
         /* get directory
          * i.e. /data/data/com.bridgelabz.camscannertrail/app_images */
-        String directory = storage.getMyDirectory();
+        String directory = storage.getDirectoryForOriginalImage();
 
         int imageId = imageUtil.nextImageID("Images");
 
@@ -276,7 +276,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         String uriString;
 
         //get Uri from Images table
-        Cursor cursor = db.retrieveData("select image_uri from "+tableName+" where d_id = " +
+        Cursor cursor = db.retrieveData("select org_image_uri from "+tableName+" where d_id = " +
                 "(select document_id from Documents where d_name = \""+mDocumentName+"\" )");
         while (cursor.moveToNext())
         {
@@ -284,6 +284,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
             Log.i(TAG, "retrieveUriFromDatabase: "+uriString);
             arrayList.add(Uri.fromFile(new File(uriString)));
         }
+        cursor.close();
         return arrayList;
     }
 

@@ -10,7 +10,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.bridgelabz.docscanner.R;
-import com.bridgelabz.docscanner.activities.XON_Main_UI;
+//import com.bridgelabz.docscanner.activities.XON_Main_UI;
+import com.bridgelabz.docscanner.activities.ImageCropping;
 import com.bridgelabz.docscanner.interfaces.ImageFilterHandler;
 import com.bridgelabz.docscanner.interfaces.XONClickListener;
 import com.bridgelabz.docscanner.utility.Dimension;
@@ -91,7 +92,7 @@ public class XONImageHolder implements XONClickListener{
 
     @Override
     public void onOK(int dialogTitleResId, View customView) {
-        IntentUtil.processIntent(XONPropertyInfo.m_SubMainActivity, XON_Main_UI.class);
+        IntentUtil.processIntent(XONPropertyInfo.m_SubMainActivity, ImageCropping.class);
         XONPropertyInfo.m_SubMainActivity.finish();
     }
 

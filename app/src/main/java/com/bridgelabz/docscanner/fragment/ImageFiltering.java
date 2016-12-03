@@ -4,9 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -154,7 +152,7 @@ public class ImageFiltering extends Fragment implements View.OnClickListener, Fi
     {
         StorageUtil storage = new StorageUtil(getActivity());
         Bitmap bitmap = ((BitmapDrawable)mImageView.getDrawable()).getBitmap();
-        String directory = storage.getMyDirectory();
+        String directory = storage.getDirectoryForOriginalImage();
         String uriString = mUri.toString();
         String  imageName = uriString.substring(uriString.lastIndexOf('/')+1);
         storage.storeImage(bitmap, directory, imageName);

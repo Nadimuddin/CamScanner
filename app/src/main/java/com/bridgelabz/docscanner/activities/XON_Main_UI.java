@@ -1,3 +1,4 @@
+/*
 package com.bridgelabz.docscanner.activities;
 
 import android.app.Activity;
@@ -52,4 +53,4 @@ public class XON_Main_UI extends Activity {
     {
         IntentUtil.processIntent(this, XONImageCropActivity.class, imageUri);
     }
-}
+}*/

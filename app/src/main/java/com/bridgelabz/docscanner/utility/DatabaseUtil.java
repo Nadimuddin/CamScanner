@@ -31,6 +31,7 @@ public class DatabaseUtil extends SQLiteOpenHelper
     private static String COL3;
     private static String COL4;
     private static String COL5;
+    private static String COL6;
 
     public DatabaseUtil(Context context, String tableName) {
         super(context, DATABASE_NAME, null, 1);
@@ -55,17 +56,22 @@ public class DatabaseUtil extends SQLiteOpenHelper
                     COL5 + " integer)";
         }
 
-        else if (tableName == "Images") {
+        else if (tableName == "Images")
+        {
             COL1 = "image_id";
             COL2 = "i_name";
-            COL3 = "image_uri";
-            COL4 = "d_id";
+            COL3 = "org_image_uri";
+            COL4 = "crp_image_uri";
+            COL5 = "fltr_image_uri";
+            COL6 = "d_id";
 
             createTableStatement = "create table " + tableName + "(" +
                     COL1 + " integer primary key autoincrement," +
                     COL2 + " text," +
                     COL3 + " text,"+
-                    COL4 + " integer)";
+                    COL4 + " text,"+
+                    COL5 + " text,"+
+                    COL6 + " integer)";
         }
 
         String getPref = mPref.getPreference(tableName+"_table");
@@ -218,7 +224,7 @@ public class DatabaseUtil extends SQLiteOpenHelper
         if(result < 0)
             Toast.makeText(mContext, "Data not inserted", Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(mContext, "data inserted with row ID "+result, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Data inserted into "+tableName+" with row ID "+result, Toast.LENGTH_SHORT).show();
 
     }
 }

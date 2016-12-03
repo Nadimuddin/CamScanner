@@ -6,12 +6,8 @@ package com.bridgelabz.docscanner.activities;
 
 import com.bridgelabz.docscanner.XONHorzScrollView;
 import com.bridgelabz.docscanner.XONImageFilterView;
-import com.bridgelabz.docscanner.controller.TemplateFilterHandlerImpl;
-import com.bridgelabz.docscanner.controller.TemplateFilterHolder;
 import com.bridgelabz.docscanner.controller.XONImageHolder;
-import com.bridgelabz.docscanner.controller.XONImageProcessHandler;
 import com.bridgelabz.docscanner.fragment.ImageFiltering;
-import com.bridgelabz.docscanner.interfaces.ImageFilterHandler;
 import com.bridgelabz.docscanner.interfaces.ThreadInvokerMethod;
 import com.bridgelabz.docscanner.preference.SaveSharedPreference;
 import com.bridgelabz.docscanner.utility.BuildConfig;
@@ -27,8 +23,6 @@ import com.bridgelabz.docscanner.utility.XONObjectCache;
 import com.bridgelabz.docscanner.utility.XONPropertyInfo;
 import com.bridgelabz.docscanner.utility.XONUtil;
 import com.bridgelabz.docscanner.controller.XONImageHolder.ViewType;
-import com.bridgelabz.docscanner.utility.XONImageFilterDef.ImageFilter;
-import com.bridgelabz.docscanner.utility.XONPropertyInfo.ImageOrientation;
 import com.bridgelabz.docscanner.R;
 
 import java.io.File;
@@ -53,7 +47,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
@@ -128,7 +121,7 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
                 m_ImageUri = m_XONImage.m_Uri;
                 Log.i(TAG, "XON View Type: "+m_XONImage.m_ViewType);
             } else {
-                IntentUtil.processIntent(XON_IM_UI.this, XON_Main_UI.class);
+                IntentUtil.processIntent(XON_IM_UI.this, ImageCropping.class);
                 finish();
                 return;
             }
@@ -176,7 +169,7 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
             StorageUtil storage = new StorageUtil(this);
             uriString = m_ImageUri.toString();
             String imageName = uriString.substring(uriString.lastIndexOf('/')+1);
-            String directory = storage.getMyDirectory();
+            String directory = storage.getDirectoryForOriginalImage();
             uri = storage.storeImage(bitmap, directory, imageName);
             arg.putString("image_uri", uri.toString());
             fragment.setArguments(arg);
@@ -260,7 +253,7 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
                 }
             }
             resetXONIMViewType();
-            IntentUtil.processIntent(this, XON_Main_UI.class);
+            IntentUtil.processIntent(this, ImageCropping.class);
             finish();
             return true;
         }
@@ -336,7 +329,7 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
                 m_ActiveMainMenu = R.id.home_btn;
                 m_ActiveSubMenu = R.id.xon_main_btn; highlightButton(false);
                 resetXONIMViewType(); finish();
-                IntentUtil.processIntent(XON_IM_UI.this, XON_Main_UI.class);
+                IntentUtil.processIntent(XON_IM_UI.this, ImageCropping.class);
             }
         });
 
