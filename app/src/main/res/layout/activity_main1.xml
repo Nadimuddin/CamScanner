@@ -5,7 +5,8 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.XON_Main_UI">
+    tools:context=".activities.XON_Main_UI"
+    >
 
     <Button
         android:id="@+id/gallery_btn"
