@@ -1,8 +1,6 @@
 package com.bridgelabz.docscanner.controller;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
@@ -14,14 +12,10 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.ImageView;
 
-import com.bridgelabz.docscanner.R;
-import com.bridgelabz.docscanner.activities.XON_IM_UI;
-import com.bridgelabz.docscanner.fragment.ImageFiltering;
 import com.bridgelabz.docscanner.interfaces.XONImageProcessor;
 import com.bridgelabz.docscanner.preference.SaveSharedPreference;
 import com.bridgelabz.docscanner.utility.StorageUtil;
@@ -151,7 +145,21 @@ public class XONImageProcessHandler {
     {
         if (taskProc == null) return;
         Log.i(TAG, "Data: "+data);
-        AsyncTaskInvoker task = new AsyncTaskInvoker();
+        /*AsyncTaskInvoker task = new AsyncTaskInvoker();
+        task.execute(data, taskProc);*/
+
+        final ProgressDialog progressDialog = new ProgressDialog(mContext);
+        progressDialog.setMessage("Processing Image");
+        progressDialog.show();
+
+        AsyncTaskInvoker task = new AsyncTaskInvoker(){
+            @Override
+            protected void onPostExecute(Void aVoid)
+            {
+                super.onPostExecute(aVoid);
+                progressDialog.dismiss();
+            }
+        };
         task.execute(data, taskProc);
     }
 
@@ -213,11 +221,6 @@ public class XONImageProcessHandler {
         if (!mFadeInBitmap)
         {
             imageView.setImageBitmap(bitmap);
-
-            /*storeCroppedImage(bitmap);
-
-            saveUriInPreference();*/
-
             return;
         }
 

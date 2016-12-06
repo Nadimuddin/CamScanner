@@ -172,13 +172,19 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
 
     public void showFilters()
     {
-        try
-        {
+        Uri uri;
+        Bitmap bitmap = null;
             SaveSharedPreference sharedPreference = new SaveSharedPreference(this);
             String uriString = sharedPreference.getPreference(KEY_FOR_TEMP_CROPPED_IMAGE);
 
-            Uri uri = Uri.fromFile(new File(uriString.substring(7)));
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            try
+            {
+                uri = Uri.fromFile(new File(uriString.substring(7)));
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
 
             StorageUtil storage = new StorageUtil(this);
             uriString = m_ImageUri.toString();
@@ -200,9 +206,6 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.layout_root, fragment);
             transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void updateCroppedImageUri(Uri uri, String imageName)
