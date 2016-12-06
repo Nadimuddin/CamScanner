@@ -1,10 +1,12 @@
 package com.bridgelabz.docscanner.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -49,6 +51,12 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
 
     File mImage;
 
+    private String mFrom;
+    private static final String MAIN_ACTIVITY = "MainActivity",
+    DOCUMENT_ACTIVITY = "DocumentActivity", IMAGE_VIEWER = "ImageViewer";
+
+    ProgressDialog mProgressDialog;
+
     private static final String TAG = "ImageCropping";
     private static final int CAMERA_REQUEST = 1;
     @Override
@@ -58,15 +66,22 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_cropping);
 
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Cropping Image...");
+        mProgressDialog.show();
+
         XONPropertyInfo.populateResources(this, BuildConfig.DEBUG, false);
         mImageUri = IntentUtil.getImageIntent(this);
+
+        mFrom = getIntent().getStringExtra("from");
+
         if (mImageUri == null) {
             if (XONObjectCache.getObjectForKey("XONImage") != null) {
                 mXONImage = (XONImageHolder) XONObjectCache.getObjectForKey("XONImage");
                 mImageUri = mXONImage.m_Uri;
                 Log.i(TAG, "XON View Type: "+mXONImage.m_ViewType);
             } else {
-                IntentUtil.processIntent(this, ImageCropping.class);
+                //IntentUtil.processIntent(this, ImageCropping.class);
                 return;
             }
         } else XONPropertyInfo.setSuperLongToastMessage(R.string.ShowCropMessage);
@@ -91,6 +106,7 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
                     {
                         calcFrameLayoutSize();
                         Log.i(TAG, "CropView Layout Size " + mLayoutSize);
+                        mProgressDialog.dismiss();
                     }
                 });
 
@@ -112,6 +128,13 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
         done.setOnClickListener(this);
     }
 
+    /*private void saveInPreference(Uri uri)
+    {
+        SaveSharedPreference sharedPreference = new SaveSharedPreference(this);
+        String uriString = uri.toString();
+        sharedPreference.setPreferences(HANDLING_BACK_PRESS_KEY, uriString);
+    }*/
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -124,7 +147,30 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
     private void goToXON_IM_UI()
     {
         IntentUtil.processIntent(this, XON_IM_UI.class);
-        //finish();
+        finish();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if(mFrom.equals(MAIN_ACTIVITY) || mFrom.equals(DOCUMENT_ACTIVITY)) {
+            StorageUtil storage = new StorageUtil(this);
+            Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+
+            try {
+                mImage = storage.createTemporaryFile();
+            } catch (Exception e) {
+                Log.i(TAG, "can't create file to take picture! " + e.toString());
+                Toast.makeText(this, "Please check SD card! Image shot is impossible", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            mImageUri = Uri.fromFile(mImage);
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            super.onBackPressed();
+        }
+        else if(mFrom.equals(IMAGE_VIEWER))
+            super.onBackPressed();
     }
 
     @Override
@@ -133,21 +179,6 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
         switch (v.getId())
         {
             case R.id.backButton:
-                /*StorageUtil storage = new StorageUtil(this);
-                Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-
-                try {
-                    mImage = storage.createTemporaryFile();
-                }
-                catch (Exception e)
-                {
-                    Log.i(TAG, "can't create file to take picture! "+e.toString());
-                    Toast.makeText(this, "Please check SD card! Image shot is impossible", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                mImageUri = Uri.fromFile(mImage);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);*/
                 onBackPressed();
                 break;
 
@@ -168,7 +199,6 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
 
             case R.id.done:
                 goToXON_IM_UI();
-
                 break;
         }
     }
@@ -178,7 +208,6 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
     {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK)
         {
-            //Bitmap bitmap = (Bitmap)result.getExtras().get("data");
             ImageUtil imageUtil = new ImageUtil(this);
 
             Bitmap bitmap = imageUtil.grabImage(mImage);
@@ -191,14 +220,13 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
             Uri imageUri = storage.storeImage(bitmap, directory, "CamScanner"+imageId+1);
 
             Intent intent = new Intent(this, ImageCropping.class);
-            intent.putExtra(Intent.EXTRA_STREAM/*"image_uri"*/, imageUri);
+            intent.putExtra(Intent.EXTRA_STREAM, imageUri);
             startActivity(intent);
         }
 
         else if(requestCode == RESULT_CANCELED)
         {
-            /*Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);*/
+            Log.i(TAG, "onActivityResult: ResultCanceled");
         }
     }
 

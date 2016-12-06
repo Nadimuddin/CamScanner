@@ -1,6 +1,7 @@
 package com.bridgelabz.docscanner.fragment;
 
 import android.app.Fragment;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -120,8 +121,8 @@ public class ImageFiltering extends Fragment implements View.OnClickListener, Fi
         switch (v.getId())
         {
             case R.id.backButton:
-                Toast.makeText(mView.getContext(), "back button is not implemented yet", Toast.LENGTH_SHORT).show();
-                //getActivity().onBackPressed();
+                //Toast.makeText(mView.getContext(), "back button is not implemented yet", Toast.LENGTH_SHORT).show();
+                getActivity().onBackPressed();
                 //getActivity().finish();
                 break;
 
@@ -142,6 +143,7 @@ public class ImageFiltering extends Fragment implements View.OnClickListener, Fi
 
             case R.id.done:
                 storeFilteredImage();
+
                 openDocumentActivity();
                 //getActivity().finish();
                 break;
@@ -152,19 +154,34 @@ public class ImageFiltering extends Fragment implements View.OnClickListener, Fi
     {
         StorageUtil storage = new StorageUtil(getActivity());
         Bitmap bitmap = ((BitmapDrawable)mImageView.getDrawable()).getBitmap();
-        String directory = storage.getDirectoryForOriginalImage();
+        String directory = storage.getDirectoryForFilteredImage();
         String uriString = mUri.toString();
         String  imageName = uriString.substring(uriString.lastIndexOf('/')+1);
-        storage.storeImage(bitmap, directory, imageName);
+        Uri uri = storage.storeImage(bitmap, directory, imageName);
+
+        updateFilteredImageUri(uri, imageName);
         Log.i(TAG, "onClick: "+imageName);
+    }
+
+    private void updateFilteredImageUri(Uri uri, String imageName)
+    {
+        DatabaseUtil database = new DatabaseUtil(getActivity(), "Images");
+        ContentValues values = new ContentValues();
+        values.put("fltr_image_uri", uri.toString());
+        int updatedColumns = database.updateData("Images", values, "i_name", imageName);
+        Toast.makeText(getActivity(), updatedColumns+" column updated", Toast.LENGTH_SHORT).show();
     }
 
     private void openDocumentActivity()
     {
         Intent intent = new Intent(getActivity(), DocumentActivity.class);
         DatabaseUtil database = new DatabaseUtil(getActivity(), "Documents");
-        Cursor cursor = database.retrieveData("select d_name from Documents where cover_image_uri = \""+
-                mUri.toString() +"\"");
+
+        String uriString = mUri.toString();
+        String imageName = uriString.substring(uriString.lastIndexOf('/')+1);
+
+        Cursor cursor = database.retrieveData("select d_name from Documents where document_id =" +
+                "(select d_id from Images where crp_image_uri = \""+mUri.toString()+"\")");
         cursor.moveToNext();
         String docName = cursor.getString(0);
         cursor.close();

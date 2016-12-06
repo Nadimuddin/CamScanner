@@ -41,6 +41,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class XONImageProcessHandler {
 
     public static final String TAG = "XONImageProcessHandler";
+    private static final String KEY_FOR_TEMP_CROPPED_IMAGE = "temp_cropped_image_uri";
 
     // Set placeholder bitmap that shows when the the background thread is running.
     private Bitmap mLoadingBitmap;
@@ -49,6 +50,7 @@ public class XONImageProcessHandler {
     protected Resources mResources;
     private boolean mFadeInBitmap = true;
     private Context mContext;
+    private Uri mCroppedImageUri;
 
     public XONImageProcessHandler(Context context)
     {
@@ -97,8 +99,6 @@ public class XONImageProcessHandler {
         }
     };
 
-    private Uri mCropImageUri;
-
     public void processImage(XONImageProcessor imgProc, Map<String, Object> data,
                              ImageView imageView)
     {
@@ -113,10 +113,9 @@ public class XONImageProcessHandler {
 
         Bitmap bitmap = (asyncDrawable).getBitmap();
 
-        mCropImageUri = getStoredImageUri(bitmap);
+        storeCroppedImage(bitmap);
 
-        SaveSharedPreference sharedPreference = new SaveSharedPreference(mContext);
-        sharedPreference.setPreferences("cropped_image_uri", mCropImageUri.toString());
+        saveUriInPreference();
 
         // NOTE: This uses a custom version of AsyncTask that has been pulled from the
         // framework and slightly modified. Refer to the docs at the top of the class
@@ -125,12 +124,17 @@ public class XONImageProcessHandler {
     }
 
 
-    public Uri getStoredImageUri(Bitmap bitmap) {
-
+    private void storeCroppedImage(Bitmap bitmap)
+    {
         StorageUtil storage = new StorageUtil(mContext);
         String directory = storage.getTempDirectory();
-        Uri uri = storage.storeImage(bitmap, directory, "TempImage.jpg");
-        return uri;
+        mCroppedImageUri = storage.storeImage(bitmap, directory, "TempImage.jpg");
+    }
+
+    private void saveUriInPreference()
+    {
+        SaveSharedPreference sharedPreference = new SaveSharedPreference(mContext);
+        sharedPreference.setPreferences(KEY_FOR_TEMP_CROPPED_IMAGE, mCroppedImageUri.toString());
     }
 
     /**
@@ -206,7 +210,16 @@ public class XONImageProcessHandler {
     @SuppressWarnings("deprecation")
     private void setImageBitmap(ImageView imageView, Bitmap bitmap)
     {
-        if (!mFadeInBitmap) { imageView.setImageBitmap(bitmap); return; }
+        if (!mFadeInBitmap)
+        {
+            imageView.setImageBitmap(bitmap);
+
+            /*storeCroppedImage(bitmap);
+
+            saveUriInPreference();*/
+
+            return;
+        }
 
         // TransitionDrawable is intended to cross-fade between multiple Drawable Arrays.
         // Here it is first with a transparent drawable color and then the final bitmap

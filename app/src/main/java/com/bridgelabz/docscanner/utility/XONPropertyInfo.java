@@ -145,8 +145,12 @@ public class XONPropertyInfo {
         // such cases nothing is done
         if (m_ProgressBar == null) return;
         if (activate) {
-            m_ProgressBar.setVisibility(View.VISIBLE);
-            m_ProgressBar.bringToFront();
+            try {
+                m_ProgressBar.setVisibility(View.VISIBLE);
+                m_ProgressBar.bringToFront();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         } else m_ProgressBar.setVisibility(View.GONE);
         m_ProgressBar.invalidate();
     }

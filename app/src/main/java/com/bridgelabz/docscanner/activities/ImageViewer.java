@@ -1,6 +1,7 @@
 package com.bridgelabz.docscanner.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,8 +15,10 @@ import android.widget.ImageButton;
 
 import com.bridgelabz.docscanner.R;
 import com.bridgelabz.docscanner.adapter.ImagesAdapter;
+import com.bridgelabz.docscanner.utility.DatabaseUtil;
 import com.bridgelabz.docscanner.utility.IntentUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -99,6 +102,18 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
 
     private void processImage(Uri imageUri)
     {
-        IntentUtil.processIntent(this, ImageCropping.class, imageUri);
+        //IntentUtil.processIntent(this, ImageCropping.class, imageUri);
+        DatabaseUtil database = new DatabaseUtil(this, "Images");
+        Cursor cursor = database.retrieveData("select org_image_uri from Images " +
+                "where fltr_image_uri = \""+imageUri.toString()+"\"");
+        cursor.moveToNext();
+        String uriString = cursor.getString(0);
+
+        Uri uri = Uri.fromFile(new File(uriString.substring(7)));
+
+        Intent intent = new Intent(this, ImageCropping.class);
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.putExtra("from", "ImageViewer");
+        startActivity(intent);
     }
 }

@@ -116,7 +116,7 @@ public class DatabaseUtil extends SQLiteOpenHelper
         ContentValues values = new ContentValues();
         values.put(COL2, col2Data);
         values.put(COL3, col3Data);
-        values.put(COL4, col4Data);
+        values.put(COL6, col4Data);
 
         long result = sqLite.insert(tableName, null, values);
         return result;
@@ -138,7 +138,6 @@ public class DatabaseUtil extends SQLiteOpenHelper
 
         //get writable database
         SQLiteDatabase sqLite = getWritableDatabase();
-
 
         rowsAffected = sqLite.update(tableName, values, whereKey+" = \'" + whereValue +"\'", null);
 
@@ -201,7 +200,7 @@ public class DatabaseUtil extends SQLiteOpenHelper
     public void prepareDataForInsertion(String tableName, String imageUri, int docId)
     {
         long result = 0;
-        Cursor cursor;
+        //Cursor cursor;
 
         switch (tableName)
         {
@@ -215,8 +214,8 @@ public class DatabaseUtil extends SQLiteOpenHelper
             case "Images" :
                 String imageName = imageUri.substring(imageUri.lastIndexOf('/')+1);
 
-                cursor = retrieveData("select * from Documents");
-                cursor.moveToLast();
+                /*cursor = retrieveData("select * from Documents");
+                cursor.moveToLast();*/
 
                 result = insertData(tableName, imageName, imageUri, docId);
                 break;

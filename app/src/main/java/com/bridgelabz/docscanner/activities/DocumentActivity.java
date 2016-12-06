@@ -233,7 +233,12 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
     private void processImage(Uri imageUri)
     {
-        IntentUtil.processIntent(this, ImageCropping.class, imageUri);
+        //IntentUtil.processIntent(this, ImageCropping.class, imageUri);
+
+        Intent intent = new Intent(this, ImageCropping.class);
+        intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        intent.putExtra("from", "DocumentActivity");
+        startActivity(intent);
     }
 
     private void updateDocumentTable()
@@ -276,7 +281,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         String uriString;
 
         //get Uri from Images table
-        Cursor cursor = db.retrieveData("select org_image_uri from "+tableName+" where d_id = " +
+        Cursor cursor = db.retrieveData("select fltr_image_uri from "+tableName+" where d_id = " +
                 "(select document_id from Documents where d_name = \""+mDocumentName+"\" )");
         while (cursor.moveToNext())
         {

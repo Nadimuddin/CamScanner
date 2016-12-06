@@ -11,6 +11,7 @@ import com.bridgelabz.docscanner.fragment.ImageFiltering;
 import com.bridgelabz.docscanner.interfaces.ThreadInvokerMethod;
 import com.bridgelabz.docscanner.preference.SaveSharedPreference;
 import com.bridgelabz.docscanner.utility.BuildConfig;
+import com.bridgelabz.docscanner.utility.DatabaseUtil;
 import com.bridgelabz.docscanner.utility.Dimension;
 import com.bridgelabz.docscanner.utility.IntentUtil;
 import com.bridgelabz.docscanner.utility.RawCacheManager;
@@ -34,6 +35,7 @@ import java.util.Vector;
 
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -49,10 +51,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 public class XON_IM_UI extends Activity implements ThreadInvokerMethod
 {
-    public static final String TAG = "XON_IM_UI";
+    private static final String TAG = "XON_IM_UI";
+    private static final String KEY_FOR_TEMP_CROPPED_IMAGE = "temp_cropped_image_uri";
 
     public Map<Integer, Button> m_ImageProcessButtons;
     public Map<Integer, Button> m_ImageSubProcessButtons;
@@ -103,6 +107,11 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
         m_SubMenuAction = new Vector<>();
     }
 
+    private ProgressDialog mProgress;
+
+    private static boolean PROGRESS_SHOW = false;
+    private static final String HANDLING_BACK_PRESS_KEY = "temp_uri_for_back_press";
+
     @SuppressLint({ "UseSparseArrays", "UseSparseArrays" })
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -110,6 +119,11 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_xon__im__ui);
+
+        mProgress = new ProgressDialog(this);
+
+        mProgress.setMessage("Cropping image....");
+        mProgress.show();
 
         m_LayoutRect = null; m_LayoutSize = null; m_XONImage = null;
         setXONIMViewType(false);
@@ -120,10 +134,11 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
                 m_XONImage = (XONImageHolder) XONObjectCache.getObjectForKey("XONImage");
                 m_ImageUri = m_XONImage.m_Uri;
                 Log.i(TAG, "XON View Type: "+m_XONImage.m_ViewType);
-            } else {
-                IntentUtil.processIntent(XON_IM_UI.this, ImageCropping.class);
-                finish();
-                return;
+            }
+            else {
+
+                m_XONImage = (XONImageHolder)XONObjectCache.getObjectForKey("DocObject");
+                m_ImageUri = m_XONImage.m_Uri;
             }
         }
 
@@ -155,13 +170,12 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
 
     }
 
-    public void showFilters(Activity act) {
-        try {
-            ImageFiltering fragment = new ImageFiltering();
-            Bundle arg = new Bundle();
-
+    public void showFilters()
+    {
+        try
+        {
             SaveSharedPreference sharedPreference = new SaveSharedPreference(this);
-            String uriString = sharedPreference.getPreference("cropped_image_uri");
+            String uriString = sharedPreference.getPreference(KEY_FOR_TEMP_CROPPED_IMAGE);
 
             Uri uri = Uri.fromFile(new File(uriString.substring(7)));
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
@@ -169,18 +183,35 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
             StorageUtil storage = new StorageUtil(this);
             uriString = m_ImageUri.toString();
             String imageName = uriString.substring(uriString.lastIndexOf('/')+1);
-            String directory = storage.getDirectoryForOriginalImage();
+            String directory = storage.getDirectoryForCroppedImage();
             uri = storage.storeImage(bitmap, directory, imageName);
+
+            updateCroppedImageUri(uri, imageName);
+
+            sharedPreference.setPreferences(KEY_FOR_TEMP_CROPPED_IMAGE, "nothing");
+            String temp = sharedPreference.getPreference(KEY_FOR_TEMP_CROPPED_IMAGE);
+            Log.i(TAG, "showFilters: "+temp);
+
+            ImageFiltering fragment = new ImageFiltering();
+            Bundle arg = new Bundle();
             arg.putString("image_uri", uri.toString());
             fragment.setArguments(arg);
 
-            FragmentTransaction transaction = act.getFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.layout_root, fragment);
-            transaction.addToBackStack(null).commit();
-            sharedPreference.setPreferences("cropped_image_uri", "nothing");
+            transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateCroppedImageUri(Uri uri, String imageName)
+    {
+        DatabaseUtil database = new DatabaseUtil(this, "Images");
+        ContentValues values = new ContentValues();
+        values.put("crp_image_uri", uri.toString());
+        int updatedColumns = database.updateData("Images", values, "i_name", imageName);
+        Toast.makeText(this, updatedColumns+" column updated", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -189,11 +220,11 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
         super.onRestart();
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         super.onBackPressed();
         Log.i(TAG, "onBackPressed: ");
-    }
+    }*/
 
     @Override
     public void onLowMemory()
@@ -241,23 +272,43 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
         m_XONImageFilterView = null; m_XONCanvasView = null;
     }
 
-    @Override
+    /*@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (m_XONIMViewType != null) {
+            if (m_XONIMViewType != null)
+            {
                 if (m_XONIMViewType.equals(XONIMViewType.Advanced)) {
                     resetXONIMViewType();
                     IntentUtil.processIntent(this, XON_IM_UI.class);
-                    m_XONCleanType = XONCleanType.Local; finish();
+                    m_XONCleanType = XONCleanType.Local;
+                    finish();
                     return true;
                 }
             }
             resetXONIMViewType();
-            IntentUtil.processIntent(this, ImageCropping.class);
+            IntentUtil.processIntent(this, ImageCropping.class, m_ImageUri);
             finish();
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }*/
+
+    @Override
+    public void onBackPressed()
+    {
+        if (m_XONIMViewType != null) {
+            if (m_XONIMViewType.equals(XONIMViewType.Advanced)) {
+                resetXONIMViewType();
+                IntentUtil.processIntent(this, XON_IM_UI.class);
+                m_XONCleanType = XONCleanType.Local;
+                finish();
+            }
+        }
+        resetXONIMViewType();
+        IntentUtil.processIntent(this, ImageCropping.class, m_ImageUri);
+        finish();
+
+        super.onBackPressed();
     }
 
     private void resetXONIMViewType()
@@ -328,7 +379,8 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
             public void onClick(View arg0) {
                 m_ActiveMainMenu = R.id.home_btn;
                 m_ActiveSubMenu = R.id.xon_main_btn; highlightButton(false);
-                resetXONIMViewType(); finish();
+                resetXONIMViewType();
+                finish();
                 IntentUtil.processIntent(XON_IM_UI.this, ImageCropping.class);
             }
         });
@@ -373,7 +425,8 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
                 m_ActiveSubMenu = R.id.xon_crop_btn; highlightButton(false);
                 Log.i(TAG, "Pressed Crop View");
                 IntentUtil.processIntent(XON_IM_UI.this, XONImageCropActivity.class);
-                m_XONCleanType = XONCleanType.Local; finish();
+                m_XONCleanType = XONCleanType.Local;
+                finish();
             }
         });
     }
@@ -475,14 +528,19 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
         m_ImageFilterActivated = true;
 
         SaveSharedPreference sharedPreference = new SaveSharedPreference(this);
-        String uriString = sharedPreference.getPreference("cropped_image_uri");
-        ProgressDialog progress = new ProgressDialog(this);
-        progress.setMessage("Cropping image....");
-        progress.show();
-        if(uriString.contains("/"))
-        {
-            showFilters(this);
-            progress.dismiss();
+        String uriString = sharedPreference.getPreference(KEY_FOR_TEMP_CROPPED_IMAGE);
+
+        //mProgress = new ProgressDialog(this);
+        /*if(!PROGRESS_SHOW) {
+            mProgress.setMessage("Cropping image....");
+            mProgress.show();
+            PROGRESS_SHOW = true;
+        }*/
+        if(uriString != null) {
+            if (uriString.contains("/")) {
+                showFilters();
+                mProgress.dismiss();
+            }
         }
     }
 

@@ -79,7 +79,7 @@ public class FilterAdapter extends RecyclerView.Adapter
                 progress.show();
                 progress.isIndeterminate();
                 processFilter(position, filterModel, holder);
-                //progress.dismiss();
+                progress.dismiss();
             }
         });
 

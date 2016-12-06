@@ -583,10 +583,19 @@ public class XONImageHolder implements XONClickListener{
             m_ImageType = ImageType.Potrait;
 
         Bitmap selImage = XONImageUtil.getScaledBitmap(srcImg, m_PanelSize, true);
-        if (srcImgRef != null) {
-            if (srcImgRef.get() != selImage) srcImgRef.get().recycle();
-            srcImgRef.clear(); srcImg = null; srcImgRef = null;
-        } else { srcImg = null; srcImgRef = null; }
+        if (srcImgRef != null)
+        {
+            if (srcImgRef.get() != selImage)
+                srcImgRef.get().recycle();
+            srcImgRef.clear();
+            srcImg = null;
+            srcImgRef = null;
+        }
+        else
+        {
+            srcImg = null;
+            srcImgRef = null;
+        }
         Log.i(TAG, "Selected Image: "+selImage);
         m_SelImageSize = new Dimension(selImage.getWidth(), selImage.getHeight());
         if (m_ViewType.equals(ViewType.CropView)) m_CropSelImageSize = m_SelImageSize;
@@ -607,6 +616,8 @@ public class XONImageHolder implements XONClickListener{
         XONObjectCache.addObject("ImageFilterController", m_ImageFilterController, true);
         m_ImageFilterParamVal = new HashMap<String, Object>();
         XONObjectCache.addObject("XONImage", this, true);
+
+        XONObjectCache.addObject("DocObject", this, true);
     }
 
     private void removeMemCache(String cacheId, boolean recycle)

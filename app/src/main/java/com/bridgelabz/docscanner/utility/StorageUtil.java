@@ -79,7 +79,7 @@ public class StorageUtil
 
         /* get directory
          * i.e. /data/data/com.bridgelabz.camscannertrail/app_images */
-        File directory = wrapper.getDir("images", ContextWrapper.MODE_PRIVATE);
+        File directory = wrapper.getDir("original_images", ContextWrapper.MODE_PRIVATE);
 
         String myDirectory = directory.toString();
         Log.i(TAG, "getDirectoryForOriginalImage: "+myDirectory);
@@ -95,7 +95,7 @@ public class StorageUtil
         File directory = wrapper.getDir("cropped_images", ContextWrapper.MODE_PRIVATE);
 
         String myDirectory = directory.toString();
-        Log.i(TAG, "getDirectoryForOriginalImage: "+myDirectory);
+        Log.i(TAG, "getDirectoryForCroppedImage: "+myDirectory);
         return myDirectory;
     }
 
@@ -108,14 +108,22 @@ public class StorageUtil
         File directory = wrapper.getDir("filtered_images", ContextWrapper.MODE_PRIVATE);
 
         String myDirectory = directory.toString();
-        Log.i(TAG, "getDirectoryForOriginalImage: "+myDirectory);
+        Log.i(TAG, "getDirectoryForFilteredImage: "+myDirectory);
         return myDirectory;
     }
 
     public String getTempDirectory()
     {
-        File temp = Environment.getExternalStorageDirectory();
-        String directory = temp.getAbsolutePath();
+        /*File temp = Environment.getExternalStorageDirectory();
+        String directory = temp.getAbsolutePath();*/
+
+        ContextWrapper wrapper = new ContextWrapper(mContext);
+
+        /* get directory
+         * i.e. /data/data/com.bridgelabz.camscannertrail/app_temp */
+        File file = wrapper.getDir("temp", ContextWrapper.MODE_PRIVATE);
+
+        String directory = file.toString();
         Log.i(TAG, "getTempDirectory: "+directory);
         return directory;
     }

@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             processImage(storedImageUri);
         }
 
-        else if (requestCode == PICK_FROM_FILE && resultCode == RESULT_OK)
+        /*else if (requestCode == PICK_FROM_FILE && resultCode == RESULT_OK)
         {
             try {
                 Uri imageUri = result.getData();
@@ -216,12 +216,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ex.printStackTrace();
                 return;
             }
-        }
+        }*/
     }
 
     private void processImage(Uri imageUri)
     {
-        IntentUtil.processIntent(this, ImageCropping.class, imageUri);
+        //IntentUtil.processIntent(this, ImageCropping.class, imageUri);
+        Intent intent = new Intent(this, ImageCropping.class);
+        intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        intent.putExtra("from", "MainActivity");
+        startActivity(intent);
     }
 
     private ArrayList<DocumentDetails> retrieveFromDatabase(String tableName)
@@ -416,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Toast.makeText(this, rowsDeleted+" rows deleted from Documents table", Toast.LENGTH_SHORT).show();
 
-        cursor = database.retrieveData("select image_uri from Images where d_id = "+docId);
+        cursor = database.retrieveData("select org_image_uri from Images where d_id = "+docId);
         while (cursor.moveToNext())
         {
             String directory = cursor.getString(0);
