@@ -205,18 +205,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             processImage(storedImageUri);
         }
-
-        /*else if (requestCode == PICK_FROM_FILE && resultCode == RESULT_OK)
-        {
-            try {
-                Uri imageUri = result.getData();
-                processImage(imageUri);
-                return;
-            } catch(Exception ex) {
-                ex.printStackTrace();
-                return;
-            }
-        }*/
     }
 
     private void processImage(Uri imageUri)

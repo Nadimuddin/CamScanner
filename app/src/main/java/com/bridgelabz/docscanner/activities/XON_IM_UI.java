@@ -530,7 +530,6 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
         SaveSharedPreference sharedPreference = new SaveSharedPreference(this);
         String uriString = sharedPreference.getPreference(KEY_FOR_TEMP_CROPPED_IMAGE);
 
-        //mProgress = new ProgressDialog(this);
         /*if(!PROGRESS_SHOW) {
             mProgress.setMessage("Cropping image....");
             mProgress.show();
