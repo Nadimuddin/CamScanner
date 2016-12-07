@@ -35,7 +35,7 @@ public class ImageUtil extends Activity
     public void beginCrop(Uri source)
     {
         int id = nextImageID("Images");
-        String imageName = "CamScannerImage"+(id+1);
+        String imageName = "CamScannerImage"+id;
         Uri destination = Uri.fromFile(new File(mActivity.getDir("images", MainActivity.MODE_PRIVATE), imageName));
         Log.i(TAG, "beginCrop: destination image: "+destination.toString());
         //Crop.of(source, destination).asSquare().start(mActivity);
@@ -60,7 +60,7 @@ public class ImageUtil extends Activity
 
         id = database.getLastID(tableName);
 
-        return id;
+        return id+1;
     }
 
     public Bitmap modifyBitmap(Bitmap bitmap, int imageViewWidth, int imageViewHeight)

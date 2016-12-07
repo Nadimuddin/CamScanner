@@ -134,6 +134,7 @@ public class RenameDialogBox extends Dialog implements View.OnClickListener
             if (userInput.equals(cursor.getString(0)))
                 return true;
         }
+        cursor.close();
         return false;
     }
 }

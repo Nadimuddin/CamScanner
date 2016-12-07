@@ -108,6 +108,7 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
                 "where fltr_image_uri = \""+imageUri.toString()+"\"");
         cursor.moveToNext();
         String uriString = cursor.getString(0);
+        cursor.close();
 
         Uri uri = Uri.fromFile(new File(uriString.substring(7)));
 

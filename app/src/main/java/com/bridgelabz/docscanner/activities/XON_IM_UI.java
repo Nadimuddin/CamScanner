@@ -442,7 +442,8 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
         button.setVisibility(View.VISIBLE);
         button.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View arg0)
+            {
                 m_ActiveMainMenu = R.id.basic_popular_effects_btn; m_ActiveSubMenu = -1;
                 highlightButton(false);
                 UIUtil.showShortMessage(XON_IM_UI.this,

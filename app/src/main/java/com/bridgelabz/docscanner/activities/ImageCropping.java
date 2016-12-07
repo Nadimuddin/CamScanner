@@ -52,8 +52,8 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
     File mImage;
 
     private String mFrom;
-    private static final String MAIN_ACTIVITY = "MainActivity",
-    DOCUMENT_ACTIVITY = "DocumentActivity", IMAGE_VIEWER = "ImageViewer";
+    private static final String MAIN_ACTIVITY = "MainActivity", DOCUMENT_ACTIVITY = "DocumentActivity",
+            IMAGE_VIEWER = "ImageViewer", IMAGE_CROPPING = "ImageCropping";
 
     ProgressDialog mProgressDialog;
 
@@ -74,6 +74,7 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
         mImageUri = IntentUtil.getImageIntent(this);
 
         mFrom = getIntent().getStringExtra("from");
+        Log.i(TAG, "onCreate: Previous activity: "+mFrom);
 
         if (mImageUri == null) {
             if (XONObjectCache.getObjectForKey("XONImage") != null) {
@@ -139,9 +140,6 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "onResume: ");
-        Log.i(TAG, "onResume:mCropView "+mXONCropView);
-        /*FrameLayout frameLayout = (FrameLayout) findViewById(R.id.xon_graphics_holder);
-        frameLayout.addView(mXONCropView);*/
     }
 
     private void goToXON_IM_UI()
@@ -153,7 +151,8 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
     @Override
     public void onBackPressed()
     {
-        if(mFrom.equals(MAIN_ACTIVITY) || mFrom.equals(DOCUMENT_ACTIVITY)) {
+        Log.i(TAG, "onBackPressed:1 ");
+        if(mFrom.equals(MAIN_ACTIVITY) || mFrom.equals(DOCUMENT_ACTIVITY) || mFrom.equals(IMAGE_CROPPING)) {
             StorageUtil storage = new StorageUtil(this);
             Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
 
@@ -167,10 +166,17 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
             mImageUri = Uri.fromFile(mImage);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
             startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            super.onBackPressed();
+            Log.i(TAG, "onBackPressed:2 ");
+            //super.onBackPressed();
         }
         else if(mFrom.equals(IMAGE_VIEWER))
             super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy: ");
     }
 
     @Override
@@ -215,18 +221,27 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
             StorageUtil storage= new StorageUtil(this);
 
             String directory = storage.getDirectoryForOriginalImage();
-            int imageId = imageUtil.nextImageID("Images");
+            int imageId = imageUtil.nextImageID("Images")-1;
 
-            Uri imageUri = storage.storeImage(bitmap, directory, "CamScanner"+imageId+1);
+            Uri imageUri = storage.storeImage(bitmap, directory, "CamScannerImage"+imageId);
 
             Intent intent = new Intent(this, ImageCropping.class);
             intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+            intent.putExtra("from", IMAGE_CROPPING);
             startActivity(intent);
+            finish();
         }
 
-        else if(requestCode == RESULT_CANCELED)
+        else if(resultCode == RESULT_CANCELED)
         {
             Log.i(TAG, "onActivityResult: ResultCanceled");
+            //if(mFrom.equals(MAIN_ACTIVITY)) {
+            //}
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+
         }
     }
 
@@ -235,6 +250,7 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             mXONImage.cancelCropView();
             //goToXON_IM_UI();
+            onBackPressed();
             return true;
         }
         return super.onKeyDown(keyCode, event);

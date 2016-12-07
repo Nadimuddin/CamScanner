@@ -177,7 +177,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
             int imageId = imageUtil.nextImageID("Images");
 
             //store image in directory
-            Uri imageUri = storage.storeImage(bitmap, directory, "CamScannerImage"+imageId+1);
+            Uri imageUri = storage.storeImage(bitmap, directory, "CamScannerImage"+imageId);
 
             //insert image detail in database
             insertImageRecord(imageUri);
@@ -246,6 +246,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         DatabaseUtil database = new DatabaseUtil(this, "Documents");
         Cursor cursor = database.retrieveData("select * from Images where d_id = (select document_id from Documents where d_name = \""+mDocumentName+"\")");
         int numberOfImages = cursor.getCount();
+        cursor.close();
 
         //get current date & time
         String dateTime = DateFormat.getDateTimeInstance().format(new Date());
@@ -269,7 +270,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         int imageId = imageUtil.nextImageID("Images");
 
         //store image in directory
-        Uri imageUri = storage.storeImage(bitmap, directory, "CamScannerImage"+imageId+1);
+        Uri imageUri = storage.storeImage(bitmap, directory, "CamScannerImage"+imageId);
 
         return imageUri;
     }
@@ -319,6 +320,8 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
         // get document ID
         int  docId = cursor.getInt(0);
+
+        cursor.close();
 
         //add record to database
         db.prepareDataForInsertion("Images", imageUri.toString(), docId);
@@ -381,8 +384,8 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
                 break;*/
         }
-        //return super.onOptionsItemSelected(item);
-        return false;
+        return super.onOptionsItemSelected(item);
+        //return false;
     }
 
     @Override
@@ -483,6 +486,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onBackPressed()
     {
+        Log.i(TAG, "onBackPressed: ");
         if(mSelection)
         {
             int count = mGridView.getChildCount();
@@ -499,7 +503,6 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-
         }
 
     }

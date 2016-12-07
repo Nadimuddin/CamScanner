@@ -227,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             arrayList.add(new DocumentDetails(cursor.getString(1), cursor.getString(2),
                     cursor.getString(3), cursor.getInt(4)));
         }
+        cursor.close();
         return arrayList;
     }
 
@@ -264,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int imageId = imageUtil.nextImageID("Images");
 
         //store image in directory
-        Uri imageUri = storage.storeImage(bitmap, directory, "CamScannerImage"+imageId+1);
+        Uri imageUri = storage.storeImage(bitmap, directory, "CamScannerImage"+imageId);
 
         return imageUri;
     }
@@ -401,6 +402,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Cursor cursor = database.retrieveData("select document_id from Documents where d_name  = \""+docName+"\"");
         cursor.moveToNext();
         int docId = cursor.getInt(0);
+        cursor.close();
 
         int rowsDeleted = database.deleteData("Documents", "document_id", docId);
 
@@ -415,6 +417,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             directory = directory.substring(7);
             storage.deleteImage(directory);
         }
+        cursor.close();
         rowsDeleted = database.deleteData("Images", "d_id", docId);
         Toast.makeText(this, rowsDeleted+" rows deleted from Documents table", Toast.LENGTH_SHORT).show();
     }
