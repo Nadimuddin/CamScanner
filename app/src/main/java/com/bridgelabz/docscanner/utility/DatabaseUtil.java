@@ -161,6 +161,23 @@ public class DatabaseUtil extends SQLiteOpenHelper
         return rowsDeleted;
     }
 
+    public int deleteData(String tableName, String keyColumn, String keyValue)
+    {
+        //to get how many rows are deleted
+        int rowsDeleted;
+
+        //object to get writable database
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        /*
+        * call delete method SQLiteDatabase class
+        * it returns no. of rows deleted
+         */
+        rowsDeleted = sqLiteDatabase.delete(tableName, keyColumn+" = ?", new String[] {keyValue});
+
+        return rowsDeleted;
+    }
+
     public boolean isThereAnyRow(String tableName)
     {
         boolean check;

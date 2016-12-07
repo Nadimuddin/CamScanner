@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -32,27 +33,7 @@ public class ImageUtil extends Activity
     }
 
     public static final String TAG = "ImageUtil";
-    public void beginCrop(Uri source)
-    {
-        int id = nextImageID("Images");
-        String imageName = "CamScannerImage"+id;
-        Uri destination = Uri.fromFile(new File(mActivity.getDir("images", MainActivity.MODE_PRIVATE), imageName));
-        Log.i(TAG, "beginCrop: destination image: "+destination.toString());
-        //Crop.of(source, destination).asSquare().start(mActivity);
-    }
 
-   /* public Uri handleCrop(int resultCode, Intent result)
-    {
-        Uri imageUri = null;
-
-        if (resultCode == RESULT_OK)
-            imageUri = Crop.getOutput(result);
-
-        else if (resultCode == Crop.RESULT_ERROR)
-            Toast.makeText(mActivity, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
-
-        return imageUri;
-    }*/
     public int nextImageID(String tableName)
     {
         int id;
@@ -66,7 +47,7 @@ public class ImageUtil extends Activity
     public Bitmap modifyBitmap(Bitmap bitmap, int imageViewWidth, int imageViewHeight)
     {
         Bitmap modifiedBitmap;
-        int x, y, width, height;
+        /*int x, y, width, height;
         int bitmapWidth = bitmap.getWidth(), bitmapHeight = bitmap.getHeight();
 
         if(bitmapWidth <= imageViewWidth) {
@@ -91,7 +72,10 @@ public class ImageUtil extends Activity
 
         modifiedBitmap = Bitmap.createBitmap(bitmap, x, y, width, height);
         int w = modifiedBitmap.getWidth();
-        int h = modifiedBitmap.getHeight();
+        int h = modifiedBitmap.getHeight();*/
+
+        modifiedBitmap = ThumbnailUtils.extractThumbnail(bitmap, imageViewWidth, imageViewHeight);
+
         return modifiedBitmap;
     }
 
@@ -104,8 +88,6 @@ public class ImageUtil extends Activity
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4;
             bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
-            //imageUri = storeImage(bitmap);
-
         }
         return bitmap;
     }

@@ -26,8 +26,6 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".utility.ImageUtil"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activities.XON_Main_UI"
-            android:screenOrientation="portrait"/>
         <activity android:name=".activities.ImageViewer"
             android:screenOrientation="portrait"/>
         <activity android:name=".activities.XONImageCropActivity"

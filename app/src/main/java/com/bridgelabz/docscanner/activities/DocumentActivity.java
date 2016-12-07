@@ -469,7 +469,6 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
     {
         Log.i(TAG, "onItemLongClick: ");
-        //view.setBackgroundResource(R.drawable.shape_for_selected);
         int count = parent .getChildCount();
         for (int i = 0; i < count; i++) {
             View current = parent.getChildAt(i);
@@ -532,8 +531,10 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
             public void updateDocumentName(String newName)
             {
                 mDocTitle.setText(newName);
+                mDocumentName = newName;
             }
         });
         rename.show();
+        rename.setCancelable(false);
     }
 }

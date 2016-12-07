@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,6 +34,8 @@ public class RenameDialogBox extends Dialog implements View.OnClickListener
     private String mOldName;
     private ChangeDocumentName mChange;
     private UpdateDocumentName mUpdateName;
+    private InputMethodManager mInputMethod;
+
     private static final String DIALOG_TITLE = "Rename Document";
     private static final String TAG = "RenameDialogBox";
     public RenameDialogBox(Context context, String oldName, ChangeDocumentName change)
@@ -62,6 +65,8 @@ public class RenameDialogBox extends Dialog implements View.OnClickListener
         ok = (Button)findViewById(R.id.ok);
         cancel = (Button)findViewById(R.id.cancel);
 
+        mInputMethod = (InputMethodManager)mContext.getSystemService(mContext.INPUT_METHOD_SERVICE);
+        mInputMethod.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         mEditText.setText(mOldName);
 
         ok.setOnClickListener(this);
@@ -85,6 +90,7 @@ public class RenameDialogBox extends Dialog implements View.OnClickListener
             }
             else {
                 result = updateName(newName);
+                mInputMethod.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 dismiss();
             }
 
@@ -93,8 +99,10 @@ public class RenameDialogBox extends Dialog implements View.OnClickListener
                 Toast.makeText(mContext, "Rename failed, data not updated", Toast.LENGTH_SHORT).show();
             }
         }
-        else if(v == cancel)
+        else if(v == cancel) {
             dismiss();
+            mInputMethod.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        }
     }
 
     private int updateName(String newName)

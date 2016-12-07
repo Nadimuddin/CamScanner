@@ -192,9 +192,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(requestCode == SELECT_PICTURE && resultCode == RESULT_OK && result != null)
         {
             Uri selectedImage = result.getData(), storedImageUri = null;
+            //ImageUtil imageUtil = new ImageUtil(this);
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                //bitmap = imageUtil.grabImage(new File(selectedImage.getPath()));
                 storedImageUri = storeImage(bitmap);
             }
             catch (IOException e) {

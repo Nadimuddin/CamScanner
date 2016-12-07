@@ -1,12 +1,14 @@
 package com.bridgelabz.docscanner.activities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import com.bridgelabz.docscanner.BuildConfig;
 import com.bridgelabz.docscanner.R;
 import com.bridgelabz.docscanner.controller.XONImageHolder;
+import com.bridgelabz.docscanner.utility.DatabaseUtil;
 import com.bridgelabz.docscanner.utility.Dimension;
 import com.bridgelabz.docscanner.utility.ImageUtil;
 import com.bridgelabz.docscanner.utility.IntentUtil;
@@ -50,6 +53,8 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
     Uri mImageUri; XONImageHolder mXONImage;
 
     File mImage;
+
+    DialogInterface.OnClickListener mDialog;
 
     private String mFrom;
     private static final String MAIN_ACTIVITY = "MainActivity", DOCUMENT_ACTIVITY = "DocumentActivity",
@@ -127,6 +132,7 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
         rotateRight.setOnClickListener(this);
         cropUncrop.setOnClickListener(this);
         done.setOnClickListener(this);
+
     }
 
     /*private void saveInPreference(Uri uri)
@@ -151,26 +157,7 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
     @Override
     public void onBackPressed()
     {
-        Log.i(TAG, "onBackPressed:1 ");
-        if(mFrom.equals(MAIN_ACTIVITY) || mFrom.equals(DOCUMENT_ACTIVITY) || mFrom.equals(IMAGE_CROPPING)) {
-            StorageUtil storage = new StorageUtil(this);
-            Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-
-            try {
-                mImage = storage.createTemporaryFile();
-            } catch (Exception e) {
-                Log.i(TAG, "can't create file to take picture! " + e.toString());
-                Toast.makeText(this, "Please check SD card! Image shot is impossible", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            mImageUri = Uri.fromFile(mImage);
-            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
-            startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            Log.i(TAG, "onBackPressed:2 ");
-            //super.onBackPressed();
-        }
-        else if(mFrom.equals(IMAGE_VIEWER))
-            super.onBackPressed();
+        openAlert();
     }
 
     @Override
@@ -185,7 +172,8 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
         switch (v.getId())
         {
             case R.id.backButton:
-                onBackPressed();
+                //onBackPressed();
+                openAlert();
                 break;
 
             case R.id.rotate_left:
@@ -207,6 +195,62 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
                 goToXON_IM_UI();
                 break;
         }
+    }
+
+    private void openAlert()
+    {
+        mDialog = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                switch (which)
+                {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        if(mFrom.equals(MAIN_ACTIVITY) || mFrom.equals(DOCUMENT_ACTIVITY) ||
+                                mFrom.equals(IMAGE_CROPPING))
+                        {
+                            deleteRecord();
+                            openCamera();
+                        }
+                        else if(mFrom.equals(IMAGE_VIEWER))
+                            onBackPressed();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to discard this image?")
+                .setPositiveButton("Discard!", mDialog).setNegativeButton("Cancel", mDialog).show();
+    }
+
+    private void deleteRecord()
+    {
+        DatabaseUtil database = new DatabaseUtil(this, "Images");
+        int deletedRows = database.deleteData("Images", "org_image_uri", mImageUri.toString());
+        Toast.makeText(this, deletedRows+" rows deleted from Images", Toast.LENGTH_SHORT).show();
+
+        int deletedRow = database.deleteData("Documents", "cover_image_uri", mImageUri.toString());
+        Toast.makeText(this, deletedRow+" rows deleted from Documents", Toast.LENGTH_SHORT).show();
+    }
+
+    private void openCamera()
+    {
+            StorageUtil storage = new StorageUtil(this);
+            Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+
+            try {
+                mImage = storage.createTemporaryFile();
+            } catch (Exception e) {
+                Log.i(TAG, "can't create file to take picture! " + e.toString());
+                Toast.makeText(this, "Please check SD card! Image shot is impossible", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            mImageUri = Uri.fromFile(mImage);
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
 
     @Override
