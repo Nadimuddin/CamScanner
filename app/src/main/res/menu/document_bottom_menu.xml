@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/delete"
+        android:title="delete"
+        android:icon="@drawable/delete_24dp"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/cut"
+        android:title="Cut"
+        android:icon="@drawable/cut_24dp"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/copy"
+        android:title="Copy"
+        android:icon="@drawable/copy_24dp"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/save_to_gallery"
+        android:title="Save to Gallery"
+        android:icon="@drawable/save_to_gallery_24dp"
+        app:showAsAction="ifRoom"/>
+
+</menu>

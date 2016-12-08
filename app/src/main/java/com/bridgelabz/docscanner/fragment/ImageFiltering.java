@@ -68,18 +68,18 @@ public class ImageFiltering extends Fragment implements View.OnClickListener, Fi
         ImageButton modify = (ImageButton)mView.findViewById(R.id.modify);
         ImageButton done = (ImageButton)mView.findViewById(R.id.done);
 
-        mArrayList.add(new FilterModel(R.drawable.ic_wb_auto_black_24dp,
-                R.drawable.ic_wb_auto_white_24dp, "Auto"));
-        mArrayList.add(new FilterModel(R.drawable.ic_photo_black_24dp,
-                R.drawable.ic_photo_white_24dp, "Original"));
-        mArrayList.add(new FilterModel(R.drawable.ic_brightness_5_black_24dp,
-                R.drawable.ic_brightness_5_white_24dp, "Brighter"));
-        mArrayList.add(new FilterModel(R.drawable.ic_opacity_black_24dp,
-                R.drawable.ic_opacity_white_24dp, "Contrast"));
-        mArrayList.add(new FilterModel(R.drawable.ic_wb_cloudy_black_24dp,
-                R.drawable.ic_wb_cloudy_white_24dp, "Grey Mode"));
-        mArrayList.add(new FilterModel(R.drawable.ic_tonality_black_24dp,
-                R.drawable.ic_tonality_white_24dp, "B & W"));
+        mArrayList.add(new FilterModel(R.drawable.auto_black_24dp,
+                R.drawable.auto_white_24dp, "Auto"));
+        mArrayList.add(new FilterModel(R.drawable.original_black_24dp,
+                R.drawable.original_white_24dp, "Original"));
+        mArrayList.add(new FilterModel(R.drawable.brightness_black_24dp,
+                R.drawable.brightness_white_24dp, "Brighter"));
+        mArrayList.add(new FilterModel(R.drawable.contrast_black_24dp,
+                R.drawable.contrast_white_24dp, "Contrast"));
+        mArrayList.add(new FilterModel(R.drawable.grey_mode_black_24dp,
+                R.drawable.grey_mode_white_24dp, "Grey Mode"));
+        mArrayList.add(new FilterModel(R.drawable.b_and_w_black_24dp,
+                R.drawable.b_and_w_white_24dp, "B & W"));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         FilterAdapter adapter = new FilterAdapter(mArrayList, new FilterImage() {

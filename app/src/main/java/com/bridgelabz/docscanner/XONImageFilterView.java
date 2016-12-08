@@ -85,7 +85,7 @@ public class XONImageFilterView implements XONImageProcessor, ThreadInvokerMetho
         m_ImageFilterView = new HashMap<String, View>();
         m_XONImageProcessHandler = new XONImageProcessHandler(
                 m_MainActivity.getApplicationContext());
-        m_XONImageProcessHandler.setLoadingImage(R.drawable.empty_photo);
+        m_XONImageProcessHandler.setLoadingImage(R.drawable.delete_24dp);
         m_XONCanvasImageProcessHandler = new XONImageProcessHandler(
                 m_MainActivity.getApplicationContext());
         m_XONCanvasImageProcessHandler.setImageFadeIn(false);
@@ -223,7 +223,7 @@ public class XONImageFilterView implements XONImageProcessor, ThreadInvokerMetho
         Log.i(TAG, "Diff Time: " + diffTime);
         if (diffTime > XONPropertyInfo.getIntRes(R.string.popup_scroll_time)) {
             UIUtil.createSingleChoiceDialog(XONPropertyInfo.m_SubMainActivity,
-                    R.drawable.alert_dialog_icon, R.string.user_effects_actions,
+                    R.drawable.delete_24dp, R.string.user_effects_actions,
                     R.array.user_effects_action_list, this).show();
         }
     }

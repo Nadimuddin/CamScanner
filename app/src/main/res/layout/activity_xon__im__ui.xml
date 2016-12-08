@@ -43,7 +43,7 @@
           android:layout_marginRight="0dip"
           android:layout_toRightOf="@id/home_btn"
           android:padding="5dip"
-          android:drawableTop="@drawable/basic_popular_effects"
+          android:drawableTop="@drawable/delete_24dp"
           android:text="@string/popular_effects"
           android:contentDescription="@string/popular_effects"
           />
@@ -126,7 +126,7 @@
           android:layout_marginRight="0dip"
           android:layout_toRightOf="@id/image_enhance_btn"
           android:padding="5dip"
-          android:drawableTop="@drawable/quick_effects"
+          android:drawableTop="@drawable/delete_24dp"
           android:text="@string/quick_effects"
           android:contentDescription="@string/quick_effects"
           />

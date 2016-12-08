@@ -29,7 +29,6 @@ import com.bridgelabz.docscanner.interfaces.UpdateDocumentName;
 import com.bridgelabz.docscanner.model.DocumentDetails;
 import com.bridgelabz.docscanner.utility.DatabaseUtil;
 import com.bridgelabz.docscanner.utility.ImageUtil;
-import com.bridgelabz.docscanner.utility.IntentUtil;
 import com.bridgelabz.docscanner.utility.StorageUtil;
 //import com.soundcloud.android.crop.Crop;
 
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String DESELECT_ALL = "Deselect All";
 
     ListView mListView;
-    FloatingActionButton fab;
+    FloatingActionButton mCameraButton;
     ArrayList<DocumentDetails> mArrayList;
     MainAdapter mAdapter;
     Toolbar mToolbar, mToolbarBottom;
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         mListView = (ListView)findViewById(R.id.listView);
-        fab = (FloatingActionButton)findViewById(R.id.fab);
+        mCameraButton = (FloatingActionButton)findViewById(R.id.fab);
         mToolbar = (Toolbar)findViewById(R.id.toolbar_main);
         mToolbarBottom = (Toolbar) findViewById(R.id.toolbar_bottom);
 
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setDocumentList();
 
-        fab.setOnClickListener(this);
+        mCameraButton.setOnClickListener(this);
     }
 
     @Override
@@ -122,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view)
     {
-        if(view == fab) {
+        if(view == mCameraButton) {
             StorageUtil storage = new StorageUtil(this);
             Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
             //File photo;
@@ -384,7 +383,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mSelectedListCount--;
             Object obj = position;
             mSelectedItems.remove(obj);
-            resId = R.drawable.shape_for_unselected;
+            resId = 0;//R.drawable.shape_for_unselected;
         }
         return resId;
     }
@@ -395,6 +394,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int menuRes = mSelection ? R.menu.select_all : R.menu.main_option_menu;
         getMenuInflater().inflate(menuRes, mMenu);
         mSelectAll = mMenu.findItem(R.id.select_all);
+    }
+
+    private void setBottomToolbar(boolean condition)
+    {
+        mToolbarBottom.getMenu().clear();
+        if(condition) {
+            mToolbarBottom.setVisibility(View.VISIBLE);
+            mToolbarBottom.inflateMenu(R.menu.main_bottom_menu);
+            mCameraButton.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            mToolbarBottom.setVisibility(View.INVISIBLE);
+            mCameraButton.setVisibility(View.VISIBLE);
+        }
     }
 
     private void deleteDocument(String docName)
@@ -422,19 +436,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cursor.close();
         rowsDeleted = database.deleteData("Images", "d_id", docId);
         Toast.makeText(this, rowsDeleted+" rows deleted from Documents table", Toast.LENGTH_SHORT).show();
-    }
-
-    private void renameDocument(String newName)
-    {
-        DocumentDetails dd;
-        for(int i=0; i<mArrayList.size(); i++)
-        {
-            dd = mArrayList.get(i);
-            if(dd.getDocumentName().equals(newName))
-            {
-
-            }
-        }
     }
 
     @Override
@@ -465,28 +466,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    private void setBottomToolbar(boolean condition)
-    {
-        mToolbarBottom.getMenu().clear();
-        if(condition) {
-            mToolbarBottom.setVisibility(View.VISIBLE);
-            mToolbarBottom.inflateMenu(R.menu.bottom_menu);
-            fab.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-            mToolbarBottom.setVisibility(View.INVISIBLE);
-            fab.setVisibility(View.VISIBLE);
-        }
-    }
-
     private void showAlert()
     {
         new AlertDialog.Builder(this).setTitle("Delete Document")
                 .setMessage("Are you sure you want to delete selected document")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
                         for(int i=0; i<mSelectedItems.size(); i++)
                         {
                             String docName = mArrayList.get(mSelectedItems.get(i)).getDocumentName();

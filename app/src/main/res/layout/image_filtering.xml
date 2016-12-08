@@ -44,7 +44,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_arrow_back_white_36dp"
+                android:src="@drawable/back_white_36dp"
                 android:background="@color/violet"
                 android:id="@+id/backButton"
                 android:layout_row="0"
@@ -54,7 +54,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_rotate_left_white_36dp"
+                android:src="@drawable/rotate_left_36dp"
                 android:background="@color/violet"
                 android:id="@+id/rotate_left"
                 android:layout_row="0"
@@ -65,7 +65,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_rotate_right_white_36dp"
+                android:src="@drawable/rotate_right_36dp"
                 android:background="@color/violet"
                 android:id="@+id/rotate_right"
                 android:layout_row="0"
@@ -76,7 +76,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_tune_white_36dp"
+                android:src="@drawable/modify_36dp"
                 android:background="@color/violet"
                 android:id="@+id/modify"
                 android:layout_row="0"
@@ -87,7 +87,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_done_white_36dp"
+                android:src="@drawable/done_36dp"
                 android:background="@color/violet"
                 android:id="@+id/done"
                 android:layout_row="0"

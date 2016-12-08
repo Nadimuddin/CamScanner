@@ -85,13 +85,13 @@ public class XONPropertyInfo {
 
     public static void showAckMesg(int titleResId, String mesgRes, XONClickListener listener)
     {
-        UIUtil.showAckMesgDialog(m_SubMainActivity, R.drawable.alert_dialog_icon, titleResId,
+        UIUtil.showAckMesgDialog(m_SubMainActivity, R.drawable.delete_24dp, titleResId,
                 mesgRes, listener);
     }
 
     public static void showAckMesg(int titleResId, int mesgResId, XONClickListener listener)
     {
-        UIUtil.showAckMesgDialog(m_SubMainActivity, R.drawable.alert_dialog_icon, titleResId,
+        UIUtil.showAckMesgDialog(m_SubMainActivity, R.drawable.delete_24dp, titleResId,
                 getString(mesgResId), listener);
     }
 

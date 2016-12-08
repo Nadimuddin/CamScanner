@@ -212,7 +212,7 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
                             openCamera();
                         }
                         else if(mFrom.equals(IMAGE_VIEWER))
-                            onBackPressed();
+                            finish();
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:

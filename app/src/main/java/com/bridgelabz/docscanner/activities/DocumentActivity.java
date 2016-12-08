@@ -30,7 +30,6 @@ import com.bridgelabz.docscanner.dialog.RenameDialogBox;
 import com.bridgelabz.docscanner.interfaces.ChangeDocumentName;
 import com.bridgelabz.docscanner.utility.DatabaseUtil;
 import com.bridgelabz.docscanner.utility.ImageUtil;
-import com.bridgelabz.docscanner.utility.IntentUtil;
 import com.bridgelabz.docscanner.utility.StorageUtil;
 
 import java.io.File;
@@ -47,10 +46,13 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         AdapterView.OnItemClickListener, View.OnDragListener, AdapterView.OnItemLongClickListener
 {
     private GridView mGridView;
-    private FloatingActionButton mFloatingButton;
+    Toolbar mToolbar,mBottomToolbar;
+    private FloatingActionButton mCameraButton;
     private ImageButton mBackButton;
     private TextView mDocTitle;
     private ImageView croppedImage;
+    private Menu mMenu;
+    private MenuItem mSelectAll;
     private String mDocumentName;
     private ArrayList<Uri> mArrayList;
     File mImage;
@@ -59,6 +61,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     private boolean mSelection = false;
     private boolean mSelected[];
     private int mSelectedItemCount = 0;
+    private ArrayList<Integer> mSelectedItems;
 
     private static final String TAG = "DocumentActivity";
     private static final int CAMERA_REQUEST = 1;
@@ -76,15 +79,16 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
         /* get XML objects
          * */
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        mBottomToolbar = (Toolbar)findViewById(R.id.toolbar_bottom);
         mGridView = (GridView)findViewById(R.id.gridView);
-        mFloatingButton = (FloatingActionButton)findViewById(R.id.fabDocument);
+        mCameraButton = (FloatingActionButton)findViewById(R.id.fabDocument);
         mBackButton = (ImageButton)findViewById(R.id.backButton);
         mDocTitle = (TextView)findViewById(R.id.docTitle);
         croppedImage = (ImageView)findViewById(R.id.croppedImage);
 
         //set Toolbar for activity
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
 
         //set blank title to remove default title
         getSupportActionBar().setTitle("");
@@ -93,7 +97,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         mDocTitle.setText(mDocumentName);
 
         //set onClickListener on views
-        mFloatingButton.setOnClickListener(this);
+        mCameraButton.setOnClickListener(this);
         mBackButton.setOnClickListener(this);
         mDocTitle.setOnClickListener(this);
         mGridView.setOnItemClickListener(this);
@@ -107,6 +111,8 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
         //boolean to get status of image whether it is selected or unselected
         mSelected = new boolean[num];
+
+        mSelectedItems = new ArrayList<>();
 
 
         /*ActivityManager am = (ActivityManager)this.getSystemService(Context.ACTIVITY_SERVICE);
@@ -128,7 +134,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
             renameDocument();
         }
 
-        else if(v == mFloatingButton)
+        else if(v == mCameraButton)
         {
             StorageUtil storage = new StorageUtil(this);
 
@@ -331,6 +337,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.document_option_menu, menu);
+        mMenu = menu;
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -404,9 +411,54 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
                 view.setBackgroundResource(setPageSelected(true, position));
             else
                 view.setBackgroundResource(setPageSelected(false, position));
-            if(mSelectedItemCount == 0)
-                mSelection = false;
+            mDocTitle.setText(mSelectedItemCount+" selected");
+            /*if(mSelectedItemCount == 0)
+                mSelection = false;*/
+        }
+    }
 
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+    {
+        Log.i(TAG, "onItemLongClick: ");
+        mSelection = true;
+        //int count = parent.getChildCount();
+        /*for(int i = 0; i < count; i++)
+        {
+            View current = parent.getChildAt(i);
+            current.setOnDragListener(this);
+        }*/
+        Log.i(TAG, "onItemLongClick: OnDragListener activated0123");
+        
+        view.setBackgroundResource(setPageSelected(true, position));
+        mDocTitle.setText(mSelectedItemCount+" selected");
+        changeOptionMenu();
+        setBottomToolbar(true);
+
+        return true;
+    }
+
+    private void changeOptionMenu()
+    {
+        mToolbar.getMenu().clear();
+        int menuRes = mSelection ? R.menu.select_all : R.menu.document_option_menu;
+        getMenuInflater().inflate(menuRes, mMenu);
+        mSelectAll = mMenu.findItem(R.id.select_all);
+    }
+
+    private void setBottomToolbar(boolean condition)
+    {
+        mBottomToolbar.getMenu().clear();
+        if(condition)
+        {
+            mBottomToolbar.setVisibility(View.VISIBLE);
+            mBottomToolbar.inflateMenu(R.menu.document_bottom_menu);
+            mCameraButton.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            mBottomToolbar.setVisibility(View.INVISIBLE);
+            mCameraButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -429,7 +481,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         {
             case DragEvent.ACTION_DRAG_ENTERED:
                 //v.setBackground(drawable);
-                v.setBackgroundResource(R.drawable.ic_arrow_back_white_36dp);
+                v.setBackgroundResource(R.drawable.back_white_36dp);
                 Log.i(TAG, "onDrag: Entered");
                 break;
 
@@ -466,23 +518,6 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     }*/
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
-    {
-        Log.i(TAG, "onItemLongClick: ");
-        int count = parent .getChildCount();
-        for (int i = 0; i < count; i++) {
-            View current = parent.getChildAt(i);
-            current.setOnDragListener(this);
-        }
-        Log.i(TAG, "onItemLongClick: OnDragListener activated");
-        
-        view.setBackgroundResource(setPageSelected(true, position));
-        mSelection = true;
-
-        return true;
-    }
-
-    @Override
     public void onBackPressed()
     {
         Log.i(TAG, "onBackPressed: ");
@@ -493,8 +528,14 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
             {
                 View current = mGridView.getChildAt(i);
                 current.setBackgroundResource(0);
+                mSelected[i] = false;
             }
             mSelection = false;
+            mSelectedItemCount = 0;
+            mSelectedItems.clear();
+            changeOptionMenu();
+            setBottomToolbar(false);
+            mDocTitle.setText(mDocumentName);
         }
         else
         {
@@ -513,13 +554,16 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         {
             mSelected[position] = true;
             mSelectedItemCount++;
+            mSelectedItems.add(position);
             resId = R.drawable.shape_for_selected;
         }
         else
         {
             mSelected[position] = false;
             mSelectedItemCount--;
-            resId = R.drawable.shape_for_unselected;
+            Object obj = position;
+            mSelectedItems.remove(obj);
+            resId = 0;
         }
         return resId;
     }

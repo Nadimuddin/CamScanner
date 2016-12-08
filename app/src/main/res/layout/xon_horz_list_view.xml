@@ -11,7 +11,7 @@
        android:scaleType="centerCrop"
        android:padding="3dip"
        android:contentDescription="@string/app_name"
-       android:src="@drawable/icon_mid">
+       android:src="@drawable/delete_24dp">
    </ImageView>
    
    <TextView android:id="@+id/title" style="@style/XONTextView" 

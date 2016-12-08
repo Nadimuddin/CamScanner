@@ -4,7 +4,7 @@
 
     <item android:id="@+id/crop"
         android:title="crop"
-        android:icon="@drawable/ic_crop_white_36dp"
+        android:icon="@drawable/crop_36dp"
         app:showAsAction="always"/>
 
     <!--<item android:id="@+id/retake"

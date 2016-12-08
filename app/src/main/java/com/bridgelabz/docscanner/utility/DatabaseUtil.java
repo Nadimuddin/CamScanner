@@ -21,7 +21,7 @@ import java.util.Date;
 public class DatabaseUtil extends SQLiteOpenHelper
 {
     private static final String TAG = "DatabaseUtil";
-    private static final String DATABASE_NAME = "cam_scanner_database.db";
+    private static final String DATABASE_NAME = "doc_scanner_database.db";
 
     SaveSharedPreference mPref;
     Context mContext;
