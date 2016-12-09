@@ -169,7 +169,7 @@ public class ImageFiltering extends Fragment implements View.OnClickListener, Fi
         ContentValues values = new ContentValues();
         values.put("fltr_image_uri", uri.toString());
         int updatedColumns = database.updateData("Images", values, "i_name", imageName);
-        Toast.makeText(getActivity(), updatedColumns+" column updated", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), updatedColumns+" column updated", Toast.LENGTH_SHORT).show();
     }
 
     private void openDocumentActivity()

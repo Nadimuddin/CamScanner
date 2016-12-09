@@ -1,6 +1,7 @@
 package com.bridgelabz.docscanner.activities;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -43,7 +45,8 @@ import java.util.Date;
  */
 
 public class DocumentActivity extends AppCompatActivity implements View.OnClickListener,
-        AdapterView.OnItemClickListener, View.OnDragListener, AdapterView.OnItemLongClickListener
+        AdapterView.OnItemClickListener, View.OnDragListener, AdapterView.OnItemLongClickListener,
+        Toolbar.OnMenuItemClickListener
 {
     private GridView mGridView;
     Toolbar mToolbar,mBottomToolbar;
@@ -59,7 +62,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     Uri mImageUri;
     int mPosition;
     private boolean mSelection = false;
-    private boolean mSelected[];
+    private boolean mIsSelected[];
     private int mSelectedItemCount = 0;
     private ArrayList<Integer> mSelectedItems;
 
@@ -67,6 +70,10 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     private static final int CAMERA_REQUEST = 1;
     private static final int SELECT_PICTURE = 2;
     private static final int CROP_FROM_CAMERA = 0;
+    private static final String SELECT_ALL = "Select All";
+    private static final String DESELECT_ALL = "Deselect_All";
+    private static final boolean SELECTED = true;
+    private static final boolean DESELECTED = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -102,6 +109,8 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         mDocTitle.setOnClickListener(this);
         mGridView.setOnItemClickListener(this);
         mGridView.setOnItemLongClickListener(this);
+        mBottomToolbar.setOnMenuItemClickListener(this);
+        Log.i(TAG, "onCreate: setOnMenuItemClickListener activated");
 
         //set corresponding images in document
         setImages();
@@ -110,7 +119,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         int num = mArrayList.size();
 
         //boolean to get status of image whether it is selected or unselected
-        mSelected = new boolean[num];
+        mIsSelected = new boolean[num];
 
         mSelectedItems = new ArrayList<>();
 
@@ -310,8 +319,10 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
             mGridView.setAdapter(adapter);
         }
-        else
-            Toast.makeText(this, "nothing to show", Toast.LENGTH_SHORT).show();
+        else {
+            Toast.makeText(this, "nothing to show in "+mDocumentName, Toast.LENGTH_SHORT).show();
+            mGridView.setAdapter(null);
+        }
     }
 
     private void insertImageRecord(Uri imageUri)
@@ -355,6 +366,29 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
                 renameDocument();
                 break;
 
+            case R.id.select_all:
+                String menuTitle = (String)item.getTitle();
+                if(menuTitle.equalsIgnoreCase(SELECT_ALL))
+                {
+                    setAllPageBackground(SELECTED);
+                    item.setTitle(DESELECT_ALL);
+                }
+                else if(menuTitle.equalsIgnoreCase(DESELECT_ALL))
+                {
+                    setAllPageBackground(DESELECTED);
+                    item.setTitle(SELECT_ALL);
+                }
+                mSelection = true;
+                mDocTitle.setText(mSelectedItemCount+" Selected");
+                break;
+
+            case R.id.delete:
+                /*if(mSelectedItems.size() > 0)
+                    showAlert();
+                else
+                    Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();*/
+                break;
+
             /*case R.id.pdfSetting:
                 Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
                 break;
@@ -396,6 +430,67 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
+    public boolean onMenuItemClick(MenuItem item)
+    {
+        if(item.getItemId() == R.id.delete)
+        {
+            if(mSelectedItems.size() > 0) {
+                showAlert();
+            }
+            else
+                Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+
+
+
+    private void showAlert()
+    {
+        DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which)
+            {
+                switch (which)
+                {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        for(int i=0; i<mSelectedItems.size(); i++)
+                        {
+                            Uri uri = mArrayList.get(mSelectedItems.get(i));
+                            deletePage(uri);
+                        }
+                        mSelection = false;
+                        setImages();
+                        setBottomToolbar(false);
+                        changeOptionMenu();
+                        mDocTitle.setText(mDocumentName);
+                        mSelectedItemCount = 0;
+                        mIsSelected = new boolean[mArrayList.size()];
+                        updateDocumentTable();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to delete these pages?")
+                .setPositiveButton("Yes", dialog).setNegativeButton("No", dialog).show();
+    }
+
+    private void deletePage(Uri uri)
+    {
+        DatabaseUtil database = new DatabaseUtil(this, "Images");
+        StorageUtil storage = new StorageUtil(this);
+
+        storage.deleteImage(uri.getPath());
+        database.deleteData("Images", "fltr_image_uri", uri.toString());
+
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
         if(!mSelection)
@@ -407,13 +502,17 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         }
         else
         {
-            if(!mSelected[position])
+            if(!mIsSelected[position])
                 view.setBackgroundResource(setPageSelected(true, position));
             else
                 view.setBackgroundResource(setPageSelected(false, position));
             mDocTitle.setText(mSelectedItemCount+" selected");
-            /*if(mSelectedItemCount == 0)
-                mSelection = false;*/
+
+            int count = mGridView.getCount();
+            if(mSelectedItemCount == count)
+                mSelectAll.setTitle(DESELECT_ALL);
+            else if(mSelectedItemCount < count)
+                mSelectAll.setTitle(SELECT_ALL);
         }
     }
 
@@ -436,6 +535,17 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         setBottomToolbar(true);
 
         return true;
+    }
+
+    private void setAllPageBackground(boolean select)
+    {
+        int count = mGridView.getCount();
+        for (int i = 0; i < count; i++)
+        {
+            View current = mGridView.getChildAt(i);
+            if (mIsSelected[i] != select)
+                current.setBackgroundResource(setPageSelected(select, i));
+        }
     }
 
     private void changeOptionMenu()
@@ -528,7 +638,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
             {
                 View current = mGridView.getChildAt(i);
                 current.setBackgroundResource(0);
-                mSelected[i] = false;
+                mIsSelected[i] = false;
             }
             mSelection = false;
             mSelectedItemCount = 0;
@@ -552,14 +662,14 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         int resId;
         if(selected)
         {
-            mSelected[position] = true;
+            mIsSelected[position] = true;
             mSelectedItemCount++;
             mSelectedItems.add(position);
             resId = R.drawable.shape_for_selected;
         }
         else
         {
-            mSelected[position] = false;
+            mIsSelected[position] = false;
             mSelectedItemCount--;
             Object obj = position;
             mSelectedItems.remove(obj);

@@ -102,7 +102,7 @@ public class XONPropertyInfo {
 
     public static void setToastMessage(String mesg)
     {
-        Toast.makeText(m_MainActivity,  mesg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(m_MainActivity,  mesg, Toast.LENGTH_SHORT).show();
     }
 
     public static Dimension getThumbSize()
@@ -205,8 +205,9 @@ public class XONPropertyInfo {
     {
         int iter = Math.round((float)(duration-LONG_TOAST_DELAY)/(float)LONG_TOAST_DELAY);
         if (iter <= 1) iter = 1;
-        for (int i = 0; i < iter; i++)
-            Toast.makeText(m_MainActivity,  mesg, Toast.LENGTH_LONG).show();
+        for (int i = 0; i < iter; i++) {
+            //Toast.makeText(m_MainActivity, mesg, Toast.LENGTH_LONG).show();
+        }
     }
 
     public static String getString(int resId)

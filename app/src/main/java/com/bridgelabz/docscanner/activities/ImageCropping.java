@@ -1,8 +1,10 @@
 package com.bridgelabz.docscanner.activities;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -229,11 +231,25 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
     private void deleteRecord()
     {
         DatabaseUtil database = new DatabaseUtil(this, "Images");
+
+        Log.i(TAG, "deleteRecord: "+mImageUri.getPath());
+
+        Cursor cursor = database.retrieveData("select d_id from Images where " +
+                "org_image_uri = \""+mImageUri.toString()+"\"");
+        cursor.moveToNext();
+        int docId = cursor.getInt(0);
+
         int deletedRows = database.deleteData("Images", "org_image_uri", mImageUri.toString());
-        Toast.makeText(this, deletedRows+" rows deleted from Images", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, deletedRows+" rows deleted from Images", Toast.LENGTH_SHORT).show();
+
+        int numberOfPages = database.retrieveData("select * from Images where d_id = "+docId).getCount();
+
+        ContentValues values = new ContentValues();
+        values.put("number_of_images", numberOfPages);
+        database.updateData("Documents", values, "document_id", docId);
 
         int deletedRow = database.deleteData("Documents", "cover_image_uri", mImageUri.toString());
-        Toast.makeText(this, deletedRow+" rows deleted from Documents", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, deletedRow+" rows deleted from Documents", Toast.LENGTH_SHORT).show();
     }
 
     private void openCamera()

@@ -103,7 +103,7 @@ public class UIUtil
 
     public static void showShortMessage(Activity act, String text)
     {
-        Toast.makeText(act,  text, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(act,  text, Toast.LENGTH_SHORT).show();
     }
 
     public static void showAckMesgDialog(Activity act, int iconResId, final int titleResId,

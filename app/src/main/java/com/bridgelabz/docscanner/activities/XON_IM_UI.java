@@ -214,7 +214,7 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
         ContentValues values = new ContentValues();
         values.put("crp_image_uri", uri.toString());
         int updatedColumns = database.updateData("Images", values, "i_name", imageName);
-        Toast.makeText(this, updatedColumns+" column updated", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, updatedColumns+" column updated", Toast.LENGTH_SHORT).show();
     }
 
     @Override

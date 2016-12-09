@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 {
     private static final int CAMERA_REQUEST = 1;
     private static final int SELECT_PICTURE = 2;
-    private static final int PICK_FROM_FILE = 3;
     private static final String TAG = "MainActivity";
     private static final String SELECT_ALL = "Select All";
     private static final String DESELECT_ALL = "Deselect All";
@@ -328,12 +327,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.select_all:
                 String menuTitle = (String )item.getTitle();
-                if(menuTitle.equalsIgnoreCase("Select All"))
+                if(menuTitle.equalsIgnoreCase(SELECT_ALL))
                 {
                     setAllListItemBackground(SELECTED);
                     item.setTitle(DESELECT_ALL);
                 }
-                else if(menuTitle.equalsIgnoreCase("Deselect All"))
+                else if(menuTitle.equalsIgnoreCase(DESELECT_ALL))
                 {
                     setAllListItemBackground(DESELECTED);
                     item.setTitle(SELECT_ALL);

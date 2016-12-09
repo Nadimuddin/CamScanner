@@ -144,6 +144,18 @@ public class DatabaseUtil extends SQLiteOpenHelper
         return rowsAffected;
     }
 
+    public int updateData(String tableName, ContentValues values, String whereKey, int whereValue)
+    {
+        int rowsAffected;
+
+        //get writable database
+        SQLiteDatabase sqLite = getWritableDatabase();
+
+        rowsAffected = sqLite.update(tableName, values, whereKey+" = " + whereValue, null);
+
+        return rowsAffected;
+    }
+
     public int deleteData(String tableName, String keyColumn, int keyValue)
     {
         //to get how many rows are deleted
@@ -239,8 +251,8 @@ public class DatabaseUtil extends SQLiteOpenHelper
         }
         if(result < 0)
             Toast.makeText(mContext, "Data not inserted", Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(mContext, "Data inserted into "+tableName+" with row ID "+result, Toast.LENGTH_SHORT).show();
+       /* else
+            Toast.makeText(mContext, "Data inserted into "+tableName+" with row ID "+result, Toast.LENGTH_SHORT).show();*/
 
     }
 }
