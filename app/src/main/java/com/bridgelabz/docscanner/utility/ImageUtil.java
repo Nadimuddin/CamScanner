@@ -1,11 +1,14 @@
 package com.bridgelabz.docscanner.utility;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -44,7 +47,7 @@ public class ImageUtil extends Activity
         return id+1;
     }
 
-    public Bitmap modifyBitmap(Bitmap bitmap, int imageViewWidth, int imageViewHeight)
+    public Bitmap getThumbnailImage(Bitmap bitmap, int imageViewWidth, int imageViewHeight)
     {
         Bitmap modifiedBitmap;
         /*int x, y, width, height;
@@ -68,7 +71,7 @@ public class ImageUtil extends Activity
             height = imageViewHeight;
         }
 
-        //Log.i(TAG, "modifyBitmap: "+(x+imageViewWidth) +" <= "+ bitmap.getWidth());
+        //Log.i(TAG, "getThumbnailImage: "+(x+imageViewWidth) +" <= "+ bitmap.getWidth());
 
         modifiedBitmap = Bitmap.createBitmap(bitmap, x, y, width, height);
         int w = modifiedBitmap.getWidth();
@@ -79,7 +82,7 @@ public class ImageUtil extends Activity
         return modifiedBitmap;
     }
 
-    public Bitmap grabImage(File image)
+    public Bitmap compressImage(File image)
     {
         Bitmap bitmap = null;
 
@@ -90,5 +93,26 @@ public class ImageUtil extends Activity
             bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
         }
         return bitmap;
+    }
+
+    public String getRealPath(Uri uri)
+    {
+        Cursor cursor = null;
+        String realUri;
+        try {
+            String temp[] = {MediaStore.Images.Media.DATA};
+            cursor = mActivity.getContentResolver().query(uri, temp, null, null, null);
+            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            realUri = cursor.getString(columnIndex);
+        }
+        finally
+        {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return realUri;
     }
 }

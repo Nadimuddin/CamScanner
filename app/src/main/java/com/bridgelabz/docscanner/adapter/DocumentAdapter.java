@@ -62,10 +62,9 @@ public class DocumentAdapter extends BaseAdapter
         try {
             bitmap = MediaStore.Images.Media.getBitmap(view.getContext().getContentResolver(), imageUri);
         } catch (IOException e) { e.printStackTrace(); }
-        //Log.i(TAG, "getView: width: "+bitmap.getWidth()+" height: "+bitmap.getHeight());
 
         ImageUtil imageUtil = new ImageUtil();
-        modifiedBitmap = imageUtil.modifyBitmap(bitmap, 150, 200);
+        modifiedBitmap = imageUtil.getThumbnailImage(bitmap, 150, 200);
 
         imageView.setImageBitmap(modifiedBitmap);
         pageNo.setText(Integer.toString(position+1));

@@ -179,7 +179,7 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
 
             try
             {
-                uri = Uri.fromFile(new File(uriString.substring(7)));
+                uri = Uri.fromFile(new File(uriString));
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
             }
             catch (Exception e) {
@@ -187,7 +187,7 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
             }
 
             StorageUtil storage = new StorageUtil(this);
-            uriString = m_ImageUri.toString();
+            uriString = m_ImageUri.getPath();
             String imageName = uriString.substring(uriString.lastIndexOf('/')+1);
             String directory = storage.getDirectoryForCroppedImage();
             uri = storage.storeImage(bitmap, directory, imageName);
@@ -200,7 +200,7 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
 
             ImageFiltering fragment = new ImageFiltering();
             Bundle arg = new Bundle();
-            arg.putString("image_uri", uri.toString());
+            arg.putString("image_uri", uri.getPath());
             fragment.setArguments(arg);
 
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -212,7 +212,7 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
     {
         DatabaseUtil database = new DatabaseUtil(this, "Images");
         ContentValues values = new ContentValues();
-        values.put("crp_image_uri", uri.toString());
+        values.put("crp_image_uri", uri.getPath());
         int updatedColumns = database.updateData("Images", values, "i_name", imageName);
         //Toast.makeText(this, updatedColumns+" column updated", Toast.LENGTH_SHORT).show();
     }
@@ -274,27 +274,6 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
         if (m_XONImage != null) m_XONImage.resetMemoryCache();
         m_XONImageFilterView = null; m_XONCanvasView = null;
     }
-
-    /*@Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (m_XONIMViewType != null)
-            {
-                if (m_XONIMViewType.equals(XONIMViewType.Advanced)) {
-                    resetXONIMViewType();
-                    IntentUtil.processIntent(this, XON_IM_UI.class);
-                    m_XONCleanType = XONCleanType.Local;
-                    finish();
-                    return true;
-                }
-            }
-            resetXONIMViewType();
-            IntentUtil.processIntent(this, ImageCropping.class, m_ImageUri);
-            finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }*/
 
     @Override
     public void onBackPressed()
@@ -440,7 +419,8 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
         Button button = (Button) findViewById(R.id.basic_popular_effects_btn);
         m_ImageProcessButtons.put(R.id.basic_popular_effects_btn, button);
         button.setVisibility(View.VISIBLE);
-        button.setOnClickListener(new OnClickListener() {
+        button.setOnClickListener(new OnClickListener()
+        {
             @Override
             public void onClick(View arg0)
             {
@@ -451,7 +431,6 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
                 activateXONImageView(R.id.quick_effects_btn, R.string.popular_effects);
             }
         });
-
     }
 
     public void highlightButton(boolean showScrollMenu)
@@ -498,6 +477,7 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
 
     private void activateXONImageView(int mainMenu, int imgFltrResId)
     {
+        mProgress.show();
         calcFrameLayoutSize();
         if (m_LayoutSize == null && m_LayoutRect == null) {
             Log.i(TAG, "Unable Apply Image "+XONPropertyInfo.getString(imgFltrResId));
@@ -524,7 +504,7 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
         m_XONImageFilterView.activateXONImageFilterView(mainMenu, imgFltrResId, m_XONImage);
 
         // Building up the Template Filters in Background Thread
-        if (!m_ImageFilterActivated ) {
+        if (!m_ImageFilterActivated) {
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("Request", "BuildTemplateFiltersReq");
             ThreadCreator.getInstance().createThread(this, data, true);
@@ -539,12 +519,12 @@ public class XON_IM_UI extends Activity implements ThreadInvokerMethod
             mProgress.show();
             PROGRESS_SHOW = true;
         }*/
-        if(uriString != null) {
+        //if(uriString != null) {
             if (uriString.contains("/")) {
                 showFilters();
                 mProgress.dismiss();
             }
-        }
+        //}
     }
 
     private void calcFrameLayoutSize()

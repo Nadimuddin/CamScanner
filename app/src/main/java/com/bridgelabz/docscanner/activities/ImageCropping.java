@@ -137,13 +137,6 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
 
     }
 
-    /*private void saveInPreference(Uri uri)
-    {
-        SaveSharedPreference sharedPreference = new SaveSharedPreference(this);
-        String uriString = uri.toString();
-        sharedPreference.setPreferences(HANDLING_BACK_PRESS_KEY, uriString);
-    }*/
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -235,11 +228,11 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
         Log.i(TAG, "deleteRecord: "+mImageUri.getPath());
 
         Cursor cursor = database.retrieveData("select d_id from Images where " +
-                "org_image_uri = \""+mImageUri.toString()+"\"");
+                "org_image_uri = \""+mImageUri.getPath()+"\"");
         cursor.moveToNext();
         int docId = cursor.getInt(0);
 
-        int deletedRows = database.deleteData("Images", "org_image_uri", mImageUri.toString());
+        int deletedRows = database.deleteData("Images", "org_image_uri", mImageUri.getPath());
         //Toast.makeText(this, deletedRows+" rows deleted from Images", Toast.LENGTH_SHORT).show();
 
         int numberOfPages = database.retrieveData("select * from Images where d_id = "+docId).getCount();
@@ -248,7 +241,7 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
         values.put("number_of_images", numberOfPages);
         database.updateData("Documents", values, "document_id", docId);
 
-        int deletedRow = database.deleteData("Documents", "cover_image_uri", mImageUri.toString());
+        database.deleteData("Documents", "cover_image_uri", mImageUri.getPath());
         //Toast.makeText(this, deletedRow+" rows deleted from Documents", Toast.LENGTH_SHORT).show();
     }
 
@@ -276,7 +269,7 @@ public class ImageCropping extends AppCompatActivity implements View.OnClickList
         {
             ImageUtil imageUtil = new ImageUtil(this);
 
-            Bitmap bitmap = imageUtil.grabImage(mImage);
+            Bitmap bitmap = imageUtil.compressImage(mImage);
 
             StorageUtil storage= new StorageUtil(this);
 

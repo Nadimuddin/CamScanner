@@ -462,8 +462,20 @@ public class XONImageHolder implements XONClickListener{
                     m_CropDisplayRect);
             Rect origRect = setCropView(m_ReSampledSize);
             if (origRect != null) {
-                resImg = Bitmap.createBitmap(srcImg.get(), origRect.left, origRect.top,
-                        origRect.width(), origRect.height());
+                Log.i(TAG, "new bitmap detail:\nbitmapWidth: "+srcImg.get().getWidth()+
+                "   bitmapHeight: "+srcImg.get().getHeight()+
+                "\norigRect.left: "+origRect.left+"   origRect.width(): "+origRect.width()+
+                "\norigRect.top: "+origRect.top+"   origRect.height(): "+origRect.height());
+
+                int x = origRect.left, y = origRect.top;
+                int width = origRect.width(), height = origRect.height();
+
+                if(x + width <= srcImg.get().getWidth() && y + height <= srcImg.get().getHeight()) {
+                    resImg = Bitmap.createBitmap(srcImg.get(), origRect.left, origRect.top,
+                            origRect.width(), origRect.height());
+                    Log.i(TAG, "getSrcImage: Image processed");
+                    //System.exit(0);
+                }
                 if (srcImg.get() != resImg) {
                     srcImg.get().recycle(); srcImg.clear(); srcImg = null;
                     srcImg = new WeakReference<Bitmap>(resImg);

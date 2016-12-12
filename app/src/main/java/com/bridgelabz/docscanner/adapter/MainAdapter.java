@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +63,7 @@ public class MainAdapter extends BaseAdapter
         TextView dateTime = (TextView)view.findViewById(R.id.dateTime);
         TextView imageCount = (TextView)view.findViewById(R.id.imageCount);
 
-        String uriString = mArrayList.get(i).getImageUri().substring(7);
+        String uriString = mArrayList.get(i).getImageUri();
         Uri imageUri = Uri.fromFile(new File(uriString));
 
         try {
@@ -72,7 +71,7 @@ public class MainAdapter extends BaseAdapter
         } catch (IOException e) { e.printStackTrace(); }
 
         ImageUtil imageUtil = new ImageUtil();
-        modifiedBitmap = imageUtil.modifyBitmap(bitmap, 100, 70);
+        modifiedBitmap = imageUtil.getThumbnailImage(bitmap, 100, 70);
 
         coverImage.setImageBitmap(modifiedBitmap);
         docName.setText(mArrayList.get(i).getDocumentName());
@@ -80,35 +79,5 @@ public class MainAdapter extends BaseAdapter
         imageCount.setText(Integer.toString(mArrayList.get(i).getImageCount()));
 
         return view;
-    }
-
-    private Bitmap modifyBitmap(Bitmap bitmap, int imageViewWidth, int imageViewHeight)
-    {
-        Bitmap modifiedBitmap;
-        int x, y, width, height;
-        int bitmapWidth = bitmap.getWidth(), bitmapHeight = bitmap.getHeight();
-
-        if(bitmapWidth/2 <= imageViewWidth/2) {
-            x = 0;
-            width = bitmapWidth;
-        }
-        else {
-            x = (bitmap.getWidth() / 2) - 50;
-            width = imageViewWidth;
-        }
-
-        if(bitmapHeight/2 <= imageViewHeight/2) {
-            y = 0;
-            height = bitmapHeight;
-        }
-        else {
-            y = (bitmap.getHeight() / 2) - 35;
-            height = imageViewHeight;
-        }
-
-        Log.i(TAG, "modifyBitmap: "+(x+imageViewWidth) +" <= "+ bitmap.getWidth());
-
-        modifiedBitmap = Bitmap.createBitmap(bitmap, x, y, width, height);
-        return modifiedBitmap;
     }
 }

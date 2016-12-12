@@ -69,11 +69,11 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     private static final String TAG = "DocumentActivity";
     private static final int CAMERA_REQUEST = 1;
     private static final int SELECT_PICTURE = 2;
-    private static final int CROP_FROM_CAMERA = 0;
     private static final String SELECT_ALL = "Select All";
     private static final String DESELECT_ALL = "Deselect_All";
     private static final boolean SELECTED = true;
     private static final boolean DESELECTED = false;
+    private static boolean UPDATE_COVER_IMAGE = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -182,7 +182,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
             StorageUtil storage= new StorageUtil(this);
 
             //get bitmap of camera image
-            Bitmap bitmap = imageUtil.grabImage(mImage);
+            Bitmap bitmap = imageUtil.compressImage(mImage);
 
             /* get directory
              * i.e. /data/data/com.bridgelabz.docscanner/images     */
@@ -199,9 +199,6 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
             updateDocumentTable();
 
-            /*Intent intent = new Intent(this, ImageCropping.class);
-            intent.putExtra("image_uri", imageUri.toString());
-            startActivity(intent);*/
             processImage(imageUri);
         }
 
@@ -210,40 +207,30 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
             //get uri of selected image
             Uri selectedImageUri = data.getData();
 
-            Uri storedImageUri = null;
+            String path = imageUtil.getRealPath(selectedImageUri);
 
-            try
-            {
-                //convert uri to bitmap
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+            File file = new File(path);
 
-                //store image in local directory
-                storedImageUri = storeImage(bitmap);
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
+            Bitmap bitmap = imageUtil.compressImage(file);
+
+            Uri storedImageUri = storeImage(bitmap);
 
             //insert image details in database
             insertImageRecord(storedImageUri);
 
             updateDocumentTable();
 
-            /*Intent intent = new Intent(this, ImageCropping.class);
-            intent.putExtra("image_uri", storedImageUri.toString());
-            startActivity(intent);*/
             processImage(storedImageUri);
         }
-        else if(requestCode == CROP_FROM_CAMERA)
+        /*else if(requestCode == CROP_FROM_CAMERA)
         {
             Bundle extras = data.getExtras();
             if (extras != null)
             {
                 Bitmap mBitmap = extras.getParcelable("data");
                 croppedImage.setImageBitmap(mBitmap);
-
             }
-        }
+        }*/
     }
 
     private void processImage(Uri imageUri)
@@ -267,6 +254,9 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         String dateTime = DateFormat.getDateTimeInstance().format(new Date());
 
         ContentValues values = new ContentValues();
+
+        if(UPDATE_COVER_IMAGE)
+            values.put("cover_image_uri", mArrayList.get(0).getPath());
         values.put("date_time", dateTime);
         values.put("number_of_images", numberOfImages);
 
@@ -301,7 +291,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
                 "(select document_id from Documents where d_name = \""+mDocumentName+"\" )");
         while (cursor.moveToNext())
         {
-            uriString = cursor.getString(0).substring(7);
+            uriString = cursor.getString(0);
             Log.i(TAG, "retrieveUriFromDatabase: "+uriString);
             arrayList.add(Uri.fromFile(new File(uriString)));
         }
@@ -319,10 +309,10 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
             mGridView.setAdapter(adapter);
         }
-        else {
+        /*else {
             Toast.makeText(this, "nothing to show in "+mDocumentName, Toast.LENGTH_SHORT).show();
             mGridView.setAdapter(null);
-        }
+        }*/
     }
 
     private void insertImageRecord(Uri imageUri)
@@ -341,7 +331,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         cursor.close();
 
         //add record to database
-        db.prepareDataForInsertion("Images", imageUri.toString(), docId);
+        db.prepareDataForInsertion("Images", imageUri.getPath(), docId);
     }
 
     @Override
@@ -426,7 +416,6 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
                 break;*/
         }
         return super.onOptionsItemSelected(item);
-        //return false;
     }
 
     @Override
@@ -443,8 +432,6 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
-
-
     private void showAlert()
     {
         DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
@@ -458,15 +445,27 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
                         {
                             Uri uri = mArrayList.get(mSelectedItems.get(i));
                             deletePage(uri);
+                            if(mSelectedItems.get(i) == 0)
+                                UPDATE_COVER_IMAGE = true;
                         }
                         mSelection = false;
-                        setImages();
-                        setBottomToolbar(false);
-                        changeOptionMenu();
-                        mDocTitle.setText(mDocumentName);
-                        mSelectedItemCount = 0;
-                        mIsSelected = new boolean[mArrayList.size()];
-                        updateDocumentTable();
+                        if(mSelectedItems.size() == mGridView.getCount())
+                        {
+                            Toast.makeText(getBaseContext(), "All pages in "+mDocumentName+" are deleted, unable to open document",
+                                    Toast.LENGTH_LONG).show();
+                            //mGridView.setAdapter(null);
+                            deleteDocument(mDocumentName);
+                            onBackPressed();
+                        }
+                        else {
+                            setImages();
+                            setBottomToolbar(false);
+                            changeOptionMenu();
+                            mDocTitle.setText(mDocumentName);
+                            mSelectedItemCount = 0;
+                            mIsSelected = new boolean[mArrayList.size()];
+                            updateDocumentTable();
+                        }
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -486,8 +485,20 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         StorageUtil storage = new StorageUtil(this);
 
         storage.deleteImage(uri.getPath());
-        database.deleteData("Images", "fltr_image_uri", uri.toString());
 
+        String imageName = uri.getPath().substring(uri.getPath().lastIndexOf('/')+1);
+        storage.deleteImage(storage.getDirectoryForCroppedImage()+"/"+imageName);
+        storage.deleteImage(storage.getDirectoryForOriginalImage()+"/"+imageName);
+
+        database.deleteData("Images", "fltr_image_uri", uri.getPath());
+
+    }
+
+    private void deleteDocument(String documentName)
+    {
+        DatabaseUtil database = new DatabaseUtil(this, "Documents");
+
+        database.deleteData("Documents", "d_name", documentName);
     }
 
     @Override

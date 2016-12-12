@@ -30,10 +30,8 @@ import com.bridgelabz.docscanner.model.DocumentDetails;
 import com.bridgelabz.docscanner.utility.DatabaseUtil;
 import com.bridgelabz.docscanner.utility.ImageUtil;
 import com.bridgelabz.docscanner.utility.StorageUtil;
-//import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
@@ -181,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setDocumentList();
             ImageUtil imageUtil = new ImageUtil(this);
 
-            Bitmap bitmap = imageUtil.grabImage(mImage);
+            Bitmap bitmap = imageUtil.compressImage(mImage);
             Uri imageUri = storeImage(bitmap);
             insertDocRecord(imageUri);
 
@@ -190,16 +188,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(requestCode == SELECT_PICTURE && resultCode == RESULT_OK && result != null)
         {
             Uri selectedImage = result.getData(), storedImageUri = null;
-            //ImageUtil imageUtil = new ImageUtil(this);
+            ImageUtil imageUtil = new ImageUtil(this);
 
-            try {
+            /*try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-                //bitmap = imageUtil.grabImage(new File(selectedImage.getPath()));
+
                 storedImageUri = storeImage(bitmap);
             }
             catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
+            String realUri = imageUtil.getRealPath(selectedImage);
+
+            File file = new File(realUri);
+
+            Bitmap bitmap = imageUtil.compressImage(file);
+            storedImageUri = storeImage(bitmap);
 
             insertDocRecord(storedImageUri);
 
@@ -259,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ImageUtil imageUtil = new ImageUtil(this);
 
         /* get directory
-         * i.e. /data/data/com.bridgelabz.camscannertrail/app_images */
+         * i.e. /data/data/com.bridgelabz.camscannertrail/app_original_images */
         String directory = storage.getDirectoryForOriginalImage();
 
         int imageId = imageUtil.nextImageID("Images");
@@ -280,10 +284,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void insertDocRecord(Uri imageUri)
     {
+        ImageUtil imageUtil = new ImageUtil(this);
+        StorageUtil storage = new StorageUtil(this);
+
+        int imageId = imageUtil.nextImageID("Images");
+        String imagePath = storage.getDirectoryForFilteredImage()+"/CamScannerImage"+imageId;
+
         DatabaseUtil db = new DatabaseUtil(this, "Documents");
 
         //add record to Documents table
-        db.prepareDataForInsertion("Documents", imageUri.toString(), 0);
+        db.prepareDataForInsertion("Documents", imagePath, 0);
 
         Cursor cursor = db.retrieveData("select document_id from Documents");
         cursor.moveToLast();
@@ -293,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         db = new DatabaseUtil(this, "Images");
 
         //add record to Images table also
-        db.prepareDataForInsertion("Images", imageUri.toString(), docId);
+        db.prepareDataForInsertion("Images", imageUri.getPath(), docId);
     }
 
     @Override
@@ -429,7 +439,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         while (cursor.moveToNext())
         {
             String directory = cursor.getString(0);
-            directory = directory.substring(7);
             storage.deleteImage(directory);
         }
         cursor.close();

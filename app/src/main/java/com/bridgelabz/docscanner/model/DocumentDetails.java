@@ -7,14 +7,14 @@ package com.bridgelabz.docscanner.model;
 public class DocumentDetails
 {
     private String mDocumentName;
-    private String mImageUri;
+    private String mCoverImageUri;
     private String mDateTime;
     private int mImageCount;
 
     public DocumentDetails(String documentName, String imageUri, String dateTime, int imageCount)
     {
         mDocumentName = documentName;
-        mImageUri = imageUri;
+        mCoverImageUri = imageUri;
         mDateTime = dateTime;
         mImageCount = imageCount;
     }
@@ -26,7 +26,7 @@ public class DocumentDetails
 
     public String getImageUri()
     {
-        return mImageUri;
+        return mCoverImageUri;
     }
 
     public String getDateTime() {

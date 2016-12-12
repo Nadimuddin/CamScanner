@@ -128,7 +128,7 @@ public class XONImageProcessHandler {
     private void saveUriInPreference()
     {
         SaveSharedPreference sharedPreference = new SaveSharedPreference(mContext);
-        sharedPreference.setPreferences(KEY_FOR_TEMP_CROPPED_IMAGE, mCroppedImageUri.toString());
+        sharedPreference.setPreferences(KEY_FOR_TEMP_CROPPED_IMAGE, mCroppedImageUri.getPath());
     }
 
     /**
@@ -149,7 +149,7 @@ public class XONImageProcessHandler {
         task.execute(data, taskProc);*/
 
         final ProgressDialog progressDialog = new ProgressDialog(mContext);
-        progressDialog.setMessage("Processing Image");
+        progressDialog.setMessage("Processing Image...");
         progressDialog.show();
 
         AsyncTaskInvoker task = new AsyncTaskInvoker(){

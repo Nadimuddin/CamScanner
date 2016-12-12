@@ -141,7 +141,7 @@ public class StorageUtil
         return tempFile;
     }
 
-    /*public Bitmap grabImage(File image)
+    /*public Bitmap compressImage(File image)
     {
         Bitmap bitmap = null;
 

@@ -54,7 +54,7 @@ public class ImageFiltering extends Fragment implements View.OnClickListener, Fi
     {
         mView = inflater.inflate(R.layout.image_filtering, container, false);
 
-        String uriString = getArguments().getString("image_uri").substring(7);
+        String uriString = getArguments().getString("image_uri");
         mUri = Uri.fromFile(new File(uriString));
 
         mArrayList = new ArrayList<>();
@@ -145,7 +145,6 @@ public class ImageFiltering extends Fragment implements View.OnClickListener, Fi
                 storeFilteredImage();
 
                 openDocumentActivity();
-                //getActivity().finish();
                 break;
         }
     }
@@ -155,7 +154,7 @@ public class ImageFiltering extends Fragment implements View.OnClickListener, Fi
         StorageUtil storage = new StorageUtil(getActivity());
         Bitmap bitmap = ((BitmapDrawable)mImageView.getDrawable()).getBitmap();
         String directory = storage.getDirectoryForFilteredImage();
-        String uriString = mUri.toString();
+        String uriString = mUri.getPath();
         String  imageName = uriString.substring(uriString.lastIndexOf('/')+1);
         Uri uri = storage.storeImage(bitmap, directory, imageName);
 
@@ -167,9 +166,16 @@ public class ImageFiltering extends Fragment implements View.OnClickListener, Fi
     {
         DatabaseUtil database = new DatabaseUtil(getActivity(), "Images");
         ContentValues values = new ContentValues();
-        values.put("fltr_image_uri", uri.toString());
-        int updatedColumns = database.updateData("Images", values, "i_name", imageName);
-        //Toast.makeText(getActivity(), updatedColumns+" column updated", Toast.LENGTH_SHORT).show();
+        values.put("fltr_image_uri", uri.getPath());
+        database.updateData("Images", values, "i_name", imageName);
+
+        /*Cursor cursor = database.retrieveData("select d_id from Images where i_name = \""
+                +imageName+"\"");
+        cursor.moveToNext();
+        int docId = cursor.getInt(0);
+        values.clear();
+        values.put("cover_image_uri", uri.getPath());
+        database.updateData("Documents", values, "document_id", docId);*/
     }
 
     private void openDocumentActivity()
@@ -177,11 +183,11 @@ public class ImageFiltering extends Fragment implements View.OnClickListener, Fi
         Intent intent = new Intent(getActivity(), DocumentActivity.class);
         DatabaseUtil database = new DatabaseUtil(getActivity(), "Documents");
 
-        String uriString = mUri.toString();
-        String imageName = uriString.substring(uriString.lastIndexOf('/')+1);
+        //String uriString = mUri.getPath();
+        //String imageName = uriString.substring(uriString.lastIndexOf('/')+1);
 
         Cursor cursor = database.retrieveData("select d_name from Documents where document_id =" +
-                "(select d_id from Images where crp_image_uri = \""+mUri.toString()+"\")");
+                "(select d_id from Images where crp_image_uri = \""+mUri.getPath()+"\")");
         cursor.moveToNext();
         String docName = cursor.getString(0);
         cursor.close();
