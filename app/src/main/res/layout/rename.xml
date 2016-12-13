@@ -7,14 +7,14 @@
         android:layout_height="wrap_content"
         android:hint="Enter new name"
         android:selectAllOnFocus="true"
-        android:id="@+id/newName" />
+        android:id="@+id/new_name" />
 
     <Button
         android:text="OK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ok"
-        android:layout_below="@+id/newName"
+        android:layout_below="@+id/new_name"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cancel"
-        android:layout_below="@+id/newName"
+        android:layout_below="@+id/new_name"
         android:layout_toLeftOf="@+id/ok"
         android:layout_toStartOf="@+id/ok" />
 

@@ -10,8 +10,8 @@
     <item android:id="@+id/retake"
         android:title="Retake"/>
 
-    <!--<item android:id="@+id/pageName"
-        android:title="Page Name"/>-->
+    <item android:id="@+id/pageName"
+        android:title="Page Name"/>
 
     <item android:id="@+id/delete"
         android:title="Delete"/>

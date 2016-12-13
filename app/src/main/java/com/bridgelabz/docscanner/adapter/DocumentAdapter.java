@@ -12,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bridgelabz.docscanner.R;
+import com.bridgelabz.docscanner.model.PageDetail;
 import com.bridgelabz.docscanner.utility.ImageUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -24,9 +26,9 @@ import java.util.ArrayList;
 public class DocumentAdapter extends BaseAdapter
 {
     private static final String TAG = "DocumentAdapter";
-    private ArrayList<Uri> mArrayList;
+    private ArrayList<PageDetail> mArrayList;
     private LayoutInflater mInflater;
-    public DocumentAdapter(Context context, ArrayList<Uri> arrayList)
+    public DocumentAdapter(Context context, ArrayList<PageDetail> arrayList)
     {
         mInflater = LayoutInflater.from(context);
         mArrayList = arrayList;
@@ -51,23 +53,26 @@ public class DocumentAdapter extends BaseAdapter
     @Override
     public View getView(int position, View view, ViewGroup viewGroup)
     {
-        Bitmap bitmap = null, modifiedBitmap;
+        Bitmap bitmap = null, thumbnail;
         if(view == null)
             view = mInflater.inflate(R.layout.document_content, viewGroup, false);
 
         ImageView imageView = (ImageView)view.findViewById(R.id.page);
         TextView pageNo = (TextView)view.findViewById(R.id.page_number);
 
-        Uri imageUri = mArrayList.get(position);
+        PageDetail pageDetail = mArrayList.get(position);
+        String uriString = pageDetail.getImageUri();
+        Uri imageUri = Uri.fromFile(new File(uriString));
+        String pageName = pageDetail.getPageName();
         try {
             bitmap = MediaStore.Images.Media.getBitmap(view.getContext().getContentResolver(), imageUri);
         } catch (IOException e) { e.printStackTrace(); }
 
         ImageUtil imageUtil = new ImageUtil();
-        modifiedBitmap = imageUtil.getThumbnailImage(bitmap, 150, 200);
+        thumbnail = imageUtil.getThumbnailImage(bitmap, 150, 200);
 
-        imageView.setImageBitmap(modifiedBitmap);
-        pageNo.setText(Integer.toString(position+1));
+        imageView.setImageBitmap(thumbnail);
+        pageNo.setText(Integer.toString(position+1)+" "+pageName);
         return view;
     }
 }

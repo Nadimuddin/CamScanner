@@ -15,11 +15,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.bridgelabz.docscanner.R;
 import com.bridgelabz.docscanner.adapter.ImagesAdapter;
+import com.bridgelabz.docscanner.dialog.PageNameDialog;
+import com.bridgelabz.docscanner.interfaces.SetPageName;
+import com.bridgelabz.docscanner.model.PageDetail;
 import com.bridgelabz.docscanner.utility.DatabaseUtil;
 import com.bridgelabz.docscanner.utility.ImageUtil;
 import com.bridgelabz.docscanner.utility.StorageUtil;
@@ -39,12 +43,13 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
     ImageButton mBackButton;
     ViewPager mViewPager;
     ImagesAdapter mAdapter;
-    ArrayList<Uri> mUris;
+    ArrayList<Uri> mUris = new ArrayList<>();
+    ArrayList<PageDetail> mArrayList;
     File mImage;
     private static boolean FROM_CAMERA = false;
 
     private static final int CAMERA_REQUEST = 1;
-    private static boolean UPDATE_COVER_IMAGE = false;
+    //private static boolean UPDATE_COVER_IMAGE = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,7 +57,15 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_viewer);
 
-        mUris = (ArrayList<Uri>) getIntent().getSerializableExtra("list_of_images");
+        //mUris = (ArrayList<Uri>) getIntent().getSerializableExtra("list_of_images");
+
+        mArrayList = (ArrayList<PageDetail>)getIntent().getSerializableExtra("list_of_images");
+
+        for(int i=0; i<mArrayList.size(); i++)
+        {
+            String uriString = mArrayList.get(i).getImageUri();
+            mUris.add(Uri.fromFile(new File(uriString)));
+        }
 
         int currentItem = getIntent().getIntExtra("current_image", 0);
         mToolbar = (Toolbar)findViewById(R.id.imageViewerToolbar);
@@ -62,7 +75,7 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
 
-        mAdapter = new ImagesAdapter(getSupportFragmentManager(), mUris);
+        mAdapter = new ImagesAdapter(getSupportFragmentManager(), mArrayList);
 
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(currentItem);
@@ -101,12 +114,10 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
             case R.id.retake:
                 StorageUtil storage = new StorageUtil(this);
                 Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-                //mImage=null;
                 try {
                     mImage = storage.createTemporaryFile();
                 }
                 catch (Exception e) {
-                    //Log.i(TAG, "can't create file to take picture! "+e.toString());
                     Toast.makeText(this, "Please check SD card! Image shot is impossible",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -115,8 +126,21 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 break;
 
-            /*case R.id.pageName:
-                break;*/
+            case R.id.pageName:
+                Uri currentImageUri = mUris.get(mViewPager.getCurrentItem());
+                DatabaseUtil database = new DatabaseUtil(this, "Images");
+                Cursor cursor = database.retrieveData("select image_id from Images where fltr_image_uri " +
+                        "=\""+currentImageUri.getPath()+"\"");
+                cursor.moveToNext();
+                final int imageId = cursor.getInt(0);
+                PageNameDialog dialog = new PageNameDialog(this, imageId, new SetPageName() {
+                    @Override
+                    public void setPageName() {
+                        setImages(imageId);
+                    }
+                });
+                dialog.show();
+                break;
 
             case R.id.delete:
                 /*DatabaseUtil database = new DatabaseUtil(this, "Images");
@@ -170,8 +194,8 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
                         else
                         {
                             setImages(docId);
-                            if (mViewPager.getCurrentItem() == 0)
-                                UPDATE_COVER_IMAGE = true;
+                            /*if (mViewPager.getCurrentItem() == 0)
+                                UPDATE_COVER_IMAGE = true;*/
                             updateDocumentTable(docId);
                         }
                         break;
@@ -191,7 +215,7 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
     {
         mUris.clear();
         mUris = retrieveUriFromDatabase(docId);
-        mAdapter = new ImagesAdapter(getSupportFragmentManager(), mUris);
+        mAdapter = new ImagesAdapter(getSupportFragmentManager(), mArrayList);
         //mAdapter.notifyDataSetChanged();
         mViewPager.setAdapter(mAdapter);
     }
@@ -229,8 +253,8 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
 
         ContentValues values = new ContentValues();
 
-        if(UPDATE_COVER_IMAGE)
-            values.put("cover_image_uri", mUris.get(0).getPath());
+        //if(UPDATE_COVER_IMAGE)
+        values.put("cover_image_uri", mUris.get(0).getPath());
         values.put("date_time", dateTime);
         values.put("number_of_images", numberOfImages);
 

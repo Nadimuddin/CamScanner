@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.bridgelabz.docscanner.R;
 import com.bridgelabz.docscanner.adapter.MainAdapter;
-import com.bridgelabz.docscanner.dialog.RenameDialogBox;
+import com.bridgelabz.docscanner.dialog.RenameDialog;
 import com.bridgelabz.docscanner.interfaces.UpdateDocumentName;
 import com.bridgelabz.docscanner.model.DocumentDetails;
 import com.bridgelabz.docscanner.utility.DatabaseUtil;
@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Cursor cursor = db.retrieveData("select * from "+tableName);
         while (cursor.moveToNext())
         {
-            arrayList.add(new DocumentDetails(cursor.getString(1), cursor.getString(2),
+            arrayList.add(new DocumentDetails(cursor.getString(1), Uri.fromFile(new File(cursor.getString(2))),
                     cursor.getString(3), cursor.getInt(4)));
         }
         cursor.close();
@@ -490,7 +490,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(item.getItemId() == R.id.rename)
         {
             String oldName = mArrayList.get(mSelectedItems.get(0)).getDocumentName();
-            RenameDialogBox rename = new RenameDialogBox(this, oldName, new UpdateDocumentName() {
+            RenameDialog rename = new RenameDialog(this, oldName, new UpdateDocumentName() {
                 @Override
                 public void updateDocumentName(String newName)
                 {

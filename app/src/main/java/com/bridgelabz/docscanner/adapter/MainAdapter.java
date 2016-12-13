@@ -63,8 +63,9 @@ public class MainAdapter extends BaseAdapter
         TextView dateTime = (TextView)view.findViewById(R.id.dateTime);
         TextView imageCount = (TextView)view.findViewById(R.id.imageCount);
 
-        String uriString = mArrayList.get(i).getImageUri();
-        Uri imageUri = Uri.fromFile(new File(uriString));
+        //String uriString = mArrayList.get(i).getImageUri();
+        //Uri imageUri = Uri.fromFile(new File(uriString));
+        Uri imageUri = mArrayList.get(i).getImageUri();
 
         try {
             bitmap = MediaStore.Images.Media.getBitmap(view.getContext().getContentResolver(), imageUri);

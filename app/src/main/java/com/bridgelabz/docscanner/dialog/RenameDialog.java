@@ -26,19 +26,19 @@ import java.util.Date;
  * Created by bridgelabz1 on 27/10/16.
  */
 
-public class RenameDialogBox extends Dialog implements View.OnClickListener
+public class RenameDialog extends Dialog implements View.OnClickListener
 {
     private Context mContext;
     private EditText mEditText;
-    private Button ok, cancel;
+    private Button mOk, mCancel;
     private String mOldName;
     private ChangeDocumentName mChange;
     private UpdateDocumentName mUpdateName;
     private InputMethodManager mInputMethod;
 
     private static final String DIALOG_TITLE = "Rename Document";
-    private static final String TAG = "RenameDialogBox";
-    public RenameDialogBox(Context context, String oldName, ChangeDocumentName change)
+    private static final String TAG = "RenameDialog";
+    public RenameDialog(Context context, String oldName, ChangeDocumentName change)
     {
         super(context);
         setTitle(DIALOG_TITLE);
@@ -47,7 +47,7 @@ public class RenameDialogBox extends Dialog implements View.OnClickListener
         mChange = change;
     }
 
-    public RenameDialogBox(Context context, String oldName, UpdateDocumentName updateName)
+    public RenameDialog(Context context, String oldName, UpdateDocumentName updateName)
     {
         super(context);
         setTitle(DIALOG_TITLE);
@@ -61,22 +61,22 @@ public class RenameDialogBox extends Dialog implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rename);
 
-        mEditText = (EditText)findViewById(R.id.newName);
-        ok = (Button)findViewById(R.id.ok);
-        cancel = (Button)findViewById(R.id.cancel);
+        mEditText = (EditText)findViewById(R.id.new_name);
+        mOk = (Button)findViewById(R.id.ok);
+        mCancel = (Button)findViewById(R.id.cancel);
 
         mInputMethod = (InputMethodManager)mContext.getSystemService(mContext.INPUT_METHOD_SERVICE);
         mInputMethod.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         mEditText.setText(mOldName);
 
-        ok.setOnClickListener(this);
-        cancel.setOnClickListener(this);
+        mOk.setOnClickListener(this);
+        mCancel.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v)
     {
-        if (v == ok)
+        if (v == mOk)
         {
             int result = 0;
             String newName = mEditText.getText().toString();
@@ -99,7 +99,7 @@ public class RenameDialogBox extends Dialog implements View.OnClickListener
                 Toast.makeText(mContext, "Rename failed, data not updated", Toast.LENGTH_SHORT).show();
             }
         }
-        else if(v == cancel) {
+        else if(v == mCancel) {
             dismiss();
             mInputMethod.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         }
@@ -108,10 +108,6 @@ public class RenameDialogBox extends Dialog implements View.OnClickListener
     private int updateName(String newName)
     {
         DatabaseUtil db = new DatabaseUtil(mContext, "Documents");
-
-        /*Cursor cursor = db.retrieveData("select document_id, cover_image_uri, number_of_images from Documents " +
-                "where d_name = \""+mOldName+"\"");
-        cursor.moveToNext();*/
 
         String dateTime = DateFormat.getDateTimeInstance().format(new Date());
 

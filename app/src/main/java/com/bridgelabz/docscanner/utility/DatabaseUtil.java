@@ -32,6 +32,7 @@ public class DatabaseUtil extends SQLiteOpenHelper
     private static String COL4;
     private static String COL5;
     private static String COL6;
+    private static String COL7;
 
     public DatabaseUtil(Context context, String tableName) {
         super(context, DATABASE_NAME, null, 1);
@@ -64,6 +65,7 @@ public class DatabaseUtil extends SQLiteOpenHelper
             COL4 = "crp_image_uri";
             COL5 = "fltr_image_uri";
             COL6 = "d_id";
+            COL7 = "page_name";
 
             createTableStatement = "create table " + tableName + "(" +
                     COL1 + " integer primary key autoincrement," +
@@ -71,7 +73,8 @@ public class DatabaseUtil extends SQLiteOpenHelper
                     COL3 + " text,"+
                     COL4 + " text,"+
                     COL5 + " text,"+
-                    COL6 + " integer)";
+                    COL6 + " integer," +
+                    COL7 + " text)";
         }
 
         String getPref = mPref.getPreference(tableName+"_table");
@@ -110,13 +113,14 @@ public class DatabaseUtil extends SQLiteOpenHelper
         return result;
     }
 
-    public long insertData(String tableName, String col2Data, String col3Data, int col4Data)
+    public long insertData(String tableName, String col2Data, String col3Data, int col6Data, String col7Data)
     {
         SQLiteDatabase sqLite = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL2, col2Data);
         values.put(COL3, col3Data);
-        values.put(COL6, col4Data);
+        values.put(COL6, col6Data);
+        values.put(COL7, col7Data);
 
         long result = sqLite.insert(tableName, null, values);
         return result;
@@ -246,7 +250,7 @@ public class DatabaseUtil extends SQLiteOpenHelper
                 /*cursor = retrieveData("select * from Documents");
                 cursor.moveToLast();*/
 
-                result = insertData(tableName, imageName, imageUri, docId);
+                result = insertData(tableName, imageName, imageUri, docId, "");
                 break;
         }
         if(result < 0)

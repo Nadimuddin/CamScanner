@@ -28,8 +28,9 @@ import android.widget.Toast;
 
 import com.bridgelabz.docscanner.R;
 import com.bridgelabz.docscanner.adapter.DocumentAdapter;
-import com.bridgelabz.docscanner.dialog.RenameDialogBox;
+import com.bridgelabz.docscanner.dialog.RenameDialog;
 import com.bridgelabz.docscanner.interfaces.ChangeDocumentName;
+import com.bridgelabz.docscanner.model.PageDetail;
 import com.bridgelabz.docscanner.utility.DatabaseUtil;
 import com.bridgelabz.docscanner.utility.ImageUtil;
 import com.bridgelabz.docscanner.utility.StorageUtil;
@@ -57,7 +58,8 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     private Menu mMenu;
     private MenuItem mSelectAll;
     private String mDocumentName;
-    private ArrayList<Uri> mArrayList;
+    private ArrayList<Uri> mUris = new ArrayList<>();
+    private ArrayList<PageDetail> mArrayList;
     File mImage;
     Uri mImageUri;
     int mPosition;
@@ -73,7 +75,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     private static final String DESELECT_ALL = "Deselect_All";
     private static final boolean SELECTED = true;
     private static final boolean DESELECTED = false;
-    private static boolean UPDATE_COVER_IMAGE = false;
+    //private static boolean UPDATE_COVER_IMAGE = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -117,6 +119,11 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
         //get number of images in a document
         int num = mArrayList.size();
+
+        for(int i=0; i<num; i++) {
+            String uriString = mArrayList.get(i).getImageUri();
+            mUris.add(Uri.fromFile(new File(uriString)));
+        }
 
         //boolean to get status of image whether it is selected or unselected
         mIsSelected = new boolean[num];
@@ -276,8 +283,9 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
         ContentValues values = new ContentValues();
 
-        if(UPDATE_COVER_IMAGE)
-            values.put("cover_image_uri", mArrayList.get(0).getPath());
+        //if(UPDATE_COVER_IMAGE)
+        //String uriString = mArrayList.get(0).getImageUri();
+        values.put("cover_image_uri", mArrayList.get(0).getImageUri());
         values.put("date_time", dateTime);
         values.put("number_of_images", numberOfImages);
 
@@ -301,20 +309,22 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         return imageUri;
     }
 
-    private ArrayList<Uri> retrieveUriFromDatabase(String tableName)
+    private ArrayList<PageDetail> retrieveUriFromDatabase(String tableName)
     {
-        ArrayList<Uri> arrayList = new ArrayList<>();
+        ArrayList<PageDetail> arrayList = new ArrayList<>();
         DatabaseUtil db = new DatabaseUtil(this, tableName);
-        String uriString;
+        String uriString, pageName;
 
         //get Uri from Images table
-        Cursor cursor = db.retrieveData("select fltr_image_uri from "+tableName+" where d_id = " +
+        Cursor cursor = db.retrieveData("select fltr_image_uri, page_name from "+tableName+" where d_id = " +
                 "(select document_id from Documents where d_name = \""+mDocumentName+"\" )");
         while (cursor.moveToNext())
         {
             uriString = cursor.getString(0);
+            pageName = cursor.getString(1);
             Log.i(TAG, "retrieveUriFromDatabase: "+uriString);
-            arrayList.add(Uri.fromFile(new File(uriString)));
+            //arrayList.add(Uri.fromFile(new File(uriString)), pageName);
+            arrayList.add(new PageDetail(uriString, pageName));
         }
         cursor.close();
         return arrayList;
@@ -464,10 +474,11 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
                     case DialogInterface.BUTTON_POSITIVE:
                         for(int i=0; i<mSelectedItems.size(); i++)
                         {
-                            Uri uri = mArrayList.get(mSelectedItems.get(i));
-                            deletePage(uri);
+                            PageDetail pageDetail = mArrayList.get(mSelectedItems.get(i));
+                            String uriString = /*mArrayList.get(mSelectedItems.get(i))*/ pageDetail.getImageUri();
+                            deletePage(uriString);/*
                             if(mSelectedItems.get(i) == 0)
-                                UPDATE_COVER_IMAGE = true;
+                                UPDATE_COVER_IMAGE = true;*/
                         }
                         mSelection = false;
                         if(mSelectedItems.size() == mGridView.getCount())
@@ -500,18 +511,18 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
                 .setPositiveButton("Yes", dialog).setNegativeButton("No", dialog).show();
     }
 
-    private void deletePage(Uri uri)
+    private void deletePage(String uriString)
     {
         DatabaseUtil database = new DatabaseUtil(this, "Images");
         StorageUtil storage = new StorageUtil(this);
 
-        storage.deleteImage(uri.getPath());
+        storage.deleteImage(uriString);
 
-        String imageName = uri.getPath().substring(uri.getPath().lastIndexOf('/')+1);
+        String imageName = uriString.substring(uriString.lastIndexOf('/')+1);
         storage.deleteImage(storage.getDirectoryForCroppedImage()+"/"+imageName);
         storage.deleteImage(storage.getDirectoryForOriginalImage()+"/"+imageName);
 
-        database.deleteData("Images", "fltr_image_uri", uri.getPath());
+        database.deleteData("Images", "fltr_image_uri", uriString);
 
     }
 
@@ -612,7 +623,8 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         Drawable drawable = null;
         int action = event.getAction();
 
-        Uri imageUri = mArrayList.get(mPosition);
+        String uriString = mArrayList.get(mPosition).getImageUri();
+        Uri imageUri = Uri.fromFile(new File(uriString));
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
             drawable = new BitmapDrawable(getResources(), bitmap);
@@ -712,7 +724,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
     private void renameDocument()
     {
-        RenameDialogBox rename = new RenameDialogBox(this, mDocumentName, new ChangeDocumentName(){
+        RenameDialog rename = new RenameDialog(this, mDocumentName, new ChangeDocumentName(){
             @Override
             public void updateDocumentName(String newName)
             {

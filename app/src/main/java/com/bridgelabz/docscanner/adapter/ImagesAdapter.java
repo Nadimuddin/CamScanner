@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.bridgelabz.docscanner.fragment.ImageFragment;
+import com.bridgelabz.docscanner.model.PageDetail;
 
 import java.util.ArrayList;
 
@@ -17,16 +18,17 @@ import java.util.ArrayList;
 public class ImagesAdapter extends FragmentStatePagerAdapter
 {
     private ArrayList<Uri> mUris;
-    public ImagesAdapter(FragmentManager fragment, ArrayList<Uri> uris)
+    private ArrayList<PageDetail> mPageDetails;
+    public ImagesAdapter(FragmentManager fragment, ArrayList<PageDetail> pageDetails)
     {
         super(fragment);
-        mUris = uris;
+        mPageDetails = pageDetails;
     }
 
     @Override
     public int getCount()
     {
-        return mUris.size();
+        return mPageDetails.size();
     }
 
     @Override
@@ -34,7 +36,8 @@ public class ImagesAdapter extends FragmentStatePagerAdapter
     {
         Fragment fragment = new ImageFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("image_uri", mUris.get(position));
+        PageDetail pageDetail = (PageDetail) mPageDetails.get(position);
+        bundle.putSerializable("page_details", pageDetail);
         fragment.setArguments(bundle);
         return fragment;
     }

@@ -1,17 +1,19 @@
 package com.bridgelabz.docscanner.model;
 
 
+import android.net.Uri;
+
 /**
  * Created by Nadimuddin on 19/10/16.
  */
 public class DocumentDetails
 {
     private String mDocumentName;
-    private String mCoverImageUri;
+    private Uri mCoverImageUri;
     private String mDateTime;
     private int mImageCount;
 
-    public DocumentDetails(String documentName, String imageUri, String dateTime, int imageCount)
+    public DocumentDetails(String documentName, Uri imageUri, String dateTime, int imageCount)
     {
         mDocumentName = documentName;
         mCoverImageUri = imageUri;
@@ -24,7 +26,7 @@ public class DocumentDetails
         return mDocumentName;
     }
 
-    public String getImageUri()
+    public Uri getImageUri()
     {
         return mCoverImageUri;
     }
