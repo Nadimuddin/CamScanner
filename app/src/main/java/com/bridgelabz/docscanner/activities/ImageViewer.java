@@ -157,11 +157,23 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
                         cursor.moveToNext();
                         int docId = cursor.getInt(0);
                         deletePage(currentImageUri);
-                        setImages(docId);
-                        updateDocumentTable(docId);
-                        if(mViewPager.getCurrentItem() == 0)
-                            UPDATE_COVER_IMAGE = true;
 
+                        if(mUris.size() == 1)
+                        {
+                            deleteDocument(docId);
+                            Toast.makeText(getBaseContext(), "All pages are deleted from Document so unable" +
+                                    "to open this Document", Toast.LENGTH_LONG).show();
+                            Intent intent = new  Intent(getBaseContext(), MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            setImages(docId);
+                            if (mViewPager.getCurrentItem() == 0)
+                                UPDATE_COVER_IMAGE = true;
+                            updateDocumentTable(docId);
+                        }
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -196,6 +208,13 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
         storage.deleteImage(storage.getDirectoryForOriginalImage()+"/"+imageName);
 
         database.deleteData("Images", "fltr_image_uri", uri.getPath());
+    }
+
+    private void deleteDocument(int docId)
+    {
+        DatabaseUtil database = new DatabaseUtil(this, "Documents");
+
+        database.deleteData("Documents", "document_id", docId);
     }
 
     private void updateDocumentTable(int docId)

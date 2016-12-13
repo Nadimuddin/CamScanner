@@ -134,6 +134,25 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
+    protected void onRestart() {
+        Log.i(TAG, "onRestart: ");
+        super.onRestart();
+        setImages();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart: ");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
+    }
+
+    @Override
     public void onClick(View v)
     {
         if(v == mDocTitle)
@@ -236,6 +255,8 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     private void processImage(Uri imageUri)
     {
         //IntentUtil.processIntent(this, ImageCropping.class, imageUri);
+
+        finish();
 
         Intent intent = new Intent(this, ImageCropping.class);
         intent.putExtra(Intent.EXTRA_STREAM, imageUri);
