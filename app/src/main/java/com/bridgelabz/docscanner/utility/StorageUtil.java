@@ -128,6 +128,12 @@ public class StorageUtil
         return directory;
     }
 
+    public String getPublicDirectory()
+    {
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                .getAbsolutePath();
+    }
+
     public File createTemporaryFile()throws Exception
     {
         File tempFile = Environment.getExternalStorageDirectory();

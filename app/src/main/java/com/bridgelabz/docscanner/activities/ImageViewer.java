@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bridgelabz.docscanner.R;
@@ -37,10 +38,11 @@ import java.util.Date;
  * Created by Nadimuddin on 25/11/16.
  */
 
-public class ImageViewer extends AppCompatActivity implements View.OnClickListener
+public class ImageViewer extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener
 {
     Toolbar mToolbar;
     ImageButton mBackButton;
+    TextView mPageName;
     ViewPager mViewPager;
     ImagesAdapter mAdapter;
     ArrayList<Uri> mUris = new ArrayList<>();
@@ -70,15 +72,19 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
         int currentItem = getIntent().getIntExtra("current_image", 0);
         mToolbar = (Toolbar)findViewById(R.id.imageViewerToolbar);
         mBackButton = (ImageButton)findViewById(R.id.backButton);
+        mPageName = (TextView)findViewById(R.id.page_name);
         mViewPager = (ViewPager)findViewById(R.id.view_pager);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
 
-        mAdapter = new ImagesAdapter(getSupportFragmentManager(), mArrayList);
+        mAdapter = new ImagesAdapter(getSupportFragmentManager(), mArrayList, mPageName, mViewPager);
 
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(currentItem);
+        mViewPager.setOnPageChangeListener(this);
+       // String pageName = mArrayList.get(currentItem).getPageName();
+       // mPageName.setText(pageName);
         mBackButton.setOnClickListener(this);
     }
 
@@ -140,6 +146,7 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
                     }
                 });
                 dialog.show();
+                dialog.setCancelable(false);
                 break;
 
             case R.id.delete:
@@ -215,7 +222,7 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
     {
         mUris.clear();
         mUris = retrieveUriFromDatabase(docId);
-        mAdapter = new ImagesAdapter(getSupportFragmentManager(), mArrayList);
+        mAdapter = new ImagesAdapter(getSupportFragmentManager(), mArrayList, mPageName, mViewPager);
         //mAdapter.notifyDataSetChanged();
         mViewPager.setAdapter(mAdapter);
     }
@@ -320,5 +327,21 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         intent.putExtra("from", "ImageViewer");
         startActivity(intent);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+    {
+        mPageName.setText(mArrayList.get(position).getPageName());
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

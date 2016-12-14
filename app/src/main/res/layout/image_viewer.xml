@@ -15,6 +15,14 @@
             android:src="@drawable/back_button"
             android:background="@null"
             android:id="@+id/backButton"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Page1"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:id="@+id/page_name"/>
 
     </android.support.v7.widget.Toolbar>
 

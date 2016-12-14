@@ -72,7 +72,7 @@ public class DocumentAdapter extends BaseAdapter
         thumbnail = imageUtil.getThumbnailImage(bitmap, 150, 200);
 
         imageView.setImageBitmap(thumbnail);
-        pageNo.setText(Integer.toString(position+1)+" "+pageName);
+        pageNo.setText(Integer.toString(position+1)+"   "+pageName);
         return view;
     }
 }

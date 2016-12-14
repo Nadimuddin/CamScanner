@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.widget.TextView;
 
 import com.bridgelabz.docscanner.fragment.ImageFragment;
 import com.bridgelabz.docscanner.model.PageDetail;
@@ -19,10 +21,15 @@ public class ImagesAdapter extends FragmentStatePagerAdapter
 {
     private ArrayList<Uri> mUris;
     private ArrayList<PageDetail> mPageDetails;
-    public ImagesAdapter(FragmentManager fragment, ArrayList<PageDetail> pageDetails)
+    private TextView mPageName;
+    private ViewPager mViewPager;
+    public ImagesAdapter(FragmentManager fragment, ArrayList<PageDetail> pageDetails, TextView pageName,
+                         ViewPager viewPager)
     {
         super(fragment);
         mPageDetails = pageDetails;
+        mPageName = pageName;
+        mViewPager = viewPager;
     }
 
     @Override
@@ -36,7 +43,7 @@ public class ImagesAdapter extends FragmentStatePagerAdapter
     {
         Fragment fragment = new ImageFragment();
         Bundle bundle = new Bundle();
-        PageDetail pageDetail = (PageDetail) mPageDetails.get(position);
+        PageDetail pageDetail = mPageDetails.get(position);
         bundle.putSerializable("page_details", pageDetail);
         fragment.setArguments(bundle);
         return fragment;

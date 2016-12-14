@@ -480,7 +480,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onMenuItemClick(MenuItem item)
     {
-        if(item.getItemId() == R.id.delete) {
+        if(item.getItemId() == R.id.delete)
+        {
             if (mSelectedItems.size() > 0)
                 showAlert();
             else

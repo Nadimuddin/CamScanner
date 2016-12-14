@@ -38,6 +38,7 @@ import com.bridgelabz.docscanner.utility.StorageUtil;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -452,15 +453,49 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public boolean onMenuItemClick(MenuItem item)
     {
-        if(item.getItemId() == R.id.delete)
+        switch (item.getItemId())
         {
-            if(mSelectedItems.size() > 0) {
-                showAlert();
-            }
-            else
-                Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();
+            case R.id.delete:
+                if(mSelectedItems.size() > 0) {
+                    showAlert();
+                }
+                else
+                    Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.save_to_gallery:
+                saveToGallery();
+                //storage.st
+                //Log.i(TAG, "onMenuItemClick: "+timeStamp);
+                break;
         }
         return true;
+    }
+
+    private void saveToGallery()
+    {
+        StorageUtil storage = new StorageUtil(this);
+        String directory = storage.getPublicDirectory();
+        SimpleDateFormat dateFormat;
+        String timeStamp;
+        String imageName;
+        Bitmap bitmap = null;
+        for(int i=0; i<mSelectedItems.size(); i++)
+        {
+            dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+            timeStamp = dateFormat.format(new Date());
+            imageName = "Doc_"+timeStamp;
+            int pos = mSelectedItems.get(i);
+            Uri uri = mUris.get(pos);
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            storage.storeImage(bitmap, directory, imageName+i+".jpg");
+        }
+        Toast.makeText(this, "Saved to "+directory, Toast.LENGTH_SHORT).show();
     }
 
     private void showAlert()
