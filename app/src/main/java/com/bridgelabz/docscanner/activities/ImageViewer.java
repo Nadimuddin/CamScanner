@@ -143,6 +143,7 @@ public class ImageViewer extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void setPageName() {
                         setImages(imageId);
+
                     }
                 });
                 dialog.show();

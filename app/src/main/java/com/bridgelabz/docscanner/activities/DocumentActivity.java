@@ -1,5 +1,6 @@
 package com.bridgelabz.docscanner.activities;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.bridgelabz.docscanner.R;
 import com.bridgelabz.docscanner.adapter.DocumentAdapter;
+import com.bridgelabz.docscanner.async_task.SaveToGallery;
 import com.bridgelabz.docscanner.dialog.RenameDialog;
 import com.bridgelabz.docscanner.interfaces.ChangeDocumentName;
 import com.bridgelabz.docscanner.model.PageDetail;
@@ -76,7 +78,6 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     private static final String DESELECT_ALL = "Deselect_All";
     private static final boolean SELECTED = true;
     private static final boolean DESELECTED = false;
-    //private static boolean UPDATE_COVER_IMAGE = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -146,18 +147,6 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         Log.i(TAG, "onRestart: ");
         super.onRestart();
         setImages();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i(TAG, "onStart: ");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(TAG, "onResume: ");
     }
 
     @Override
@@ -249,15 +238,6 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
             processImage(storedImageUri);
         }
-        /*else if(requestCode == CROP_FROM_CAMERA)
-        {
-            Bundle extras = data.getExtras();
-            if (extras != null)
-            {
-                Bitmap mBitmap = extras.getParcelable("data");
-                croppedImage.setImageBitmap(mBitmap);
-            }
-        }*/
     }
 
     private void processImage(Uri imageUri)
@@ -404,48 +384,11 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
                 mDocTitle.setText(mSelectedItemCount+" Selected");
                 break;
 
-            case R.id.delete:
-                /*if(mSelectedItems.size() > 0)
-                    showAlert();
-                else
-                    Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();*/
-                break;
-
-            /*case R.id.pdfSetting:
-                Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.invite:
-                Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.comment:
-                Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.emailTo:
-                Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.setTag:
-                Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.manualSorting:
-                Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.viewBy:
-                Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.collage:
-                Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
-                break;
-
             case R.id.select:
-                Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
-                break;*/
+                mSelection = true;
+                changeOptionMenu();;
+                setBottomToolbar(mSelection);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -456,17 +399,15 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
         switch (item.getItemId())
         {
             case R.id.delete:
-                if(mSelectedItems.size() > 0) {
+                if(mSelectedItems.size() > 0)
                     showAlert();
-                }
                 else
                     Toast.makeText(this, "Nothing selected", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.save_to_gallery:
                 saveToGallery();
-                //storage.st
-                //Log.i(TAG, "onMenuItemClick: "+timeStamp);
+                onBackPressed();
                 break;
         }
         return true;
@@ -474,28 +415,22 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
     private void saveToGallery()
     {
-        StorageUtil storage = new StorageUtil(this);
-        String directory = storage.getPublicDirectory();
-        SimpleDateFormat dateFormat;
-        String timeStamp;
-        String imageName;
-        Bitmap bitmap = null;
-        for(int i=0; i<mSelectedItems.size(); i++)
-        {
-            dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-            timeStamp = dateFormat.format(new Date());
-            imageName = "Doc_"+timeStamp;
-            int pos = mSelectedItems.get(i);
-            Uri uri = mUris.get(pos);
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setMessage("Saving to Gallery....");
+        progress.setCancelable(false);
+        progress.show();
 
-            storage.storeImage(bitmap, directory, imageName+i+".jpg");
-        }
-        Toast.makeText(this, "Saved to "+directory, Toast.LENGTH_SHORT).show();
+        SaveToGallery saveToGallery = new SaveToGallery(this, mSelectedItems, mUris){
+            @Override
+            protected void onPostExecute(String s)
+            {
+                super.onPostExecute(s);
+                progress.dismiss();
+                Toast.makeText(getBaseContext(), "Saved to Gallery", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        saveToGallery.execute();
     }
 
     private void showAlert()
@@ -597,20 +532,13 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
     {
-        Log.i(TAG, "onItemLongClick: ");
-        mSelection = true;
-        //int count = parent.getChildCount();
-        /*for(int i = 0; i < count; i++)
-        {
-            View current = parent.getChildAt(i);
-            current.setOnDragListener(this);
-        }*/
-        Log.i(TAG, "onItemLongClick: OnDragListener activated0123");
-        
-        view.setBackgroundResource(setPageSelected(true, position));
-        mDocTitle.setText(mSelectedItemCount+" selected");
-        changeOptionMenu();
-        setBottomToolbar(true);
+        if(!mIsSelected[position]) {
+            mSelection = true;
+            view.setBackgroundResource(setPageSelected(true, position));
+            mDocTitle.setText(mSelectedItemCount + " selected");
+            changeOptionMenu();
+            setBottomToolbar(true);
+        }
 
         return true;
     }
@@ -759,7 +687,7 @@ public class DocumentActivity extends AppCompatActivity implements View.OnClickL
 
     private void renameDocument()
     {
-        RenameDialog rename = new RenameDialog(this, mDocumentName, new ChangeDocumentName(){
+        RenameDialog rename = new RenameDialog(this, mDocumentName, new ChangeDocumentName() {
             @Override
             public void updateDocumentName(String newName)
             {

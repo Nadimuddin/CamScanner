@@ -29,9 +29,9 @@
         android:title="View By"/>
 
     <item android:id="@+id/collage"
-        android:title="Collage"/>
+        android:title="Collage"/>-->
 
     <item android:title="Select"
-        android:id="@+id/select"/>-->
+        android:id="@+id/select"/>
 
 </menu>

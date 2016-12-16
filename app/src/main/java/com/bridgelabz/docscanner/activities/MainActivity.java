@@ -88,36 +88,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i(TAG, "onStart: ");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i(TAG, "onRestart: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG, "onDestroy: ");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(TAG, "onPause: ");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i(TAG, "onStop: ");
-    }
-
-    @Override
     protected void onResume()
     {
         Log.i(TAG, "onResume: ");
@@ -191,14 +161,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
     {
-        Log.i(TAG, "onItemLongClick: ");
-        mSelection = true;
-        view.setBackgroundResource(setDocumentSelected(true, position));
-        changeOptionMenu();
-        mToolbar.setTitle(mSelectedListCount+" Selected");
-        getSupportActionBar().setTitle(mSelectedListCount+" Selected");
-        setBottomToolbar(true);
-        mPosition = position;
+        if(!mIsSelected[position]) {
+            mSelection = true;
+            view.setBackgroundResource(setDocumentSelected(true, position));
+            changeOptionMenu();
+            mToolbar.setTitle(mSelectedListCount + " Selected");
+            getSupportActionBar().setTitle(mSelectedListCount + " Selected");
+            setBottomToolbar(true);
+        }
+        //mPosition = position;
         return true;
     }
 
@@ -221,14 +192,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Uri selectedImage = result.getData(), storedImageUri = null;
             ImageUtil imageUtil = new ImageUtil(this);
 
-            /*try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-
-                storedImageUri = storeImage(bitmap);
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }*/
             String realUri = imageUtil.getRealPath(selectedImage);
 
             File file = new File(realUri);
@@ -244,7 +207,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void processImage(Uri imageUri)
     {
-        //IntentUtil.processIntent(this, ImageCropping.class, imageUri);
         Intent intent = new Intent(this, ImageCropping.class);
         intent.putExtra(Intent.EXTRA_STREAM, imageUri);
         intent.putExtra("from", "MainActivity");
@@ -381,18 +343,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mSelection = true;
                 mToolbar.setTitle(mSelectedListCount+" Selected");
                 break;
-
-            /*case R.id.createNewFolder:
-                Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.gridView:
-                Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.sortBy:
-                Toast.makeText(this, item.getTitle()+" is not implemented yet", Toast.LENGTH_SHORT).show();
-                break;*/
         }
         return super.onOptionsItemSelected(item);
     }
@@ -423,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mSelectedListCount--;
             Object obj = position;
             mSelectedItems.remove(obj);
-            resId = 0;//R.drawable.shape_for_unselected;
+            resId = 0;
         }
         return resId;
     }
